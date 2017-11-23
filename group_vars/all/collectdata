@@ -1,6 +1,5 @@
 volume_driver: local
-elasticsearch_cluster_name: docker-cluster
-elasticsearch_prefix_index: index-dev
+elasticsearch_cluster_name: index-dev
 master_heap_size: 512m
 master_mem_limit: 1073741824
 data_heap_size: 512m
