@@ -10,6 +10,7 @@ services:
      SERVICE_ELASTICSEARCH_PASSWORD: "{{ elasticsearch_svckibana_password }}"
      ELASTICSEARCH_HOST: elasticsearch
      ELASTICSEARCH_PORT: 9200
+     PREFIX_INDEX: "{{ elasticsearch_cluster_name }}"
     external_links:
     - elasticsearch/elasticsearch-client:elasticsearch
 
