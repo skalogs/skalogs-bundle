@@ -1,0 +1,32 @@
+*.swp
+*.swo
+*~
+.idea
+*.iml
+
+# ansible plugins binary
+*.pyc
+
+#binaries
+*.gz
+*.tgz
+*.bzip
+*.bz2
+*.zip
+*.iso
+*.tar
+
+#local ssh config
+config_ssh
+
+*.retry
+
+.vagrant
+*.log
+.idea
+.idea*
+.idea/*
+
+roles/AdopteUnOps.*
+
+.ansible_vault_pass
