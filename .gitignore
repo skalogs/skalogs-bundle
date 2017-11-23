@@ -30,3 +30,5 @@ config_ssh
 roles/AdopteUnOps.*
 
 .ansible_vault_pass
+ansible_aws.key
+
