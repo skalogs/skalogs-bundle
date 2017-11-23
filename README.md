@@ -172,11 +172,18 @@ This ansible create :
           
 ### Create the project "demo"
 
-This project is a demo for collect data from different stacks:
-* demo-todo : application nodejs
-* demo-petclinic : application springboot
-* packetbeat : collect network informations from Host
-* metricbeat : collect metric informations from Host
+This project is a demo for collect data.
+
+Launch the playbook
+```
+./ansible-playbook_wrapper create_project_demo.yml -K -e "NAME_PROJECT=demo"
+```
+
+* Install some stacks : 
+    * demo-todo : application nodejs
+    * demo-petclinic : application springboot
+    * packetbeat : collect network informations from Host
+    * metricbeat : collect metric informations from Host
 
 ## Disaster recovery
 
