@@ -1,0 +1,28 @@
+version: '2'
+services:
+  metricbeat-config:
+    labels:
+        io.rancher.container.start_once: true
+        io.rancher.container.pull_image: always
+    image: adopteunops/metricbeat-config:1.0.0-SNAPSHOT
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:{{elasticsearch_version}}
+    labels:
+        io.rancher.container.pull_image: always
+        io.rancher.sidekicks: metricbeat-config
+        io.rancher.container.dns: 'true'
+        io.rancher.scheduler.global: "true"
+    network_mode: host
+    volumes:
+    - /proc:/hostfs/proc:ro
+    - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+    - /:/hostfs:ro
+    volumes_from:
+    - metricbeat-config
+    command:
+    - metricbeat
+    - -c
+    - /usr/share/metricbeat-config/metricbeat.yml
+    - -e
+    - -system.hostfs=/hostfs

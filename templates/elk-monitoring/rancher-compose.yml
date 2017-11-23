@@ -1,0 +1,135 @@
+version: '2'
+services:
+  redis:
+    scale: 1
+    start_on_create: true
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 6379
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000
+
+  logstash-indexer:
+    metadata:
+      logstash:
+        inputs: |
+          redis {
+            host => "redis"
+            port => "6379"
+            data_type => "list"
+            key => "logstash"
+          }
+        filters: |
+          if "kernel" in [type] {
+            grok {  # kernel logs
+              match => {"message" => "%{SYSLOGTIMESTAMP:timestamp}.*kernel: \[.*\] %{GREEDYDATA:message}"}
+              overwrite => [ "message" ]
+            }
+          }
+
+          if "kernel" not in [type] {
+            mutate {
+              rename => { "docker.id" => "container_id" }
+              rename => { "docker.name" => "container_name" }
+              rename => { "docker.image" => "docker_image" }
+              rename => { "docker.hostname" => "docker_hostname" }
+            }
+          }
+
+        outputs: |
+          elasticsearch {
+            hosts => ["elasticsearch.rancher.internal:9200"]
+            user => "{{elasticsearch_svcadmin_username}}"
+            password => "{{elasticsearch_svcadmin_password}}"
+          }
+
+  logstash-collector:
+    metadata:
+      logstash:
+        inputs: |
+          udp {
+            port => 5000
+            codec => "json"
+          }
+          file {
+            path => "/host/var/log/kern.log"
+            type => "kernel"
+          }
+        outputs: |
+          redis {
+            host => "redis"
+            port => "6379"
+            data_type => "list"
+            key => "logstash"
+          }
+
+  elasticsearch:
+    scale: {{elk_monitoring_minimum_master_nodes}}
+    retain_ip: true
+
+{% if elasticsearch_license_file != "" %}
+  elasticsearch-setup:
+    metadata:
+      license: |
+{{ lookup('template', elasticsearch_license_file) | indent(8, True) }}
+{% endif %}
+
+  curator:
+    metadata:
+      curator-actions: |
+        actions:
+          1:
+            action: delete_indices
+            description: >-
+              Delete indices older than 45 days (based on index name), for logstash-
+              prefixed indices. Ignore the error if the filter does not result in an
+              actionable list of indices (ignore_empty_list) and exit cleanly.
+            options:
+              ignore_empty_list: True
+            filters:
+            - filtertype: pattern
+              kind: prefix
+              value: logstash-
+            - filtertype: age
+              source: name
+              direction: older
+              timestring: '%Y.%m.%d'
+              unit: days
+              unit_count: 45
+          2:
+            action: forcemerge
+            description: >-
+              forceMerge logstash- prefixed indices older than 2 days (based on index
+              creation_date) to 2 segments per shard.  Delay 120 seconds between each
+              forceMerge operation to allow the cluster to quiesce. Skip indices that
+              have already been forcemerged to the minimum number of segments to avoid
+              reprocessing.
+            options:
+              max_num_segments: 2
+              delay: 120
+              timeout_override:
+              ignore_empty_list: True
+              continue_if_exception: False
+            filters:
+            - filtertype: pattern
+              kind: prefix
+              value: logstash-
+              exclude:
+            - filtertype: age
+              source: creation_date
+              direction: older
+              unit: days
+              unit_count: 2
+              exclude:
+            - filtertype: forcemerged
+              max_num_segments: 2
+              exclude:
+
+  kibana-setup:
+    metadata:
+      elasticdump: |
+{{ lookup('template', elk_monitoring_kibana_conf_file) | indent(8, True) }}

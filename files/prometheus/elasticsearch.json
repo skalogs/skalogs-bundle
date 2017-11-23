@@ -1,0 +1,2194 @@
+{
+  "overwrite": true,
+  "dashboard": {
+    "editable": true,
+    "timezone": "utc",
+    "title": "Elasticsearch",
+    "gnetId": 266,
+    "graphTooltip": 1,
+    "hideControls": false,
+    "id": null,
+    "links": [],
+    "refresh": "1m",
+    "rows": [
+      {
+        "collapse": false,
+        "height": "",
+        "panels": [
+          {
+            "cacheTimeout": null,
+            "colorBackground": true,
+            "colorValue": false,
+            "colors": [
+              "rgba(50, 172, 45, 0.97)",
+              "rgba(255, 166, 0, 0.89)",
+              "rgba(245, 54, 54, 0.9)"
+            ],
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "height": "50",
+            "id": 8,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "span": 6,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "targets": [
+              {
+                "expr": "max(es_cluster_status{cluster=\"$$cluster\"})",
+                "hide": false,
+                "intervalFactor": 2,
+                "legendFormat": "",
+                "metric": "",
+                "refId": "A",
+                "step": 60
+              }
+            ],
+            "thresholds": "1,2",
+            "title": "Cluster Status",
+            "transparent": false,
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "GREEN",
+                "value": "0"
+              },
+              {
+                "op": "=",
+                "text": "YELLOW",
+                "value": "1"
+              },
+              {
+                "op": "=",
+                "text": "RED",
+                "value": "2"
+              }
+            ],
+            "valueName": "current"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "height": "50",
+            "id": 10,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "span": 2,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "targets": [
+              {
+                "expr": "max(es_cluster_nodes_number{cluster=\"$$cluster\"})",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "metric": "",
+                "refId": "A",
+                "step": 60
+              }
+            ],
+            "thresholds": "",
+            "title": "Nodes",
+            "transparent": false,
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+              }
+            ],
+            "valueName": "current"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "height": "50",
+            "id": 9,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "span": 2,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "targets": [
+              {
+                "expr": "max(es_cluster_datanodes_number{cluster=\"$$cluster\"})",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "metric": "",
+                "refId": "A",
+                "step": 60
+              }
+            ],
+            "thresholds": "",
+            "title": "Data Nodes",
+            "transparent": false,
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+              }
+            ],
+            "valueName": "current"
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": true,
+        "title": "Cluster",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": "",
+        "panels": [
+          {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "format": "percent",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "height": "50",
+            "id": 11,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "minSpan": 2,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "repeat": "shard_type",
+            "span": 12,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": true,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": true
+            },
+            "targets": [
+              {
+                "expr": "min(es_cluster_shards_active_percent{cluster=\"$$cluster\"})",
+                "intervalFactor": 2,
+                "legendFormat": "",
+                "refId": "A",
+                "step": 60
+              }
+            ],
+            "thresholds": "",
+            "title": "Active Shards",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+              }
+            ],
+            "valueName": "current"
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": true,
+        "title": "Shards",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": "",
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 30,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "es_process_cpu_percent{cluster=\"$$cluster\"}",
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "CPU Usage",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "percent",
+                "label": "CPU usage",
+                "logBase": 1,
+                "max": 100,
+                "min": 0,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 31,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "sort": "min",
+              "sortDesc": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "es_jvm_mem_pool_used_bytes{cluster=\"$$cluster\"}",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}} {{pool}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "JVM Usage",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "bytes",
+                "label": "Memory",
+                "logBase": 1,
+                "max": null,
+                "min": 0,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 35,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "es_os_mem_used_bytes{cluster=\"$$cluster\"}",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Memory Usage",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "bytes",
+                "label": "Memory",
+                "logBase": 1,
+                "max": null,
+                "min": 0,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 32,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "1-(es_fs_path_free_bytes{cluster=\"$$cluster\",node=~\"$$node\"}/es_fs_path_total_bytes{cluster=\"$$cluster\",node=~\"$$node\"})",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}} - {{path}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "custom",
+                "fill": true,
+                "fillColor": "rgba(216, 200, 27, 0.27)",
+                "op": "gt",
+                "value": 0.8
+              },
+              {
+                "colorMode": "custom",
+                "fill": true,
+                "fillColor": "rgba(234, 112, 112, 0.22)",
+                "op": "gt",
+                "value": 0.9
+              }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Disk Usage",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "percentunit",
+                "label": "Memory",
+                "logBase": 1,
+                "max": 1,
+                "min": 0,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": true,
+        "title": "System",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": "",
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 1,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "sort": null,
+              "sortDesc": null,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 3,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "es_index_doc_number{cluster=\"$$cluster\"}",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Documents - Count",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": "Documents",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 24,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 3,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_indices_indexing_index_count{cluster=\"$$cluster\"}[$$interval])",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Documents - Indexing Rate",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": "Documents/s",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 25,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 3,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_indices_doc_deleted_number{cluster=\"$$cluster\"}[$$interval])",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Documents - Deletion Rate",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": "Documents/s",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 26,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 3,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_indices_merges_total_number{cluster=\"$$cluster\"}[$$interval])",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Documents - Merge Rate",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": "Documents/s",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": true,
+        "title": "Documents",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": "",
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 33,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_indices_search_query_time_seconds{cluster=\"$$cluster\"}[$$interval])",
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Query Time",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "ms",
+                "label": "Time",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 5,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_indices_indexing_index_time_seconds{cluster=\"$$cluster\"}[$$interval])",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Indexing Time",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "ms",
+                "label": "Time",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 3,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_index_merges_total_time_seconds{cluster=\"$$cluster\"}[$$interval])",
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Merging Time",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "ms",
+                "label": "Time",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": true,
+        "title": "Times",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": "",
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 4,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 6,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "es_index_fielddata_memory_size_bytes{cluster=\"$$cluster\"}",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 10
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Field Data - Memory Size",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "bytes",
+                "label": "Memory",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 34,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 6,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_index_requestcache_evictions_count{cluster=\"$$cluster\"}[$$interval])",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 10
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Field Data - Evictions",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": "Evictions/s",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 35,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 3,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "es_os_mem_total_bytes{cluster=\"$$cluster\"}",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Query Cache - Size",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "bytes",
+                "label": "Size",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 36,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 3,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_indices_querycache_evictions_count{cluster=\"$$cluster\"}[$$interval])",
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Query Cache - Evictions",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": "Evictions/s",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 37,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 3,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_index_requestcache_hit_count{cluster=\"$$cluster\"}[$$interval])",
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Query Cache - Hits",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": "Hits/s",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": true,
+        "title": "Caches",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": "",
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 6,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "es_jvm_mem_heap_used_percent{cluster=\"$$cluster\"}",
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Heap Used",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "percent",
+                "label": "Heap",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 7,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_jvm_gc_collection_count{cluster=\"$$cluster\"}[$$interval])",
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}} - {{gc}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Garbage Collection - Count",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": "GCs",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "datasource": "prometheus",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "grid": {},
+            "height": "400",
+            "id": 27,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(es_jvm_gc_collection_time_seconds{cluster=\"$$cluster\"}[$$interval])",
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "{{node}} - {{gc}}",
+                "metric": "",
+                "refId": "A",
+                "step": 20
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Garbage Collection - Time",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "s",
+                "label": "Time",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": true,
+        "title": "Java Virtual Machine",
+        "titleSize": "h6"
+      }
+    ],
+    "schemaVersion": 14,
+    "style": "dark",
+    "tags": [
+      "prometheus",
+      "elasticsearch"
+    ],
+    "templating": {
+      "list": [
+        {
+          "allValue": null,
+          "current": {
+            "selected": true,
+            "text": "1m",
+            "value": "1m"
+          },
+          "datasource": "prometheus",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Interval",
+          "multi": false,
+          "name": "interval",
+          "options": [
+            {
+              "selected": false,
+              "text": "15s",
+              "value": "15s"
+            },
+            {
+              "selected": false,
+              "text": "30s",
+              "value": "30s"
+            },
+            {
+              "selected": true,
+              "text": "1m",
+              "value": "1m"
+            },
+            {
+              "selected": false,
+              "text": "5m",
+              "value": "5m"
+            },
+            {
+              "selected": false,
+              "text": "1h",
+              "value": "1h"
+            },
+            {
+              "selected": false,
+              "text": "6h",
+              "value": "6h"
+            },
+            {
+              "selected": false,
+              "text": "1d",
+              "value": "1d"
+            }
+          ],
+          "query": "15s,30s,1m,5m,1h,6h,1d",
+          "refresh": 0,
+          "type": "custom"
+        },
+        {
+          "allValue": null,
+          "current": {},
+          "datasource": "prometheus",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Cluster",
+          "multi": false,
+          "name": "cluster",
+          "options": [],
+          "query": "label_values(es_cluster_status,cluster)",
+          "refresh": 1,
+          "regex": "",
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {},
+          "datasource": "prometheus",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Node",
+          "multi": true,
+          "name": "node",
+          "options": [],
+          "query": "label_values(es_jvm_uptime_seconds{cluster=\"$$cluster\"},node)",
+          "refresh": 1,
+          "regex": "",
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {},
+          "datasource": "prometheus",
+          "hide": 2,
+          "includeAll": true,
+          "label": "Shard Type",
+          "multi": true,
+          "name": "shard_type",
+          "options": [],
+          "query": "label_values(es_cluster_shards_active_percent,type)",
+          "refresh": 1,
+          "regex": "",
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ]
+    },
+    "version": 27
+  }
+}

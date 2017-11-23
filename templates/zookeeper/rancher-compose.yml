@@ -1,0 +1,26 @@
+version: '2'
+services:
+  zookeeper:
+    scale: {{zookeeper_scale}}
+    retain_ip: true
+    health_check:
+      port: 2181
+      interval: 5000
+      unhealthy_threshold: 3
+      strategy: none
+      response_timeout: 5000
+      healthy_threshold: 2
+      initializing_timeout: 300000
+      reinitializing_timeout: 300000
+  zookeeper-viewer:
+    scale: 1
+    start_on_create: true
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 8080
+      unhealthy_threshold: 3
+      initializing_timeout: 300000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 300000

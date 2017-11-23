@@ -1,0 +1,20 @@
+version: '2'
+services:
+  kibana:
+    scale: {{kibana_scale}}
+    start_on_create: true
+    health_check:
+      response_timeout: 20000
+      healthy_threshold: 2
+      port: 5601
+      unhealthy_threshold: 3
+      initializing_timeout: 8000000
+      interval: 2000
+      strategy: recreate
+      request_line: GET "/status" "HTTP/1.0"
+      reinitializing_timeout: 8000000
+
+  kibana-setup:
+    metadata:
+      elasticdump: |
+{{ lookup('template', elasticsearch_kibana_conf_file) | indent(8, True) }}

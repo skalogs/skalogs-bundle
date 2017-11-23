@@ -1,0 +1,93 @@
+version: '2'
+services:
+  metricbeat:
+    scale: 1
+    metadata:
+      metricbeat-config: |
+        metricbeat.config.modules:
+          reload.period: 10s
+          reload.enabled: false
+        metricbeat.modules:
+        - module: system
+          metricsets:
+            - cpu
+            - load
+            - filesystem
+            - fsstat
+            - memory
+            - network
+            - process
+          enabled: true
+          period: 10s
+          processes: ['.*']
+        output.kafka:
+          hosts: ["54.76.190.172:9092"]
+          topic: processtopic
+          partition.round_robin:
+            reachable_only: false
+          required_acks: 1
+          compression: gzip
+          max_message_bytes: 1000000
+        logging.to_files: false
+
+  logstash-collector:
+    metadata:
+      logstash:
+        patterns:
+          - NGUSERNAME [a-zA-Z\.\@\-\+_%]+
+          - NGUSER %{NGUSERNAME}
+          - NGINXACCESS %{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp_nginx_access}\] "%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}" %{NUMBER:response} (?:%{NUMBER:bytes}|-) (?:"(?:%{URI:referrer}|-)"|%{QS:referrer}) %{QS:agent}
+        inputs: |
+          udp {
+            port => 5000
+              codec => "json"
+          }
+          file {
+            path => "/host/var/log/kern.log"
+            type => "kernel"
+          }
+
+        filters: |
+          if ![type] {
+            mutate {
+              add_field => { "type" =>  "myapp-demo" }
+            }
+          }
+
+          # add generic fields on all kind of logs
+          mutate {
+            add_field => {
+              "env" => "dev"
+              "rancher-env" => "myapp-project"
+            }
+          }
+
+          if [type] == "kernel" {
+            grok {  # kernel logs
+              match => {"message" => "%{SYSLOGTIMESTAMP:timestamp}.*kernel: \[.*\] %{GREEDYDATA:message}"}
+              overwrite => [ "message" ]
+            }
+
+            date {
+              match => [ "timestamp" , "MMM d HH:mm:ss", "MMM dd HH:mm:ss", "ISO8601" ]
+              target => "timestamp"
+            }
+          }
+
+          if "nginx:" in [docker][image] {
+            grok {
+              match => { "message" => "%{NGINXACCESS}" }
+            }
+            date {
+              match => [ "timestamp_nginx_access" , "dd/MMM/YYYY:HH:mm:ss Z" ]
+              target => "timestamp_nginx_access"
+            }
+          }
+
+        outputs: |
+          kafka {
+            bootstrap_servers => "54.76.190.172:9092"
+            topic_id => "processtopic"
+            codec => "json"
+          }
+          stdout { codec => rubydebug }

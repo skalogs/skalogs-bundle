@@ -1,0 +1,31 @@
+version: '2'
+services:
+  kibana:
+    environment:
+      ELASTICSEARCH_USERNAME: "{{ elasticsearch_svckibana_username }}"
+      ELASTICSEARCH_PASSWORD: "{{ elasticsearch_svckibana_password }}"
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    external_links:
+    - elasticsearch/elasticsearch-client:elasticsearch
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label_soft_ne: role=tools
+      io.rancher.scheduler.affinity:host_label_soft: role_kibana=true
+    tty: true
+    image: docker.elastic.co/kibana/kibana:{{elasticsearch_version}}
+    stdin_open: true
+
+  kibana-setup:
+    environment:
+      SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
+      SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
+      ELASTICSEARCH_VERSION: "{{elasticsearch_version}}"
+      DEFAULT_INDEX_PATTERN: "{{elasticsearch_cluster_name}}-*"
+    external_links:
+    - elasticsearch/elasticsearch-client:elasticsearch
+    image: adopteunops/elasticdump-rancher:latest
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.start_once: true
+    tty: true
+    stdin_open: true

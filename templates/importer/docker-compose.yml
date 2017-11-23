@@ -1,0 +1,79 @@
+version: '2'
+services:
+  importer:
+    environment:
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PORT: 9300
+      ELASTICSEARCH_CLUSTERNAME: "{{ elasticsearch_cluster_name }}"
+      SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
+      SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
+      KAFKA_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_POLLRECORD: 200
+      KAFKA_POLLINGTIME: 200
+    external_links:
+    - kafka/kafka:kafka
+    - elasticsearch/elasticsearch-client:elasticsearch
+    labels:
+      io.rancher.container.pull_image: always
+      com.prometheus.monitoring: 'true'
+      com.prometheus.port: '8080'
+      com.prometheus.metricspath: '/prometheus'      
+    tty: true
+    image: adopteunops/importer:1.0.0-SNAPSHOT
+    stdin_open: true
+  admin:
+    environment:
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PORT: 9300
+      ELASTICSEARCH_CLUSTERNAME: "{{ elasticsearch_cluster_name }}"
+      SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
+      SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
+      KAFKA_BOOTSTRAPSERVERS: kafka:9092
+      ZOOKEEPER_BOOTSTRAPSERVERS: zookeeper:2181/kafka
+    external_links:
+    - kafka/kafka:kafka
+    - zookeeper/zookeeper:zookeeper
+    - elasticsearch/elasticsearch-client:elasticsearch
+    labels:
+      io.rancher.container.pull_image: always
+    tty: true
+    image: adopteunops/admin:1.0.0-SNAPSHOT
+    stdin_open: true
+  error-importer:
+    environment:
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PORT: 9300
+      ELASTICSEARCH_CLUSTERNAME: "{{ elasticsearch_cluster_name }}"
+      SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
+      SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
+      KAFKA_BOOTSTRAPSERVERS: kafka:9092
+    external_links:
+    - kafka/kafka:kafka
+    - elasticsearch/elasticsearch-client:elasticsearch
+    labels:
+      io.rancher.container.pull_image: always
+      com.prometheus.monitoring: 'true'
+      com.prometheus.port: '8080'
+      com.prometheus.metricspath: '/prometheus'
+    tty: true
+    image: adopteunops/error-importer:1.0.0-SNAPSHOT
+    stdin_open: true
+  retry-importer:
+    environment:
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PORT: 9300
+      ELASTICSEARCH_CLUSTERNAME: "{{ elasticsearch_cluster_name }}"
+      SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
+      SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
+      KAFKA_BOOTSTRAPSERVERS: kafka:9092
+    external_links:
+    - kafka/kafka:kafka
+    - elasticsearch/elasticsearch-client:elasticsearch
+    labels:
+      io.rancher.container.pull_image: always
+      com.prometheus.monitoring: 'true'
+      com.prometheus.port: '8080'
+      com.prometheus.metricspath: '/prometheus'
+    tty: true
+    image: adopteunops/retry-importer:1.0.0-SNAPSHOT
+    stdin_open: true

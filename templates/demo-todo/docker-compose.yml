@@ -1,0 +1,18 @@
+version: '2'
+services:
+  todo:
+    image: adopteunops/demo-node-todo:1.0.0-SNAPSHOT
+    stdin_open: true
+    tty: true
+    links:
+    - mongodb:mongodb
+    ports:
+    - 8090:8080/tcp
+    labels:
+      io.rancher.container.pull_image: always
+  mongodb:
+    image: mongo:3.0
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always

@@ -1,0 +1,24 @@
+version: '2'
+services:
+  packetbeat-config:
+    labels:
+        io.rancher.container.start_once: true
+        io.rancher.container.pull_image: always
+    image: adopteunops/packetbeat-config:1.0.0-SNAPSHOT
+
+  packetbeat:
+    image: docker.elastic.co/beats/packetbeat:{{elasticsearch_version}}
+    labels:
+        io.rancher.container.pull_image: always
+        io.rancher.sidekicks: packetbeat-config
+        io.rancher.container.dns: 'true'
+    cap_add:
+    - NET_ADMIN
+    network_mode: host
+    volumes_from:
+    - packetbeat-config
+    command:
+    - packetbeat
+    - -c
+    - /usr/share/packetbeat-config/packetbeat.yml
+    - -e

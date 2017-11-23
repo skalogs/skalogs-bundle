@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web:
+    image: nginx:1.10
+    stdin_open: true
+    tty: true
+    ports:
+    - 80:80/tcp
+    labels:
+      io.rancher.container.pull_image: always
+  demo-petclinic:
+    image: adopteunops/demo-petclinic:1.5.1
+    stdin_open: true
+    tty: true
+    ports:
+    - 8080:8080/tcp
+    labels:
+      io.rancher.container.pull_image: always

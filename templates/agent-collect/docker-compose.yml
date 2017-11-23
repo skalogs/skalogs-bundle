@@ -1,0 +1,77 @@
+version: '2'
+services:
+  logstash-collector-config:
+    restart: always
+    image: simpletechs/rancher_logstash-config:v0.2.0-smpl1
+    labels:
+      io.rancher.container.hostname_override: container_name
+      logspout.exclude: 'true'
+    environment:
+      LOGSPOUT: ignore
+  logstash-collector:
+    restart: always
+    tty: true
+    volumes_from:
+    - logstash-collector-config
+    command:
+    - logstash
+    - -f
+    - /etc/logstash
+    image: docker.elastic.co/logstash/logstash:{{elasticsearch_version}}
+    environment:
+      xpack.monitoring.enabled: false
+      LOGSPOUT: ignore
+    stdin_open: true
+    volumes:
+    - '/var/log:/host/var/log:ro'
+    user: root
+    labels:
+      io.rancher.sidekicks: logstash-collector-config
+      io.rancher.scheduler.global: 'true'
+      io.rancher.container.hostname_override: container_name
+      logspout.exclude: 'true'
+
+  logspout:
+    environment:
+      EXCLUDE_LABEL: "io.rancher.container.system"
+      LOGSPOUT: ignore
+      ROUTE_URIS: logstash://logstash:5000
+      INACTIVITY_TIMEOUT: 1m
+      ALLOW_TTY: true
+    links:
+    - logstash-collector:logstash
+    labels:
+      io.rancher.scheduler.global: "true"
+      io.rancher.container.hostname_override: container_name
+    tty: true
+    image: adopteunops/logspout-logstash:20170823
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    stdin_open: true
+
+  metricbeat-config:
+    labels:
+        io.rancher.container.start_once: true
+        io.rancher.container.pull_image: always
+    image: adopteunops/metricbeat-config:1.0.0-SNAPSHOT
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:{{elasticsearch_version}}
+    labels:
+        io.rancher.container.pull_image: always
+        io.rancher.sidekicks: metricbeat-config
+        io.rancher.container.dns: 'true'
+        io.rancher.scheduler.global: "true"
+    network_mode: host
+    volumes:
+    - /proc:/hostfs/proc:ro
+    - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+    - /:/hostfs:ro
+    volumes_from:
+    - metricbeat-config
+    command:
+    - metricbeat
+    - -c
+    - /usr/share/metricbeat-config/metricbeat.yml
+    - -e
+    - -system.hostfs=/hostfs

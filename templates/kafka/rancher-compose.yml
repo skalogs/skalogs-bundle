@@ -1,0 +1,37 @@
+version: '2'
+services:
+  kafka:
+    scale: {{kafka_scale}}
+    retain_ip: true
+    start_on_create: true
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 5000
+      port: 9092
+      unhealthy_threshold: 3
+      interval: 5000
+      strategy: none
+  kafka-manager:
+    scale: 1
+    start_on_create: true
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 9000
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000
+  kafka-lag-prometheus-exporter:
+    scale: 1
+    start_on_create: true
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 7979
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000

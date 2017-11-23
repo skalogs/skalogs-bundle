@@ -1,0 +1,4 @@
+version: '2'
+services:
+  metricbeat-dashboard:
+    scale: 1

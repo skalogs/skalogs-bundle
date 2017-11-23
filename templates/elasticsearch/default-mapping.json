@@ -1,0 +1,189 @@
+ {
+  "order": 100,
+  "template": "{{elasticsearch_cluster_name}}-*",
+  "settings": {
+    "index": {
+      "indexing.slowlog.level": "info",
+      "indexing.slowlog.source": "1000",
+      "indexing.slowlog.threshold.index.debug": "2s",
+      "indexing.slowlog.threshold.index.info": "5s",
+      "indexing.slowlog.threshold.index.trace": "500ms",
+      "indexing.slowlog.threshold.index.warn": "10s",
+      "search.slowlog.threshold.fetch.debug": "500ms",
+      "search.slowlog.threshold.fetch.info": "800ms",
+      "search.slowlog.threshold.fetch.trace": "200ms",
+      "search.slowlog.threshold.fetch.warn": "1s",
+      "search.slowlog.threshold.query.debug": "2s",
+      "search.slowlog.threshold.query.info": "5s",
+      "search.slowlog.threshold.query.trace": "500ms",
+      "search.slowlog.threshold.query.warn": "10s",
+      "refresh_interval": "30s",
+      "number_of_shards": "5",
+      "number_of_replicas": "1",
+      "codec": "best_compression",
+      "merge.scheduler.max_thread_count": 1,
+      "priority": "5",
+      "translog": {
+        "flush_threshold_size": "1gb",
+        "sync_interval": "2m",
+        "durability": "async"
+      },
+      "mapping": {
+        "ignore_malformed": "false"
+      },
+      "query": {
+        "default_field": "message"
+      },
+      "unassigned": {
+        "node_left": {
+          "delayed_timeout": "5m"
+        }
+      },
+      "analysis": {
+        "analyzer": {
+          "path_analyzer": {
+            "filter": [
+              "standard",
+              "lowercase"
+            ],
+            "type": "custom",
+            "tokenizer": "path_hierarchy"
+          },
+          "url_email_analyzer": {
+            "filter": [
+              "standard",
+              "lowercase"
+            ],
+            "type": "custom",
+            "tokenizer": "uax_url_email"
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "_default_": {
+      "_source": {
+        "enabled": true
+      },
+      "dynamic_templates": [
+        {
+          "long_field": {
+            "mapping": {
+              "type": "long"
+            },
+            "match_mapping_type": "long"
+          }
+        },
+        {
+          "double_field": {
+            "mapping": {
+              "type": "double"
+            },
+            "match_mapping_type": "double"
+          }
+        },
+        {
+          "boolean_field": {
+            "mapping": {
+              "type": "boolean"
+            },
+            "match_mapping_type": "boolean"
+          }
+        },
+        {
+          "date_field": {
+            "mapping": {
+              "type": "date"
+            },
+            "match_mapping_type": "date"
+          }
+        },
+        {
+          "ip_field": {
+            "mapping": {
+              "type": "ip"
+            },
+            "match": "*_ip"
+          }
+        },
+        {
+          "geo_point_field": {
+            "mapping": {
+              "type": "geo_point"
+            },
+            "match": "*_gp"
+          }
+        },
+        {
+          "geo_shape_field": {
+            "mapping": {
+              "type": "geo_shape"
+            },
+            "match": "*_gs"
+          }
+        },
+        {
+          "na_string_field": {
+            "mapping": {
+              "norms": false,
+              "index": false,
+              "type": "keyword",
+              "doc_values": true,
+              "ignore_above": 256
+            },
+            "match": "*_na"
+          }
+        },
+        {
+          "url_email_string_field": {
+            "mapping": {
+              "search_analyzer": "url_email_analyzer",
+              "analyzer": "url_email_analyzer",
+              "norms": false,
+              "type": "text"
+            },
+            "match": "*_ue"
+          }
+        },
+        {
+          "path_string_field": {
+            "mapping": {
+              "search_analyzer": "path_analyzer",
+              "analyzer": "path_analyzer",
+              "norms": false,
+              "type": "text"
+            },
+            "match": "*_path"
+          }
+        },
+        {
+          "nested_field": {
+            "mapping": {
+              "type": "nested"
+            },
+            "match": "*_nested"
+          }
+        },
+        {
+          "string_field": {
+            "mapping": {
+              "type": "keyword"
+            },
+            "match_mapping_type": "string"
+          }
+        }
+      ],
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+        "timestamp": {
+          "type": "date",
+          "doc_values": true
+        }
+      }
+    }
+  },
+  "aliases": {}
+}

@@ -1,0 +1,28 @@
+---
+#./ansible-playbook_wrapper create_collect_data.yml -K -e "NAME_PROJECT=myproject"
+- hosts: "{{ NAME_PROJECT}}[0]"
+  gather_facts: no
+  roles:
+  - {role: AdopteUnOps.rancher-create-project, tags: rancher-create-project}
+
+- hosts: "{{ NAME_PROJECT }}"
+  pre_tasks:
+  # force reload of apikey, as it's cached by ansible when we first trigger the playbook
+  - include_vars: "{{ inventory_dir }}/group_vars/{{ NAME_PROJECT }}/apikey.yml"
+  roles:
+  - {role: AdopteUnOps.rancher-add-host, tags: add-host}
+
+- hosts: "{{ NAME_PROJECT}}[0]"
+  gather_facts: no
+  roles:
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: janitor, tags: [install-stack, janitor]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: elk-monitoring, tags: [install-stack, elk-monitoring]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: prometheus, tags: [install-stack, prometheus]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: elasticsearch, tags: [install-stack, elasticsearch]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: zookeeper, tags: [install-stack, zookeeper]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: kafka, tags: [install-stack, kafka]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: importer, tags: [install-stack, process]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: kibana, tags: [install-stack, kibana]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: packetbeat-dashboard, tags: [install-stack, packetbeat-dashboard]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: metricbeat-dashboard, tags: [install-stack, metricbeat-dashboard]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: endpoints, tags: [install-stack, endpoints]}

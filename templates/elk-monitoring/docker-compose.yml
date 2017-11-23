@@ -1,0 +1,187 @@
+version: '2'
+services:
+  elasticsearch-config:
+    labels:
+      io.rancher.container.start_once: 'true'
+      logspout.exclude: 'true'
+    image: adopteunops/elasticsearch-rancher-config:latest
+  elasticsearch-sysctl:
+        labels:
+            io.rancher.container.start_once: true
+        network_mode: none
+        image: rawmind/alpine-sysctl:0.1
+        privileged: true
+        environment:
+            - "SYSCTL_KEY=vm.max_map_count"
+            - "SYSCTL_VALUE=262144"
+  elasticsearch:
+    labels:
+      io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+      io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks:  elasticsearch-config,elasticsearch-sysctl
+      io.rancher.scheduler.affinity:host_label: role=monitoring
+      logspout.exclude: 'true'
+    environment:
+      - "cluster.name=monitoring"
+      - "node.name=$${HOSTNAME}"
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms{{elk_monitoring_heap_size}} -Xmx{{elk_monitoring_heap_size}}"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+      - "discovery.zen.minimum_master_nodes={{elk_monitoring_minimum_master_nodes}}"
+    image: docker.elastic.co/elasticsearch/elasticsearch:{{elasticsearch_version}}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: {{elk_monitoring_master_mem_limit}}
+    mem_swappiness: 0
+    cap_add:
+      - IPC_LOCK
+    volumes:
+    - elasticsearch-volume:/usr/share/elasticsearch/data
+    volumes_from:
+    - elasticsearch-config
+
+  elasticsearch-setup:
+      labels:
+          io.rancher.container.start_once: true
+          logspout.exclude: 'true'
+          io.rancher.scheduler.affinity:host_label: role=monitoring
+      environment:
+        SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
+        SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
+      image: adopteunops/elasticsearch-rancher-setup:latest
+      links:
+          - "elasticsearch:"
+
+  redis:
+    restart: always
+    tty: true
+    image: redis:3.0.3
+    stdin_open: true
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: role=monitoring
+      logspout.exclude: 'true'
+
+  logstash-indexer-config:
+    restart: always
+    image: rancher/logstash-config:v0.2.0
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: role=monitoring
+      logspout.exclude: 'true'
+  logstash-indexer:
+    restart: always
+    tty: true
+    volumes_from:
+    - logstash-indexer-config
+    command:
+    - logstash
+    - -f
+    - /etc/logstash
+    image: docker.elastic.co/logstash/logstash:{{elasticsearch_version}}
+    links:
+    - redis:redis
+    - 'elasticsearch:'
+    stdin_open: true
+    labels:
+      io.rancher.sidekicks: logstash-indexer-config
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: role=monitoring
+      logspout.exclude: 'true'
+
+  logstash-collector-config:
+    restart: always
+    image: rancher/logstash-config:v0.2.0
+    labels:
+      io.rancher.container.hostname_override: container_name
+      logspout.exclude: 'true'
+  logstash-collector:
+    restart: always
+    tty: true
+    links:
+    - redis:redis
+    volumes_from:
+    - logstash-collector-config
+    command:
+    - logstash
+    - -f
+    - /etc/logstash
+    image: docker.elastic.co/logstash/logstash:{{elasticsearch_version}}
+    stdin_open: true
+    volumes:
+    - '/var/log:/host/var/log:ro'
+    user: root
+    labels:
+      io.rancher.sidekicks: logstash-collector-config
+      io.rancher.scheduler.global: 'true'
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: role=monitoring
+      logspout.exclude: 'true'
+
+  logspout:
+    environment:
+      EXCLUDE_LABEL: logspout.exclude
+      LOGSPOUT: ignore
+      ROUTE_URIS: logstash://logstash:5000
+      INACTIVITY_TIMEOUT: 1m
+      ALLOW_TTY: true
+    links:
+    - logstash-collector:logstash
+    labels:
+      io.rancher.scheduler.global: "true"
+      io.rancher.container.hostname_override: container_name
+    tty: true
+    image: adopteunops/logspout-logstash:20170823
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    stdin_open: true
+
+  curator:
+    links:
+    - 'elasticsearch:'
+    environment:
+      CRON_EXPR: {{curator_cron_pattern}}
+    image: adopteunops/elasticsearch-curator:1.0.0
+    labels:
+      io.rancher.scheduler.affinity:host_label: role=monitoring
+      logspout.exclude: 'true'
+    tty: true
+    stdin_open: true
+
+  kibana:
+    environment:
+      elasticsearch.url: "http://elasticsearch:9200"
+    links:
+    - 'elasticsearch:'
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label: role=monitoring
+      logspout.exclude: 'true'
+    tty: true
+    image: docker.elastic.co/kibana/kibana:{{elasticsearch_version}}
+    stdin_open: true
+
+  kibana-setup:
+    environment:
+      SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
+      SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
+      ELASTICSEARCH_VERSION: "{{elasticsearch_version}}"
+      DEFAULT_INDEX_PATTERN: "logstash-*"
+    image: adopteunops/elasticdump-rancher:latest
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label: role=monitoring
+      io.rancher.container.start_once: true
+      logspout.exclude: 'true'
+    tty: true
+    stdin_open: true
+
+volumes:
+  elasticsearch-volume:
+    driver: {{volume_driver}}
+    per_container: true

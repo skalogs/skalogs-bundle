@@ -1,0 +1,97 @@
+version: '2'
+services:
+
+  elasticsearch-master:
+    scale: {{minimum_master_nodes}}
+    retain_ip: true
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 9200
+      unhealthy_threshold: 3
+      initializing_timeout: 180000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 180000
+    metadata:
+      elasticsearch-config: |
+{{ lookup('template', elasticsearch_conf_file) | indent(8, True) }}
+
+
+  elasticsearch-data:
+    scale: {{initial_data_nodes}}
+    retain_ip: true
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 9200
+      unhealthy_threshold: 3
+      initializing_timeout: 180000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 180000
+    metadata:
+      elasticsearch-config: |
+{{ lookup('template', elasticsearch_conf_file) | indent(8, True) }}
+
+  elasticsearch-client:
+    scale: {{initial_client_nodes}}
+    retain_ip: true
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 9200
+      unhealthy_threshold: 3
+      initializing_timeout: 180000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 180000
+    metadata:
+      elasticsearch-config: |
+{{ lookup('template', elasticsearch_conf_file) | indent(8, True) }}
+
+  elasticsearch-setup:
+    metadata:
+      templates: |
+        [
+{% for templateFile in elasticsearch_template_files %}
+          {
+            "name" : "{{templateFile | basename | splitext | first }}",
+            "value" :
+{{ lookup('template', templateFile) | indent(12, True) }}
+          }{% if not loop.last %},{% endif %}
+{% endfor %}
+
+        ]
+
+{% if elasticsearch_repository_files | length > 0 %}
+      repositories: |
+        [
+{% for repositoryFile in elasticsearch_repository_files %}
+          {
+            "name" : "{{repositoryFile  | basename | splitext | first }}",
+            "value" :
+{{ lookup('template', repositoryFile) | indent(12, True) }}
+          }{% if not loop.last %},{% endif %}
+{% endfor %}
+
+        ]
+{% endif %}
+
+{% if elasticsearch_license_file != "" %}
+      license: |
+{{ lookup('template', elasticsearch_license_file) | indent(8, True) }}
+{% endif %}
+
+  elasticsearch-prometheus-exporter:
+    scale: 1
+    start_on_create: true
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 7979
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000

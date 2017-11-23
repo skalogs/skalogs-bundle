@@ -1,0 +1,42 @@
+version: '2'
+services:
+  retry-importer:
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 8080
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 6000
+  error-importer:
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 8080
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000
+  importer:
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 8080
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000
+  admin:
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 8090
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000

@@ -1,0 +1,53 @@
+version: '2'
+services:
+  packetbeat:
+    scale: 1
+    metadata:
+      packetbeat-config: |
+        packetbeat.interfaces.device: any
+
+        packetbeat.protocols.dns:
+          ports: [53]
+          include_authorities: true
+          include_additionals: true
+
+        packetbeat.protocols.http:
+          ports: [80, 5601, 9200, 8080, 8081, 5000, 8002]
+
+        packetbeat.protocols.memcache:
+          ports: [11211]
+
+        packetbeat.protocols.mysql:
+          ports: [3306]
+
+        packetbeat.protocols.pgsql:
+          ports: [5432]
+
+        packetbeat.protocols.redis:
+          ports: [6379]
+
+        packetbeat.protocols.thrift:
+          ports: [9090]
+
+        packetbeat.protocols.mongodb:
+          ports: [27017]
+
+        packetbeat.protocols.cassandra:
+          ports: [9042]
+
+
+        processors:
+        - add_cloud_metadata:
+
+        output.kafka:
+          # initial brokers for reading cluster metadata
+          hosts: ["kafka.kafka:9092"]
+
+          # message topic selection + partitioning
+          topic: processtopic
+          partition.round_robin:
+            reachable_only: false
+
+          required_acks: 1
+          compression: gzip
+          max_message_bytes: 1000000

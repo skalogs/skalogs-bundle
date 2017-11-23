@@ -1,0 +1,1 @@
+{"_index":".kibana","_type":"index-pattern","_id":"logstash-*","_score":1,"_source":{"title":"logstash-*","timeFieldName":"timestamp","notExpandable":true}}

@@ -1,0 +1,164 @@
+version: '2'
+services:
+  enduser:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      certs: []
+      #default_cert: mydomain-enduser-certificate
+      #config: |-
+      #  frontend http-frontend
+      #    bind *:80
+      #    mode http
+      #    redirect scheme https code 301 if !{ ssl_fc }
+      port_rules:
+      - hostname: kibana.{{rancher_dns_subdomain_fqdn}}
+        priority: 1
+        protocol: http
+        service: kibana/kibana
+        source_port: 80
+        target_port: 5601
+      - hostname: elasticsearch-api.{{rancher_dns_subdomain_fqdn}}
+        priority: 2
+        protocol: http
+        service: elasticsearch/elasticsearch-client
+        source_port: 80
+        target_port: 9200
+      #- hostname: '*'
+      #  path: ''
+      #  priority: 50
+      #  protocol: http
+      #  selector: http-frontend
+      #  source_port: 80
+      #  target_port: 80
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 42
+      unhealthy_threshold: 3
+      interval: 2000
+      strategy: recreate
+  admin:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      certs: []
+      #default_cert: wall-admin-certificate
+      config: |-
+        global
+          userlist L1
+            user {{ admin_endpoint_user }} insecure-password {{ admin_endpoint_password }}
+
+        backend alertmanager
+                 acl AuthOkay http_auth(L1)
+                 http-request auth realm UserAuth if !AuthOkay
+
+        backend prometheus
+                 acl AuthOkay http_auth(L1)
+                 http-request auth realm UserAuth if !AuthOkay
+
+        backend zookeeperviewer
+                 acl AuthOkay http_auth(L1)
+                 http-request auth realm UserAuth if !AuthOkay
+
+        backend kafkamanager
+                 acl AuthOkay http_auth(L1)
+                 http-request auth realm UserAuth if !AuthOkay
+
+        backend processimporter
+                 acl AuthOkay http_auth(L1)
+                 http-request auth realm UserAuth if !AuthOkay
+
+        backend admin
+                 acl AuthOkay http_auth(L1)
+                 http-request auth realm UserAuth if !AuthOkay
+
+        #frontend http-frontend
+        #  bind *:80
+        #  mode http
+        #  redirect scheme https code 301 if !{ ssl_fc }
+      port_rules:
+      - backend_name: alertmanager
+        hostname: {{monitoring_alertmanager_url}}
+        priority: 1
+        protocol: http
+        service: prometheus/alertmanager
+        source_port: 80
+        target_port: 9093
+      - backend_name: grafana
+        hostname: {{monitoring_grafana_url}}
+        priority: 2
+        protocol: http
+        service: prometheus/grafana
+        source_port: 80
+        target_port: 3000
+      - backend_name: prometheus
+        hostname: {{monitoring_prometheus_url}}
+        priority: 3
+        protocol: http
+        service: prometheus/prometheus
+        source_port: 80
+        target_port: 9090
+      - backend_name: zookeeperviewer
+        hostname: {{zookeeper_viewer_url}}
+        priority: 4
+        protocol: http
+        service: zookeeper/zookeeper-viewer
+        source_port: 80
+        target_port: 8080
+      - backend_name: kafkamanager
+        hostname: {{kafka_manager_url}}
+        priority: 5
+        protocol: http
+        service: kafka/kafka-manager
+        source_port: 80
+        target_port: 9000
+      - backend_name: kibana
+        hostname: {{monitoring_kibana_url}}
+        priority: 6
+        protocol: http
+        service: elk-monitoring/kibana
+        source_port: 80
+        target_port: 5601
+      - backend_name: processimporter
+        hostname: {{importer_process_url}}
+        priority: 7
+        protocol: http
+        service: "importer/process-importer"
+        source_port: 80
+        target_port: 8080
+      - backend_name: adminimporter
+        hostname: {{admin_importer_url}}
+        priority: 8
+        protocol: http
+        service: "importer/admin"
+        source_port: 80
+        target_port: 8090
+      - backend_name: errorimporter
+        hostname: {{error_importer_url}}
+        priority: 9
+        protocol: http
+        service: "importer/error-importer"
+        source_port: 80
+        target_port: 8080
+      - backend_name: retryimporter
+        hostname: {{retry_process_url}}
+        priority: 10
+        protocol: http
+        service: "importer/retry-importer"
+        source_port: 80
+        target_port: 8080
+      #- hostname: '*'
+      #  path: ''
+      #  priority: 50
+      #  protocol: http
+      #  selector: http-frontend
+      #  source_port: 80
+      #  target_port: 80
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 42
+      unhealthy_threshold: 3
+      interval: 2000
+      strategy: recreate

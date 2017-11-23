@@ -1,0 +1,6 @@
+ {"_index":".kibana","_type":"index-pattern","_id":"{{ elasticsearch_cluster_name }}-*","_score":1,"_source":{"title":"{{ elasticsearch_cluster_name }}-*","timeFieldName":"@timestamp","notExpandable":true}}
+ {"_index":".kibana","_type":"index-pattern","_id":"{{ elasticsearch_cluster_name }}-http*","_score":2,"_source":{"title":"{{ elasticsearch_cluster_name }}-http*","timeFieldName":"@timestamp","notExpandable":true}}
+ {"_index":".kibana","_type":"index-pattern","_id":"{{ elasticsearch_cluster_name }}-dns*","_score":3,"_source":{"title":"{{ elasticsearch_cluster_name }}-dns*","timeFieldName":"@timestamp","notExpandable":true}}
+ {"_index":".kibana","_type":"index-pattern","_id":"{{ elasticsearch_cluster_name }}-error*","_score":4,"_source":{"title":"{{ elasticsearch_cluster_name }}-error*","timeFieldName":"@timestamp","notExpandable":true}}
+ {"_index":".kibana","_type":"index-pattern","_id":"{{ elasticsearch_cluster_name }}-metric*","_score":5,"_source":{"title":"{{ elasticsearch_cluster_name }}-metric*","timeFieldName":"@timestamp","notExpandable":true}}
+

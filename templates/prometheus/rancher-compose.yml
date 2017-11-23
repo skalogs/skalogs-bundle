@@ -1,0 +1,97 @@
+# notemplating
+version: '2'
+services:
+  prometheus-rancher-exporter:
+    health_check:
+      port: 9173
+      interval: 5000
+      unhealthy_threshold: 3
+      request_line: ''
+      healthy_threshold: 2
+      response_timeout: 5000
+  prometheus:
+    scale: {{prometheus_scale}}
+    health_check:
+      port: 9090
+      interval: 5000
+      unhealthy_threshold: 3
+      request_line: ''
+      healthy_threshold: 2
+      response_timeout: 5000
+    metadata:
+      prometheus-config: |
+        global:
+          scrape_interval:     5s
+          evaluation_interval: 5s
+          external_labels:
+              monitor: 'exporter-metrics'
+              rancher_env: '{{ NAME_PROJECT }}'
+              environment: 'Development'
+
+        rule_files:
+        - /etc/prom-conf/rules.yml
+
+        scrape_configs:
+        - job_name: 'Metrics'
+          file_sd_configs:
+          - files:
+            - /prom-rancher-sd-data/node_exporter.json
+            - /prom-rancher-sd-data/rancher.json
+            refresh_interval: 15s
+
+        - job_name: 'rancher-api'
+          dns_sd_configs:
+          - names:
+            - 'prometheus-rancher-exporter'
+            refresh_interval: 15s
+            type: A
+            port: 9173
+
+        - job_name: 'Prometheus'
+          static_configs:
+            - targets:
+              - '127.0.0.1:9090'
+
+      prometheus-rules: |
+{% for ruleFile in prometheus_rule_files %}
+{{ lookup('template', ruleFile) | indent(10, True) }}
+{% endfor %}
+
+  grafana:
+    health_check:
+      port: 3000
+      interval: 5000
+      unhealthy_threshold: 3
+      request_line: ''
+      healthy_threshold: 2
+      response_timeout: 5000
+
+  grafana-setup:
+    metadata:
+      datasources: |
+        [
+{% for datasourceFile in prometheus_grafana_datasources %}
+          {
+            "name": "{{datasourceFile  | basename | splitext | first}}",
+            "value":
+{{ lookup('file', datasourceFile) | indent(12, True) }}
+          }{% if not loop.last %},{% endif %}
+{% endfor %}
+
+        ]
+      dashboards: |
+        [
+{% for dashboardFile in prometheus_grafana_dashboards %}
+          {
+            "name": "{{dashboardFile  | basename | splitext | first}}",
+            "value":
+{{ lookup('file', dashboardFile) | indent(12, True) }}
+          }{% if not loop.last %},{% endif %}
+{% endfor %}
+
+        ]
+
+  alertmanager:
+    metadata:
+      alertmanager-config: |
+{{ lookup('template', alertmanager_config_file) | indent(8, True) }}

@@ -1,0 +1,30 @@
+action.auto_create_index: "+.*,+{{elasticsearch_cluster_name}}-*"
+
+# perf
+thread_pool.bulk.queue_size: 5000
+
+indices.memory.index_buffer_size: 35%
+indices.memory.min_index_buffer_size: 256mb
+
+cluster.routing.allocation.node_initial_primaries_recoveries: 32
+cluster.routing.allocation.node_concurrent_recoveries: 10
+cluster.routing.allocation.cluster_concurrent_rebalance: 5
+indices.recovery.max_bytes_per_sec: 1gb
+
+# audit
+xpack.security.audit.enabled: true
+xpack.security.audit.outputs: [logfile]
+
+# xpack monitoring
+xpack.monitoring.exporters.id1.type: http
+xpack.monitoring.exporters.id1.host: ["elk-monitoring.rancher.internal:9200"]
+xpack.monitoring.exporters.id1.connection.keep_alive: true
+xpack.monitoring.exporters.id1.connection.timeout: 6s
+xpack.monitoring.exporters.id1.connection.read_timeout: 60s
+xpack.monitoring.exporters.id1.auth.username: "{{ elasticsearch_svcadmin_username }}"
+xpack.monitoring.exporters.id1.auth.password: "{{ elasticsearch_svcadmin_password }}"
+
+# watcher
+xpack.notification.email.default_account: default
+xpack.notification.email.account.default.email_defaults.from: "{{smtp_from}}"
+xpack.notification.email.account.default.smtp.host: "{{smtp_host}}"

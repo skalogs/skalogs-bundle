@@ -1,0 +1,103 @@
+volume_driver: local
+elasticsearch_cluster_name: docker-cluster
+
+master_heap_size: 512m
+master_mem_limit: 1073741824
+data_heap_size: 512m
+data_mem_limit: 1073741824
+client_heap_size: 512m
+client_mem_limit: 1073741824
+
+minimum_master_nodes: 1
+initial_data_nodes: 1
+initial_client_nodes: 1
+
+elk_monitoring_heap_size: 512m
+elk_monitoring_master_mem_limit: 1073741824
+elk_monitoring_minimum_master_nodes: 1
+elk_monitoring_kibana_conf_file: elk-monitoring/kibana-conf.json
+
+prometheus_scale: 1
+alertmanager_config_file: prometheus/alertmanager.conf
+prometheus_rule_files:
+  - prometheus/infra-prometheus-rules.conf
+  - kafka/kafka-prometheus-rules.conf
+  - elasticsearch/elasticsearch-prometheus-rules.conf
+
+prometheus_grafana_datasources:
+  - prometheus/prometheus-datasource.json
+
+prometheus_grafana_dashboards:
+  - prometheus/hosts.json
+  - prometheus/hosts-extended.json
+  - prometheus/container-summary.json
+  - prometheus/elasticsearch.json
+  - prometheus/elasticsearch-thread-pool.json
+  - prometheus/kafka.json
+  - prometheus/events.json
+
+curator_cron_pattern: 0 22 * * *
+
+elasticsearch_template_files:
+  - elasticsearch/default-mapping.json
+  - elasticsearch/packetbeat-dns.json
+  - elasticsearch/packetbeat-http.json
+
+elasticsearch_repository_files: []
+
+elasticsearch_kibana_conf_file: kibana/kibana-conf.json
+elasticsearch_conf_file: elasticsearch/elasticsearch-conf.yml
+
+elasticsearch_license_file: ""
+
+elasticsearch_version: 5.6.4
+
+zookeeper_heap_size: 512m
+#should be 3 for clustering
+zookeeper_scale: 1
+
+kafka_scale: 1
+kafka_heap_size: 512m
+
+kafka_zookeeper_path: zookeeper:2181/kafka
+kafka_manager_zookeeper_path: zookeeper:2181/kafka-manager
+
+kibana_scale: 1
+elasticsearch_svckibana_username: elastic
+elasticsearch_svckibana_password: changeme
+elasticsearch_svcadmin_username: "{{elasticsearch_svckibana_username}}"
+elasticsearch_svcadmin_password: "{{elasticsearch_svckibana_password}}"
+
+rancher_dns_root_domain: mydomain.com
+normalized_project_name: '{{NAME_PROJECT | lower }}'
+rancher_dns_subdomain_fqdn: '{{normalized_project_name}}.{{rancher_dns_root_domain}}'
+
+#SMTP
+smtp_enabled: false
+smtp_host: localhost
+smtp_port: 53
+smtp_auth_username: ""
+smtp_auth_password: ""
+smtp_from: ""
+
+# monitoring notification
+monitoring_from: '{{normalized_project_name}}-prometheus@mydomain.com'
+monitoring_from_sender: '{{normalized_project_name}} Monitoring'
+monitoring_recipient: 'someone@mydomain.com'
+monitoring_grafana_admin_password: 'admin'
+
+# endpoints url
+endpoints_protocol: http
+monitoring_prometheus_url: 'prometheus-admin.{{ rancher_dns_subdomain_fqdn }}'
+monitoring_grafana_url: 'grafana-admin.{{rancher_dns_subdomain_fqdn}}'
+monitoring_alertmanager_url: 'alertmanager-admin.{{ rancher_dns_subdomain_fqdn }}'
+monitoring_kibana_url: 'kibana-admin.{{ rancher_dns_subdomain_fqdn }}'
+zookeeper_viewer_url: 'zookeeper-admin.{{ rancher_dns_subdomain_fqdn }}'
+kafka_manager_url: 'kafka-admin.{{ rancher_dns_subdomain_fqdn }}'
+importer_process_url: 'importer.{{ rancher_dns_subdomain_fqdn }}'
+admin_importer_url: 'admin.{{ rancher_dns_subdomain_fqdn }}'
+error_importer_url: 'error.{{ rancher_dns_subdomain_fqdn }}'
+retry_importer_url: 'error.{{ rancher_dns_subdomain_fqdn }}'
+
+admin_endpoint_user: admin
+admin_endpoint_password: admin

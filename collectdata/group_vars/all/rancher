@@ -1,0 +1,10 @@
+rancher_master_host: 10.10.10.10
+rancher_master_port: 8080
+rancher_master_url: http://{{rancher_master_host}}:{{rancher_master_port}}
+
+rancher_project_name: "{{NAME_PROJECT | lower }}"
+
+# use public api on rancher side
+rancher_agent_ip: "{{ansible_host}}"
+
+docker_registries: []

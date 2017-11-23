@@ -1,0 +1,52 @@
+version: '2'
+services:
+  zookeeper-jmx-exporter:
+    labels:
+      io.rancher.container.start_once: 'true'
+    image: adopteunops/prometheus-jmx-exporter:0.10
+    network_mode: none
+  zookeeper-conf:
+    labels:
+      io.rancher.container.start_once: 'true'
+    image: rawmind/rancher-zk:3.4.9
+    network_mode: none
+    volumes:
+    - /opt/tools
+  zookeeper:
+    environment:
+      ZK_DATA_DIR: /opt/zk/data
+      JVMFLAGS: -Xms{{zookeeper_heap_size}} -Xmx{{zookeeper_heap_size}} -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+DisableExplicitGC -javaagent:/etc/jmx_exporter/jmx_exporter_agent.jar=1234:/etc/jmx_exporter/zookeeper.yaml
+      ZK_INIT_LIMIT: '10'
+      ZK_MAX_CLIENT_CXNS: '500'
+      ZK_SYNC_LIMIT: '5'
+      ZK_TICK_TIME: '2000'
+    labels:
+      io.rancher.sidekicks: zookeeper-conf,zookeeper-jmx-exporter
+      io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: role_zookeeper=true
+      io.rancher.container.pull_image: always
+      com.prometheus.monitoring: true
+      com.prometheus.port: 1234
+    tty: true
+    image: rawmind/alpine-zk:3.4.9-3
+    volumes:
+    - zookeeper-volume:/opt/zk/data
+    volumes_from:
+    - zookeeper-conf
+    - zookeeper-jmx-exporter
+  zookeeper-viewer:
+    environment:
+      ZK_DEFAULT_NODE: zookeeper:2181
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+    tty: true
+    image: tobilg/zookeeper-webui
+    links:
+    - 'zookeeper:'
+    stdin_open: true
+volumes:
+  zookeeper-volume:
+    driver: {{volume_driver}}
+    per_container: true
