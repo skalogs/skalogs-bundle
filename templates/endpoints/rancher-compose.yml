@@ -142,7 +142,7 @@ services:
         source_port: 80
         target_port: 8080
       - backend_name: retryimporter
-        hostname: {{retry_process_url}}
+        hostname: {{retry_importer_url}}
         priority: 10
         protocol: http
         service: "importer/retry-importer"
