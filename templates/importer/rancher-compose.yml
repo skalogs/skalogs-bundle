@@ -20,7 +20,7 @@ services:
       interval: 2000
       strategy: recreate
       reinitializing_timeout: 60000
-  importer:
+  process-importer:
     health_check:
       response_timeout: 2000
       healthy_threshold: 2
