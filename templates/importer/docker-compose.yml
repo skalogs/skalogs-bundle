@@ -1,6 +1,6 @@
 version: '2'
 services:
-  importer:
+  process-importer:
     environment:
       ELASTICSEARCH_HOST: elasticsearch
       ELASTICSEARCH_PORT: 9300
@@ -19,7 +19,7 @@ services:
       com.prometheus.port: '8080'
       com.prometheus.metricspath: '/prometheus'      
     tty: true
-    image: adopteunops/importer:1.0.0-SNAPSHOT
+    image: adopteunops/process-importer:1.0.0-SNAPSHOT
     stdin_open: true
   admin:
     environment:
