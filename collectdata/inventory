@@ -4,7 +4,7 @@ host-master.intranet ansible_host=10.10.10.10
 [collect-data]
 host-slave1.intranet ansible_host=10.10.10.11 custom_host_tags="role=monitoring&role_es_master=true"
 host-slave2.intranet ansible_host=10.10.10.12 custom_host_tags="role_elasticsearch=true&role_enduser_lb=true"
-host-slave3.intranet ansible_host=10.10.10.13 custom_host_tags="role_elasticsearch=true&role_enduser_lb=true"
+host-slave3.intranet ansible_host=10.10.10.13 custom_host_tags="role_elasticsearch=true"
 host-slave4.intranet ansible_host=10.10.10.14 custom_host_tags="role_zookeeper=true&role_kafka=true&role_admin_lb=true"
 
 [demo]
