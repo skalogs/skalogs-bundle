@@ -1,4 +1,4 @@
-action.auto_create_index: "+.*,+{{elasticsearch_cluster_name}}-*"
+action.auto_create_index: "+.*,+{{elasticsearch_cluster_name}}-*,+{{elasticsearch_prefix_index}}-*"
 
 # perf
 thread_pool.bulk.queue_size: 5000
