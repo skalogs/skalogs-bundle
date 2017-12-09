@@ -21,7 +21,7 @@ services:
           period: 10s
           processes: ['.*']
         output.kafka:
-          hosts: ["54.76.190.172:9092"]
+          hosts: ["54.186.249.60:9092"]
           topic: processtopic
           partition.round_robin:
             reachable_only: false
@@ -86,7 +86,7 @@ services:
 
         outputs: |
           kafka {
-            bootstrap_servers => "54.76.190.172:9092"
+            bootstrap_servers => "{{ kafka_endpoint_url }}"
             topic_id => "processtopic"
             codec => "json"
           }
