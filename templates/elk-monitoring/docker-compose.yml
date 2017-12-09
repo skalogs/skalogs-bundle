@@ -28,7 +28,7 @@ services:
       - "ES_JAVA_OPTS=-Xms{{elk_monitoring_heap_size}} -Xmx{{elk_monitoring_heap_size}}"
       - "discovery.zen.ping.unicast.hosts=elasticsearch"
       - "discovery.zen.minimum_master_nodes={{elk_monitoring_minimum_master_nodes}}"
-    image: docker.elastic.co/elasticsearch/elasticsearch:{{elasticsearch_version}}
+    image: {{docker_elastic_repo}}/elasticsearch/elasticsearch:{{elasticsearch_version}}
     ulimits:
       memlock:
         soft: -1
@@ -83,7 +83,7 @@ services:
     - logstash
     - -f
     - /etc/logstash
-    image: docker.elastic.co/logstash/logstash:{{elasticsearch_version}}
+    image: {{docker_elastic_repo}}/logstash/logstash:{{elasticsearch_version}}
     links:
     - redis:redis
     - 'elasticsearch:'
@@ -111,7 +111,7 @@ services:
     - logstash
     - -f
     - /etc/logstash
-    image: docker.elastic.co/logstash/logstash:{{elasticsearch_version}}
+    image: {{docker_elastic_repo}}/logstash/logstash:{{elasticsearch_version}}
     stdin_open: true
     volumes:
     - '/var/log:/host/var/log:ro'
@@ -163,7 +163,7 @@ services:
       io.rancher.scheduler.affinity:host_label: role=monitoring
       logspout.exclude: 'true'
     tty: true
-    image: docker.elastic.co/kibana/kibana:{{elasticsearch_version}}
+    image: {{docker_elastic_repo}}/kibana/kibana:{{elasticsearch_version}}
     stdin_open: true
 
   kibana-setup:

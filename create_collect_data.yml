@@ -23,6 +23,4 @@
   - {role: AdopteUnOps.rancher-install-stack, stack_name: kafka, tags: [install-stack, kafka]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: importer, tags: [install-stack, process]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: kibana, tags: [install-stack, kibana]}
-  - {role: AdopteUnOps.rancher-install-stack, stack_name: packetbeat-dashboard, tags: [install-stack, packetbeat-dashboard]}
-  - {role: AdopteUnOps.rancher-install-stack, stack_name: metricbeat-dashboard, tags: [install-stack, metricbeat-dashboard]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: endpoints, tags: [install-stack, endpoints]}

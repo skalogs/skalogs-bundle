@@ -3,7 +3,7 @@ services:
   process-importer:
     environment:
       ELASTICSEARCH_HOST: elasticsearch
-      ELASTICSEARCH_PORT: 9300
+      ELASTICSEARCH_PORT: 9200
       ELASTICSEARCH_CLUSTERNAME: "{{ elasticsearch_cluster_name }}"
       SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
       SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
@@ -17,14 +17,14 @@ services:
       io.rancher.container.pull_image: always
       com.prometheus.monitoring: 'true'
       com.prometheus.port: '8080'
-      com.prometheus.metricspath: '/prometheus'      
+      com.prometheus.metricspath: '/prometheus'
     tty: true
-    image: adopteunops/process-importer:1.0.0-SNAPSHOT
+    image: adopteunops/process-importer:{{importer_version}}
     stdin_open: true
   admin:
     environment:
       ELASTICSEARCH_HOST: elasticsearch
-      ELASTICSEARCH_PORT: 9300
+      ELASTICSEARCH_PORT: 9200
       ELASTICSEARCH_CLUSTERNAME: "{{ elasticsearch_cluster_name }}"
       SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
       SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
@@ -37,12 +37,12 @@ services:
     labels:
       io.rancher.container.pull_image: always
     tty: true
-    image: adopteunops/admin:1.0.0-SNAPSHOT
+    image: adopteunops/admin:{{importer_version}}
     stdin_open: true
   error-importer:
     environment:
       ELASTICSEARCH_HOST: elasticsearch
-      ELASTICSEARCH_PORT: 9300
+      ELASTICSEARCH_PORT: 9200
       ELASTICSEARCH_CLUSTERNAME: "{{ elasticsearch_cluster_name }}"
       SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
       SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
@@ -59,12 +59,12 @@ services:
       com.prometheus.port: '8080'
       com.prometheus.metricspath: '/prometheus'
     tty: true
-    image: adopteunops/error-importer:1.0.0-SNAPSHOT
+    image: adopteunops/error-importer:{{importer_version}}
     stdin_open: true
   retry-importer:
     environment:
       ELASTICSEARCH_HOST: elasticsearch
-      ELASTICSEARCH_PORT: 9300
+      ELASTICSEARCH_PORT: 9200
       ELASTICSEARCH_CLUSTERNAME: "{{ elasticsearch_cluster_name }}"
       SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
       SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
@@ -81,5 +81,5 @@ services:
       com.prometheus.port: '8080'
       com.prometheus.metricspath: '/prometheus'
     tty: true
-    image: adopteunops/retry-importer:1.0.0-SNAPSHOT
+    image: adopteunops/retry-importer:{{importer_version}}
     stdin_open: true

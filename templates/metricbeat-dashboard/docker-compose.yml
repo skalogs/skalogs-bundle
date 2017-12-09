@@ -13,4 +13,3 @@ services:
      PREFIX_INDEX: "{{ elasticsearch_cluster_name }}"
     external_links:
     - elasticsearch/elasticsearch-client:elasticsearch
-
