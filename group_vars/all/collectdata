@@ -50,7 +50,9 @@ elasticsearch_conf_file: elasticsearch/elasticsearch-conf.yml
 
 elasticsearch_license_file: ""
 
-elasticsearch_version: 5.6.4
+elasticsearch_version: 6.0.1
+
+importer_version: 1.0.0-SNAPSHOT
 
 zookeeper_heap_size: 512m
 #should be 3 for clustering
@@ -98,6 +100,12 @@ importer_process_url: 'importer.{{ rancher_dns_subdomain_fqdn }}'
 admin_importer_url: 'admin.{{ rancher_dns_subdomain_fqdn }}'
 error_importer_url: 'error.{{ rancher_dns_subdomain_fqdn }}'
 retry_importer_url: 'error.{{ rancher_dns_subdomain_fqdn }}'
+
+enduser_kibana_url: 'kibana.{{rancher_dns_subdomain_fqdn}}'
+enduser_elasticsearch_url: 'elasticsearch-api.{{rancher_dns_subdomain_fqdn}}'
+kafka_endpoint_url: 'kafka.kafka.{{rancher_dns_subdomain_fqdn}}:9092'
+prometheus_endpoint_url: 'prometheus.prometheus.{{rancher_dns_subdomain_fqdn}}:9092'
+
 
 admin_endpoint_user: admin
 admin_endpoint_password: admin
