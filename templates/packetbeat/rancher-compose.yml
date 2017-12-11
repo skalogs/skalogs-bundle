@@ -41,7 +41,7 @@ services:
 
         output.kafka:
           # initial brokers for reading cluster metadata
-          hosts: ["54.186.249.60:9092"]
+          hosts: ["{{ kafka_endpoint_url }}"]
 
           # message topic selection + partitioning
           topic: processtopic

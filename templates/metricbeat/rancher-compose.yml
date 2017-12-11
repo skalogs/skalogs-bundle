@@ -21,7 +21,7 @@ services:
           period: 10s
           processes: ['.*']
         output.kafka:
-          hosts: ["kafka.kafka:9092"]
+          hosts: ["{{ kafka_endpoint_url }}"]
           topic: processtopic
           partition.round_robin:
             reachable_only: false
