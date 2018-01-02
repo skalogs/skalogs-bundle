@@ -31,10 +31,12 @@ prometheus_grafana_dashboards:
   - prometheus/hosts.json
   - prometheus/hosts-extended.json
   - prometheus/container-summary.json
+  - prometheus/docker.json
   - prometheus/elasticsearch.json
   - prometheus/elasticsearch-thread-pool.json
   - prometheus/kafka.json
   - prometheus/events.json
+  - prometheus/jvm-overview.json
 
 curator_cron_pattern: 0 22 * * *
 
@@ -47,6 +49,7 @@ elasticsearch_repository_files: []
 
 elasticsearch_kibana_conf_file: kibana/kibana-conf.json
 elasticsearch_conf_file: elasticsearch/elasticsearch-conf.yml
+curator_config_file: elasticsearch/curator-conf.yml
 
 elasticsearch_license_file: ""
 
@@ -62,7 +65,7 @@ kafka_scale: 1
 kafka_heap_size: 512m
 
 kafka_zookeeper_path: zookeeper:2181/kafka
-kafka_manager_zookeeper_path: zookeeper:2181/kafka-manager
+kafka_manager_zookeeper_path: zookeeper:2181
 
 kibana_scale: 1
 elasticsearch_svckibana_username: elastic
@@ -71,6 +74,10 @@ elasticsearch_svcadmin_username: "{{elasticsearch_svckibana_username}}"
 elasticsearch_svcadmin_password: "{{elasticsearch_svckibana_password}}"
 
 rancher_dns_root_domain: mydomain.com
+
+importer_heap_size: 512m
+importer_mem_limit: 636870912
+
 normalized_project_name: '{{NAME_PROJECT | lower }}'
 rancher_dns_subdomain_fqdn: '{{normalized_project_name}}.{{rancher_dns_root_domain}}'
 
@@ -106,6 +113,7 @@ enduser_elasticsearch_url: 'elasticsearch-api.{{rancher_dns_subdomain_fqdn}}'
 kafka_endpoint_url: 'kafka.kafka.{{rancher_dns_subdomain_fqdn}}:9092'
 prometheus_endpoint_url: 'prometheus.prometheus.{{rancher_dns_subdomain_fqdn}}:9092'
 
+platform_support_email: 'monitoring@yourcompany.com'
 
 admin_endpoint_user: admin
 admin_endpoint_password: admin

@@ -10,6 +10,7 @@ services:
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       KAFKA_POLLRECORD: 200
       KAFKA_POLLINGTIME: 200
+      JAVA_OPTS: "-Xms{{importer_heap_size}} -Xmx{{importer_heap_size}}"
     external_links:
     - kafka/kafka:kafka
     - elasticsearch/elasticsearch-client:elasticsearch
@@ -21,6 +22,9 @@ services:
     tty: true
     image: adopteunops/process-importer:{{importer_version}}
     stdin_open: true
+    mem_limit: {{importer_mem_limit}}
+    mem_swappiness: 0
+
   admin:
     environment:
       ELASTICSEARCH_HOST: elasticsearch
@@ -39,6 +43,7 @@ services:
     tty: true
     image: adopteunops/admin:{{importer_version}}
     stdin_open: true
+
   error-importer:
     environment:
       ELASTICSEARCH_HOST: elasticsearch
@@ -47,9 +52,7 @@ services:
       SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
       SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
-      PROCESS_ERRORPROCESS: false
-      KAFKA_POLLRECORD: 200
-      KAFKA_POLLINGTIME: 200
+      JAVA_OPTS: "-Xms{{importer_heap_size}} -Xmx{{importer_heap_size}}"
     external_links:
     - kafka/kafka:kafka
     - elasticsearch/elasticsearch-client:elasticsearch
@@ -61,6 +64,9 @@ services:
     tty: true
     image: adopteunops/error-importer:{{importer_version}}
     stdin_open: true
+    mem_limit: {{importer_mem_limit}}
+    mem_swappiness: 0
+
   retry-importer:
     environment:
       ELASTICSEARCH_HOST: elasticsearch
@@ -69,9 +75,7 @@ services:
       SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
       SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
-      PROCESS_RETRYPROCESS: false
-      KAFKA_POLLRECORD: 200
-      KAFKA_POLLINGTIME: 200
+      JAVA_OPTS: "-Xms{{importer_heap_size}} -Xmx{{importer_heap_size}}"
     external_links:
     - kafka/kafka:kafka
     - elasticsearch/elasticsearch-client:elasticsearch
@@ -83,3 +87,5 @@ services:
     tty: true
     image: adopteunops/retry-importer:{{importer_version}}
     stdin_open: true
+    mem_limit: {{importer_mem_limit}}
+    mem_swappiness: 0
