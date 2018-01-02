@@ -28,7 +28,7 @@ services:
       unhealthy_threshold: 3
       initializing_timeout: 180000
       interval: 2000
-      strategy: recreate
+      strategy: none
       reinitializing_timeout: 180000
     metadata:
       elasticsearch-config: |
@@ -95,3 +95,8 @@ services:
       interval: 2000
       strategy: recreate
       reinitializing_timeout: 60000
+
+  curator:
+    metadata:
+      curator-actions: |
+{{ lookup('template', curator_config_file) | indent(8, True) }}

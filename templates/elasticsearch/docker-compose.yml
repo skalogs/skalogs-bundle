@@ -21,7 +21,7 @@ services:
             io.rancher.scheduler.affinity:host_label: role_es_master=true
             io.rancher.container.hostname_override: container_name
             io.rancher.sidekicks: elasticsearch-master-config,elasticsearch-master-sysctl
-        image: {{docker_elastic_repo}}/elasticsearch/elasticsearch:{{elasticsearch_version}}
+        image: {{docker_elastic_repo}}/elasticsearch/elasticsearch-platinum:{{elasticsearch_version}}
         command:
         - /scripts/startup.sh
         external_links:
@@ -35,6 +35,7 @@ services:
             - "discovery.zen.minimum_master_nodes={{minimum_master_nodes}}"
             - "node.master=true"
             - "node.data=false"
+            - "ELASTIC_PASSWORD={{elasticsearch_svckibana_password}}"
         ulimits:
             memlock:
                 soft: -1
@@ -72,7 +73,7 @@ services:
             io.rancher.scheduler.affinity:host_label: role_elasticsearch=true
             io.rancher.container.hostname_override: container_name
             io.rancher.sidekicks: elasticsearch-data-config,elasticsearch-data-sysctl
-        image: {{docker_elastic_repo}}/elasticsearch/elasticsearch:{{elasticsearch_version}}
+        image: {{docker_elastic_repo}}/elasticsearch/elasticsearch-platinum:{{elasticsearch_version}}
         command:
         - /scripts/startup.sh
         external_links:
@@ -85,6 +86,7 @@ services:
             - "ES_JAVA_OPTS=-Xms{{data_heap_size}} -Xmx{{data_heap_size}}"
             - "node.master=false"
             - "node.data=true"
+            - "ELASTIC_PASSWORD={{elasticsearch_svckibana_password}}"
         ulimits:
             memlock:
                 soft: -1
@@ -124,7 +126,7 @@ services:
             io.rancher.scheduler.affinity:host_label_soft_ne: role_elasticsearch=true
             io.rancher.container.hostname_override: container_name
             io.rancher.sidekicks: elasticsearch-client-config,elasticsearch-client-sysctl
-        image: {{docker_elastic_repo}}/elasticsearch/elasticsearch:{{elasticsearch_version}}
+        image: {{docker_elastic_repo}}/elasticsearch/elasticsearch-platinum:{{elasticsearch_version}}
         command:
         - /scripts/startup.sh
         external_links:
@@ -137,6 +139,7 @@ services:
             - "ES_JAVA_OPTS=-Xms{{client_heap_size}} -Xmx{{client_heap_size}}"
             - "node.master=false"
             - "node.data=false"
+            - "ELASTIC_PASSWORD={{elasticsearch_svckibana_password}}"
         ulimits:
             memlock:
                 soft: -1
@@ -164,6 +167,7 @@ services:
         image: adopteunops/elasticsearch-rancher-setup:latest
         links:
             - "elasticsearch-master:elasticsearch"
+
     elasticsearch-prometheus-exporter:
       environment:
         ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
@@ -178,6 +182,21 @@ services:
       links:
       - elasticsearch-master:elasticsearch
       stdin_open: true
+
+    curator:
+      links:
+      - 'elasticsearch-master:elasticsearch'
+      environment:
+        CRON_EXPR: {{curator_cron_pattern}}
+        SERVICE_ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
+        SERVICE_ELASTICSEARCH_PASSWORD: {{ elasticsearch_svcadmin_password }}
+      image: adopteunops/elasticsearch-curator:5.4.1
+      labels:
+        io.rancher.scheduler.affinity:host_label: role=monitoring
+        logspout.exclude: 'true'
+      tty: true
+      stdin_open: true
+
 volumes:
   elasticsearch-master-volume:
     driver: {{volume_driver}}

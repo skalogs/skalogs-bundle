@@ -1,0 +1,113 @@
+actions:
+  1:
+    action: delete_indices
+    description: >-
+      Delete indices older than 7 days (based on index name), for {{elasticsearch_cluster_name}}-
+      prefixed indices. Ignore the error if the filter does not result in an
+      actionable list of indices (ignore_empty_list) and exit cleanly.
+    options:
+      ignore_empty_list: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: {{elasticsearch_cluster_name}}-
+    - filtertype: pattern
+      kind: regex
+      value: '.*-0007-'
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y-%m-%d'
+      unit: days
+      unit_count: 7
+  2:
+    action: delete_indices
+    description: >-
+      Delete indices older than 30 days (based on index name), for {{elasticsearch_cluster_name}}-
+      prefixed indices. Ignore the error if the filter does not result in an
+      actionable list of indices (ignore_empty_list) and exit cleanly.
+    options:
+      ignore_empty_list: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: {{elasticsearch_cluster_name}}-
+    - filtertype: pattern
+      kind: regex
+      value: '.*-0030-'
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y-%m-%d'
+      unit: months
+      unit_count: 1
+  3:
+    action: delete_indices
+    description: >-
+      Delete indices older than 90 days (based on index name), for {{elasticsearch_cluster_name}}-
+      prefixed indices. Ignore the error if the filter does not result in an
+      actionable list of indices (ignore_empty_list) and exit cleanly.
+    options:
+      ignore_empty_list: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: {{elasticsearch_cluster_name}}-
+    - filtertype: pattern
+      kind: regex
+      value: '.*-0090-'
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y-%m-%d'
+      unit: months
+      unit_count: 3
+  4:
+    action: delete_indices
+    description: >-
+      Delete indices older than a year (based on index name), for {{elasticsearch_cluster_name}}-
+      prefixed indices. Ignore the error if the filter does not result in an
+      actionable list of indices (ignore_empty_list) and exit cleanly.
+    options:
+      ignore_empty_list: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: {{elasticsearch_cluster_name}}-
+    - filtertype: pattern
+      kind: regex
+      value: '.*-0365-'
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y-%m-%d'
+      unit: years
+      unit_count: 1
+  5:
+    action: forcemerge
+    description: >-
+      forceMerge {{elasticsearch_cluster_name}}- prefixed indices older than 2 days (based on index
+      creation_date) to 2 segments per shard.  Delay 120 seconds between each
+      forceMerge operation to allow the cluster to quiesce. Skip indices that
+      have already been forcemerged to the minimum number of segments to avoid
+      reprocessing.
+    options:
+      max_num_segments: 2
+      delay: 120
+      timeout_override:
+      ignore_empty_list: True
+      continue_if_exception: False
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: {{elasticsearch_cluster_name}}-
+      exclude:
+    - filtertype: age
+      source: creation_date
+      direction: older
+      unit: days
+      unit_count: 2
+      exclude:
+    - filtertype: forcemerged
+      max_num_segments: 2
+      exclude:
