@@ -12,7 +12,7 @@ services:
       io.rancher.scheduler.affinity:host_label_soft_ne: role=tools
       io.rancher.scheduler.affinity:host_label_soft: role_kibana=true
     tty: true
-    image: docker.elastic.co/kibana/kibana:{{elasticsearch_version}}
+    image: {{docker_elastic_repo}}/kibana/kibana:{{elasticsearch_version}}
     stdin_open: true
 
   kibana-setup:
