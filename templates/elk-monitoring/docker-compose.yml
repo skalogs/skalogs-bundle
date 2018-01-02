@@ -28,7 +28,8 @@ services:
       - "ES_JAVA_OPTS=-Xms{{elk_monitoring_heap_size}} -Xmx{{elk_monitoring_heap_size}}"
       - "discovery.zen.ping.unicast.hosts=elasticsearch"
       - "discovery.zen.minimum_master_nodes={{elk_monitoring_minimum_master_nodes}}"
-    image: {{docker_elastic_repo}}/elasticsearch/elasticsearch:{{elasticsearch_version}}
+      - "ELASTIC_PASSWORD={{elasticsearch_svckibana_password}}"
+    image: {{docker_elastic_repo}}/elasticsearch/elasticsearch-platinum:{{elasticsearch_version}}
     ulimits:
       memlock:
         soft: -1
@@ -145,8 +146,10 @@ services:
     links:
     - 'elasticsearch:'
     environment:
+      SERVICE_ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
+      SERVICE_ELASTICSEARCH_PASSWORD: {{ elasticsearch_svcadmin_password }}
       CRON_EXPR: {{curator_cron_pattern}}
-    image: adopteunops/elasticsearch-curator:1.0.0
+    image: adopteunops/elasticsearch-curator:5.4.1
     labels:
       io.rancher.scheduler.affinity:host_label: role=monitoring
       logspout.exclude: 'true'

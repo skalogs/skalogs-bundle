@@ -1,1 +1,1 @@
-{"_index":".kibana","_type":"index-pattern","_id":"logstash-*","_score":1,"_source":{"title":"logstash-*","timeFieldName":"timestamp","notExpandable":true}}
+{"_index":".kibana","_type":"doc","_id":"index-pattern:logstash-*","_source":{"type": "index-pattern", "index-pattern": {"title":"logstash-*","timeFieldName":"timestamp","notExpandable":true}}}
