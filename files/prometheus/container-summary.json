@@ -1,42 +1,30 @@
 {
   "overwrite": true,
   "dashboard": {
-    "id": null,
-    "title": "Container Summary",
-    "tags": [
-      "Services",
-      "Containers"
-    ],
     "annotations": {
-      "list": []
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
     },
     "editable": true,
     "gnetId": null,
     "graphTooltip": 0,
     "hideControls": false,
-    "links": [
-      {
-        "icon": "external link",
-        "tags": [],
-        "title": "Google cAdvisor",
-        "tooltip": "Analyzes resource usage and performance characteristics of running containers.",
-        "type": "link",
-        "url": "https://github.com/google/cadvisor"
-      },
-      {
-        "icon": "external link",
-        "tags": [],
-        "title": "Prometheus Rancher Exporter",
-        "tooltip": "Exposes Rancher metrics to Prometheus",
-        "type": "link",
-        "url": "https://github.com/infinityworksltd/prometheus-rancher-exporter"
-      }
-    ],
+    "id": null,
+    "links": [],
     "refresh": "5s",
     "rows": [
       {
         "collapse": false,
-        "height": "200px",
+        "height": "150px",
         "panels": [
           {
             "cacheTimeout": null,
@@ -44,7 +32,7 @@
             "colorValue": true,
             "colors": [
               "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
+              "#65c5db",
               "rgba(50, 172, 45, 0.97)"
             ],
             "datasource": "prometheus",
@@ -86,22 +74,24 @@
                 "to": "null"
               }
             ],
-            "span": 4,
+            "span": 3,
             "sparkline": {
               "fillColor": "rgba(31, 118, 189, 0.18)",
               "full": true,
               "lineColor": "rgb(31, 120, 193)",
-              "show": true
+              "show": false
             },
+            "tableColumn": "",
             "targets": [
               {
-                "expr": "count(container_last_seen{container_label_io_rancher_container_name!=\"\"} > (time() - 15))",
+                "expr": "count(container_last_seen{container_label_io_rancher_container_name!=\"\"} > (time() - 1500))",
+                "format": "time_series",
                 "intervalFactor": 1,
                 "refId": "A",
                 "step": 300
               }
             ],
-            "thresholds": "",
+            "thresholds": "0",
             "title": "Total Running Containers",
             "type": "singlestat",
             "valueFontSize": "110%",
@@ -115,42 +105,16 @@
             "valueName": "current"
           },
           {
-            "content": "# Container Stats\n\nThis is an example of a dashboard showing information derived from both the Google cAdvisor process that runs within the Rancher agent process, and the Prometheus Rancher Exporter. \nThis data is scraped by prometheus and displayed through grafana.",
-            "editable": true,
-            "error": false,
-            "id": 14,
-            "links": [],
-            "mode": "markdown",
-            "span": 8,
-            "title": "",
-            "transparent": true,
-            "type": "text"
-          }
-        ],
-        "repeat": null,
-        "repeatIteration": null,
-        "repeatRowId": null,
-        "showTitle": false,
-        "title": "Graphs",
-        "titleSize": "h6"
-      },
-      {
-        "collapse": false,
-        "height": "150px",
-        "panels": [
-          {
             "cacheTimeout": null,
             "colorBackground": false,
             "colorValue": true,
             "colors": [
-              "rgba(245, 54, 54, 0.9)",
+              "#d44a3a",
               "rgba(237, 129, 40, 0.89)",
               "rgba(50, 172, 45, 0.97)"
             ],
             "datasource": "prometheus",
-            "editable": true,
-            "error": false,
-            "format": "bytes",
+            "format": "percent",
             "gauge": {
               "maxValue": 100,
               "minValue": 0,
@@ -158,7 +122,7 @@
               "thresholdLabels": false,
               "thresholdMarkers": true
             },
-            "id": 8,
+            "id": 19,
             "interval": null,
             "links": [],
             "mappingType": 1,
@@ -176,9 +140,9 @@
             "nullPointMode": "connected",
             "nullText": null,
             "postfix": "",
-            "postfixFontSize": "80%",
+            "postfixFontSize": "50%",
             "prefix": "",
-            "prefixFontSize": "80%",
+            "prefixFontSize": "50%",
             "rangeMaps": [
               {
                 "from": "null",
@@ -186,24 +150,24 @@
                 "to": "null"
               }
             ],
-            "span": 4,
+            "span": 3,
             "sparkline": {
               "fillColor": "rgba(31, 118, 189, 0.18)",
-              "full": true,
+              "full": false,
               "lineColor": "rgb(31, 120, 193)",
-              "show": true
+              "show": false
             },
+            "tableColumn": "",
             "targets": [
               {
-                "expr": "sum(node_memory_MemTotal)",
+                "expr": " 100 * sum(rancher_service_state{state=\"active\"}) / (sum(rancher_service_state{state=\"inactive\"}) + sum(rancher_service_state{state=\"active\"}))",
+                "format": "time_series",
                 "intervalFactor": 2,
-                "legendFormat": "",
-                "refId": "A",
-                "step": 600
+                "refId": "A"
               }
             ],
-            "thresholds": "",
-            "title": "Total Host Memory",
+            "thresholds": "90,99",
+            "title": "Service Availability",
             "type": "singlestat",
             "valueFontSize": "110%",
             "valueMaps": [
@@ -213,7 +177,7 @@
                 "value": "null"
               }
             ],
-            "valueName": "avg"
+            "valueName": "current"
           },
           {
             "cacheTimeout": null,
@@ -221,179 +185,13 @@
             "colorValue": true,
             "colors": [
               "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
+              "#ef843c",
               "rgba(50, 172, 45, 0.97)"
             ],
             "datasource": "prometheus",
             "editable": true,
             "error": false,
-            "format": "bytes",
-            "gauge": {
-              "maxValue": 100,
-              "minValue": 0,
-              "show": false,
-              "thresholdLabels": false,
-              "thresholdMarkers": true
-            },
-            "id": 7,
-            "interval": null,
-            "links": [],
-            "mappingType": 1,
-            "mappingTypes": [
-              {
-                "name": "value to text",
-                "value": 1
-              },
-              {
-                "name": "range to text",
-                "value": 2
-              }
-            ],
-            "maxDataPoints": 100,
-            "nullPointMode": "connected",
-            "nullText": null,
-            "postfix": "",
-            "postfixFontSize": "80%",
-            "prefix": "",
-            "prefixFontSize": "80%",
-            "rangeMaps": [
-              {
-                "from": "null",
-                "text": "N/A",
-                "to": "null"
-              }
-            ],
-            "span": 4,
-            "sparkline": {
-              "fillColor": "rgba(31, 118, 189, 0.18)",
-              "full": true,
-              "lineColor": "rgb(31, 120, 193)",
-              "show": true
-            },
-            "targets": [
-              {
-                "expr": "sum(container_memory_usage_bytes)",
-                "intervalFactor": 2,
-                "legendFormat": "",
-                "refId": "A",
-                "step": 600
-              }
-            ],
-            "thresholds": "",
-            "title": "Total Container Memory Used",
-            "type": "singlestat",
-            "valueFontSize": "110%",
-            "valueMaps": [
-              {
-                "op": "=",
-                "text": "N/A",
-                "value": "null"
-              }
-            ],
-            "valueName": "avg"
-          },
-          {
-            "cacheTimeout": null,
-            "colorBackground": false,
-            "colorValue": true,
-            "colors": [
-              "rgba(50, 172, 45, 0.97)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(245, 54, 54, 0.9)"
-            ],
-            "datasource": "prometheus",
-            "editable": true,
-            "error": false,
-            "format": "none",
-            "gauge": {
-              "maxValue": 100,
-              "minValue": 0,
-              "show": false,
-              "thresholdLabels": false,
-              "thresholdMarkers": true
-            },
-            "id": 15,
-            "interval": null,
-            "links": [],
-            "mappingType": 1,
-            "mappingTypes": [
-              {
-                "name": "value to text",
-                "value": 1
-              },
-              {
-                "name": "range to text",
-                "value": 2
-              }
-            ],
-            "maxDataPoints": 100,
-            "nullPointMode": "connected",
-            "nullText": null,
-            "postfix": "",
-            "postfixFontSize": "80%",
-            "prefix": "",
-            "prefixFontSize": "80%",
-            "rangeMaps": [
-              {
-                "from": "null",
-                "text": "N/A",
-                "to": "null"
-              }
-            ],
-            "span": 4,
-            "sparkline": {
-              "fillColor": "rgba(31, 118, 189, 0.18)",
-              "full": true,
-              "lineColor": "rgb(31, 120, 193)",
-              "show": true
-            },
-            "targets": [
-              {
-                "expr": "rancher_service_state{state!=\"active\"} == 1",
-                "intervalFactor": 2,
-                "legendFormat": "",
-                "refId": "A",
-                "step": 600
-              }
-            ],
-            "thresholds": "",
-            "title": "Number of Services Not Active",
-            "type": "singlestat",
-            "valueFontSize": "110%",
-            "valueMaps": [
-              {
-                "op": "=",
-                "text": "None",
-                "value": "null"
-              }
-            ],
-            "valueName": "avg"
-          }
-        ],
-        "repeat": null,
-        "repeatIteration": null,
-        "repeatRowId": null,
-        "showTitle": false,
-        "title": "New row",
-        "titleSize": "h6"
-      },
-      {
-        "collapse": false,
-        "height": "150px",
-        "panels": [
-          {
-            "cacheTimeout": null,
-            "colorBackground": false,
-            "colorValue": true,
-            "colors": [
-              "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(50, 172, 45, 0.97)"
-            ],
-            "datasource": "prometheus",
-            "editable": true,
-            "error": false,
-            "format": "none",
+            "format": "percent",
             "gauge": {
               "maxValue": 100,
               "minValue": 0,
@@ -431,28 +229,30 @@
                 "to": "null"
               }
             ],
-            "span": 4,
+            "span": 3,
             "sparkline": {
               "fillColor": "rgba(31, 118, 189, 0.18)",
               "full": true,
               "lineColor": "rgb(241, 4, 73)",
               "show": true
             },
+            "tableColumn": "",
             "targets": [
               {
-                "expr": "count({__name__=\"rancher_stack_state\"} > 0)",
+                "expr": "100 * (sum(rancher_host_state{state=\"active\"}) - sum(rancher_host_agent_state{state!=\"active\"})) / sum(rancher_host_state{state=\"active\"})",
+                "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "",
                 "refId": "A",
                 "step": 2
               }
             ],
-            "thresholds": "",
+            "thresholds": "90,99",
             "timeFrom": "5s",
             "timeShift": "5s",
-            "title": "Total Stacks in Rancher",
+            "title": "Host Availabilty",
             "type": "singlestat",
-            "valueFontSize": "80%",
+            "valueFontSize": "100%",
             "valueMaps": [
               {
                 "op": "=",
@@ -460,7 +260,7 @@
                 "value": "0"
               }
             ],
-            "valueName": "avg"
+            "valueName": "current"
           },
           {
             "cacheTimeout": null,
@@ -468,7 +268,7 @@
             "colorValue": true,
             "colors": [
               "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
+              "#65c5db",
               "rgba(50, 172, 45, 0.97)"
             ],
             "datasource": "prometheus",
@@ -512,16 +312,18 @@
                 "to": "null"
               }
             ],
-            "span": 4,
+            "span": 3,
             "sparkline": {
               "fillColor": "rgba(31, 118, 189, 0.18)",
               "full": true,
               "lineColor": "rgb(241, 4, 73)",
               "show": true
             },
+            "tableColumn": "",
             "targets": [
               {
                 "expr": "count({__name__=\"rancher_service_state\"} > 0)",
+                "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "",
                 "refId": "A",
@@ -533,88 +335,7 @@
             "timeShift": "5s",
             "title": "Total Services in Rancher",
             "type": "singlestat",
-            "valueFontSize": "80%",
-            "valueMaps": [
-              {
-                "op": "=",
-                "text": "No Rancher Stack Present",
-                "value": "0"
-              }
-            ],
-            "valueName": "avg"
-          },
-          {
-            "cacheTimeout": null,
-            "colorBackground": false,
-            "colorValue": true,
-            "colors": [
-              "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(50, 172, 45, 0.97)"
-            ],
-            "datasource": "prometheus",
-            "editable": true,
-            "error": false,
-            "format": "none",
-            "gauge": {
-              "maxValue": 100,
-              "minValue": 0,
-              "show": false,
-              "thresholdLabels": false,
-              "thresholdMarkers": true
-            },
-            "height": "",
-            "hideTimeOverride": true,
-            "id": 16,
-            "interval": null,
-            "links": [],
-            "mappingType": 1,
-            "mappingTypes": [
-              {
-                "name": "value to text",
-                "value": 1
-              },
-              {
-                "name": "range to text",
-                "value": 2
-              }
-            ],
-            "maxDataPoints": 100,
-            "nullPointMode": "connected",
-            "nullText": null,
-            "postfix": "",
-            "postfixFontSize": "50%",
-            "prefix": "",
-            "prefixFontSize": "50%",
-            "rangeMaps": [
-              {
-                "from": "null",
-                "text": "N/A",
-                "to": "null"
-              }
-            ],
-            "span": 4,
-            "sparkline": {
-              "fillColor": "rgba(31, 118, 189, 0.18)",
-              "full": true,
-              "lineColor": "rgb(241, 4, 73)",
-              "show": true
-            },
-            "targets": [
-              {
-                "expr": "sum(rancher_service_scale)",
-                "intervalFactor": 2,
-                "legendFormat": "",
-                "refId": "A",
-                "step": 2
-              }
-            ],
-            "thresholds": "",
-            "timeFrom": "5s",
-            "timeShift": "5s",
-            "title": "Total Containers in Rancher",
-            "type": "singlestat",
-            "valueFontSize": "80%",
+            "valueFontSize": "100%",
             "valueMaps": [
               {
                 "op": "=",
@@ -634,20 +355,208 @@
       },
       {
         "collapse": false,
-        "height": "250px",
+        "height": 250,
         "panels": [
           {
-            "columns": [
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "prometheus",
+            "fill": 1,
+            "id": 18,
+            "legend": {
+              "avg": false,
+              "current": true,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 2,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 12,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
               {
-                "text": "Current",
-                "value": "current"
+                "expr": " 100 * sum(rancher_service_state{state=\"active\"}) / (sum(rancher_service_state{state=\"inactive\"}) + sum(rancher_service_state{state=\"active\"}))",
+                "format": "time_series",
+                "intervalFactor": 2,
+                "legendFormat": "Disponibility",
+                "refId": "A"
               }
             ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": false,
+                "op": "lt",
+                "value": 80
+              },
+              {
+                "colorMode": "warning",
+                "fill": true,
+                "line": false,
+                "op": "lt",
+                "value": 95
+              }
+            ],
+            "timeFrom": "1h",
+            "timeShift": null,
+            "title": "Service Availability",
+            "tooltip": {
+              "shared": true,
+              "sort": 2,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "percent",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "prometheus",
+            "fill": 1,
+            "id": 20,
+            "legend": {
+              "avg": false,
+              "current": true,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 2,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 12,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "100 * (sum(rancher_host_state{state=\"active\"}) - sum(rancher_host_agent_state{state!=\"active\"})) / sum(rancher_host_state{state=\"active\"})",
+                "format": "time_series",
+                "intervalFactor": 2,
+                "legendFormat": "Disponibilty",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": false,
+                "op": "lt",
+                "value": 80
+              },
+              {
+                "colorMode": "warning",
+                "fill": true,
+                "line": false,
+                "op": "lt",
+                "value": 95
+              }
+            ],
+            "timeFrom": "1h",
+            "timeShift": null,
+            "title": "Host Availabilty",
+            "tooltip": {
+              "shared": true,
+              "sort": 2,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "percent",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
+          {
+            "columns": [],
             "datasource": "prometheus",
             "editable": true,
             "error": false,
             "filterNull": false,
             "fontSize": "100%",
+            "height": "500px",
             "id": 13,
             "links": [],
             "pageSize": null,
@@ -657,8 +566,53 @@
               "col": 0,
               "desc": false
             },
-            "span": 12,
+            "span": 6,
             "styles": [
+              {
+                "alias": "Service Name",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "name",
+                "thresholds": [],
+                "type": "string",
+                "unit": "short"
+              },
+              {
+                "alias": "Stack Name",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "stack_name",
+                "thresholds": [],
+                "type": "string",
+                "unit": "short"
+              },
+              {
+                "alias": "",
+                "colorMode": "row",
+                "colors": [
+                  "rgba(50, 172, 45, 0.97)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(245, 54, 54, 0.9)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 0,
+                "pattern": "Value",
+                "thresholds": [],
+                "type": "number",
+                "unit": "short"
+              },
               {
                 "colorMode": "row",
                 "colors": [
@@ -673,22 +627,132 @@
                   "0",
                   "1"
                 ],
-                "type": "number",
+                "type": "hidden",
                 "unit": "none"
               }
             ],
             "targets": [
               {
-                "expr": "rancher_service_state{state=\"active\"}",
+                "expr": "rancher_service_health_status{health_state=\"healthy\"} == 1",
+                "format": "table",
+                "instant": true,
                 "intervalFactor": 2,
-                "legendFormat": "{{name}}",
+                "legendFormat": "",
                 "metric": "",
                 "refId": "A",
                 "step": 30
               }
             ],
-            "title": "Active Rancher Services",
-            "transform": "timeseries_aggregations",
+            "title": "Active Service",
+            "transform": "table",
+            "type": "table"
+          },
+          {
+            "columns": [],
+            "datasource": "prometheus",
+            "fontSize": "100%",
+            "height": "500px",
+            "id": 17,
+            "links": [],
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+              "col": 0,
+              "desc": true
+            },
+            "span": 6,
+            "styles": [
+              {
+                "alias": "Service Name",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "name",
+                "thresholds": [],
+                "type": "string",
+                "unit": "short"
+              },
+              {
+                "alias": "Stack Name",
+                "colorMode": "row",
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "stack_name",
+                "thresholds": [],
+                "type": "string",
+                "unit": "short"
+              },
+              {
+                "alias": "State",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "health_state",
+                "thresholds": [],
+                "type": "string",
+                "unit": "short"
+              },
+              {
+                "alias": "",
+                "colorMode": "row",
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 0,
+                "pattern": "Value",
+                "thresholds": [],
+                "type": "number",
+                "unit": "short"
+              },
+              {
+                "alias": "",
+                "colorMode": "row",
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(245, 54, 54, 0.9)"
+                ],
+                "decimals": 0,
+                "pattern": "/.*/",
+                "thresholds": [
+                  "0"
+                ],
+                "type": "hidden",
+                "unit": "short"
+              }
+            ],
+            "targets": [
+              {
+                "expr": "rancher_service_health_status{health_state!=\"healthy\"} == 1",
+                "format": "table",
+                "instant": true,
+                "interval": "",
+                "intervalFactor": 2,
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "title": "Inactive Service",
+            "transform": "table",
             "type": "table"
           }
         ],
@@ -696,17 +760,21 @@
         "repeatIteration": null,
         "repeatRowId": null,
         "showTitle": false,
-        "title": "New row",
+        "title": "Dashboard Row",
         "titleSize": "h6"
       }
     ],
     "schemaVersion": 14,
     "style": "dark",
+    "tags": [
+      "Services",
+      "Containers"
+    ],
     "templating": {
       "list": []
     },
     "time": {
-      "from": "now-6h",
+      "from": "now-15m",
       "to": "now"
     },
     "timepicker": {
@@ -741,6 +809,7 @@
       "type": "timepicker"
     },
     "timezone": "browser",
-    "version": 9
+    "title": "Container Summary",
+    "version": 11
   }
 }

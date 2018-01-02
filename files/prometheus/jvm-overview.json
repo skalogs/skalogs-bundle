@@ -1,73 +1,79 @@
 {
   "overwrite": true,
   "dashboard": {
+    "annotations": {
+      "list": []
+    },
+    "description": "Dashboard for JVM metrics with Prometheus / JMX Exporter",
     "editable": true,
-    "title": "Elasticsearch Tread Pools",
-    "gnetId": null,
+    "gnetId": 3066,
     "graphTooltip": 0,
     "hideControls": false,
     "id": null,
     "links": [],
-    "refresh": false,
+    "refresh": "30s",
     "rows": [
       {
         "collapse": false,
-        "height": "250px",
+        "height": 250,
         "panels": [
           {
             "aliasColors": {},
             "bars": false,
+            "dashLength": 10,
+            "dashes": false,
             "datasource": "prometheus",
-            "editable": true,
-            "error": false,
             "fill": 1,
-            "grid": {},
-            "id": 1,
+            "id": 2,
             "legend": {
-              "avg": false,
-              "current": false,
-              "hideEmpty": true,
-              "hideZero": true,
-              "max": false,
-              "min": false,
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "rightSide": true,
               "show": true,
               "total": false,
-              "values": false
+              "values": true
             },
             "lines": true,
-            "linewidth": 2,
+            "linewidth": 1,
             "links": [],
-            "nullPointMode": "connected",
+            "nullPointMode": "null",
             "percentage": false,
             "pointradius": 5,
             "points": false,
             "renderer": "flot",
+            "repeat": null,
             "seriesOverrides": [],
-            "span": 4,
+            "spaceLength": 10,
+            "span": 12,
             "stack": false,
             "steppedLine": false,
             "targets": [
               {
-                "expr": "es_threadpool_threads_number{type=\"active\"}",
-                "hide": false,
-                "intervalFactor": 2,
-                "legendFormat": "{{node}}",
+                "expr": "jvm_memory_bytes_used{service_name=~\"$$service_name\"}",
+                "format": "time_series",
+                "interval": "",
+                "intervalFactor": 5,
+                "legendFormat": "{{area}} memory [{{service_name}}]",
+                "metric": "jvm_memory_bytes_used",
                 "refId": "A",
-                "step": 600
+                "step": 5
               }
             ],
             "thresholds": [],
             "timeFrom": null,
             "timeShift": null,
-            "title": "Thread Pool - Active Count",
+            "title": "Memory used",
             "tooltip": {
-              "msResolution": true,
               "shared": true,
-              "sort": 2,
-              "value_type": "cumulative"
+              "sort": 0,
+              "value_type": "individual"
             },
             "type": "graph",
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -75,7 +81,7 @@
             },
             "yaxes": [
               {
-                "format": "short",
+                "format": "bytes",
                 "label": null,
                 "logBase": 1,
                 "max": null,
@@ -91,21 +97,30 @@
                 "show": true
               }
             ]
-          },
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
           {
             "aliasColors": {},
             "bars": false,
+            "dashLength": 10,
+            "dashes": false,
             "datasource": "prometheus",
-            "editable": true,
-            "error": false,
             "fill": 1,
-            "grid": {},
             "id": 3,
             "legend": {
               "avg": false,
               "current": false,
-              "hideEmpty": true,
-              "hideZero": true,
               "max": false,
               "min": false,
               "show": true,
@@ -113,39 +128,50 @@
               "values": false
             },
             "lines": true,
-            "linewidth": 2,
+            "linewidth": 1,
             "links": [],
-            "nullPointMode": "connected",
+            "nullPointMode": "null",
             "percentage": false,
             "pointradius": 5,
             "points": false,
             "renderer": "flot",
             "seriesOverrides": [],
-            "span": 4,
+            "spaceLength": 10,
+            "span": 6,
             "stack": false,
             "steppedLine": false,
             "targets": [
               {
-                "expr": "es_threadpool_tasks_number{type=\"queue\"}",
-                "hide": false,
-                "intervalFactor": 2,
-                "legendFormat": "{{node}}",
+                "expr": "jvm_threads_current{service_name=~\"$$service_name\"}",
+                "format": "time_series",
+                "intervalFactor": 5,
+                "legendFormat": "current [{{service_name}}]",
+                "metric": "jvm_threads_current",
                 "refId": "A",
-                "step": 600
+                "step": 5
+              },
+              {
+                "expr": "jvm_threads_daemon{service_name=~\"$$service_name\"}",
+                "format": "time_series",
+                "intervalFactor": 5,
+                "legendFormat": "daemon [{{service_name}}]",
+                "metric": "jvm_threads_daemon",
+                "refId": "B",
+                "step": 5
               }
             ],
             "thresholds": [],
             "timeFrom": null,
             "timeShift": null,
-            "title": "Thread Pool - Queue Count",
+            "title": "Threads used",
             "tooltip": {
-              "msResolution": true,
               "shared": true,
-              "sort": 2,
-              "value_type": "cumulative"
+              "sort": 0,
+              "value_type": "individual"
             },
             "type": "graph",
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -153,6 +179,7 @@
             },
             "yaxes": [
               {
+                "decimals": 0,
                 "format": "short",
                 "label": null,
                 "logBase": 1,
@@ -173,95 +200,14 @@
           {
             "aliasColors": {},
             "bars": false,
+            "dashLength": 10,
+            "dashes": false,
             "datasource": "prometheus",
-            "editable": true,
-            "error": false,
             "fill": 1,
-            "grid": {},
-            "id": 2,
-            "legend": {
-              "avg": false,
-              "current": false,
-              "hideEmpty": true,
-              "hideZero": true,
-              "max": false,
-              "min": false,
-              "show": true,
-              "total": false,
-              "values": false
-            },
-            "lines": true,
-            "linewidth": 2,
-            "links": [],
-            "nullPointMode": "connected",
-            "percentage": false,
-            "pointradius": 5,
-            "points": false,
-            "renderer": "flot",
-            "seriesOverrides": [],
-            "span": 4,
-            "stack": false,
-            "steppedLine": false,
-            "targets": [
-              {
-                "expr": "es_threadpool_threads_number{type=\"largest\"}",
-                "hide": false,
-                "intervalFactor": 2,
-                "legendFormat": "{{node}}",
-                "refId": "A",
-                "step": 600
-              }
-            ],
-            "thresholds": [],
-            "timeFrom": null,
-            "timeShift": null,
-            "title": "Thread Pool - Largest Count",
-            "tooltip": {
-              "msResolution": true,
-              "shared": true,
-              "sort": 2,
-              "value_type": "cumulative"
-            },
-            "type": "graph",
-            "xaxis": {
-              "mode": "time",
-              "name": null,
-              "show": true,
-              "values": []
-            },
-            "yaxes": [
-              {
-                "format": "short",
-                "label": null,
-                "logBase": 1,
-                "max": null,
-                "min": null,
-                "show": true
-              },
-              {
-                "format": "short",
-                "label": null,
-                "logBase": 1,
-                "max": null,
-                "min": null,
-                "show": true
-              }
-            ]
-          },
-          {
-            "aliasColors": {},
-            "bars": false,
-            "datasource": "prometheus",
-            "editable": true,
-            "error": false,
-            "fill": 1,
-            "grid": {},
             "id": 4,
             "legend": {
               "avg": false,
               "current": false,
-              "hideEmpty": true,
-              "hideZero": true,
               "max": false,
               "min": false,
               "show": true,
@@ -269,39 +215,42 @@
               "values": false
             },
             "lines": true,
-            "linewidth": 2,
+            "linewidth": 1,
             "links": [],
-            "nullPointMode": "connected",
+            "nullPointMode": "null",
             "percentage": false,
             "pointradius": 5,
             "points": false,
             "renderer": "flot",
             "seriesOverrides": [],
-            "span": 12,
+            "spaceLength": 10,
+            "span": 6,
             "stack": false,
             "steppedLine": false,
             "targets": [
               {
-                "expr": "es_threadpool_threads_number{type=\"threads\"}",
-                "hide": false,
-                "intervalFactor": 2,
-                "legendFormat": "{{node}}-{{exported_name}}",
+                "expr": "jvm_classes_loaded{service_name=~\"$$service_name\"}",
+                "format": "time_series",
+                "interval": "",
+                "intervalFactor": 5,
+                "legendFormat": "loaded [{{service_name}}]",
+                "metric": "jvm_classes_loaded",
                 "refId": "A",
-                "step": 120
+                "step": 5
               }
             ],
             "thresholds": [],
             "timeFrom": null,
             "timeShift": null,
-            "title": "Thread Pool - Threads Count",
+            "title": "Class loading",
             "tooltip": {
-              "msResolution": true,
               "shared": true,
-              "sort": 2,
-              "value_type": "cumulative"
+              "sort": 0,
+              "value_type": "individual"
             },
             "type": "graph",
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -309,8 +258,9 @@
             },
             "yaxes": [
               {
+                "decimals": 0,
                 "format": "short",
-                "label": null,
+                "label": "",
                 "logBase": 1,
                 "max": null,
                 "min": null,
@@ -325,20 +275,30 @@
                 "show": true
               }
             ]
-          },
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
           {
             "aliasColors": {},
             "bars": false,
+            "dashLength": 10,
+            "dashes": false,
             "datasource": "prometheus",
-            "editable": true,
-            "error": false,
             "fill": 1,
-            "grid": {},
             "id": 5,
             "legend": {
               "avg": false,
               "current": false,
-              "hideZero": true,
               "max": false,
               "min": false,
               "show": true,
@@ -346,39 +306,42 @@
               "values": false
             },
             "lines": true,
-            "linewidth": 2,
+            "linewidth": 1,
             "links": [],
-            "nullPointMode": "connected",
+            "nullPointMode": "null",
             "percentage": false,
             "pointradius": 5,
             "points": false,
             "renderer": "flot",
             "seriesOverrides": [],
-            "span": 12,
+            "spaceLength": 10,
+            "span": 6,
             "stack": false,
             "steppedLine": false,
             "targets": [
               {
-                "expr": "es_threadpool_threads_count{type=\"rejected\"}",
-                "hide": false,
-                "intervalFactor": 2,
-                "legendFormat": "{{node}}",
+                "expr": "rate(jvm_gc_collection_seconds_sum{service_name=~\"$$service_name\"}[1m])",
+                "format": "time_series",
+                "interval": "",
+                "intervalFactor": 5,
+                "legendFormat": "{{gc}} [{{service_name}}]",
+                "metric": "jvm_gc_collection_seconds_sum",
                 "refId": "A",
-                "step": 120
+                "step": 5
               }
             ],
             "thresholds": [],
             "timeFrom": null,
             "timeShift": null,
-            "title": "Thread Pool - Rejected Count",
+            "title": "GC time / 1 min. rate",
             "tooltip": {
-              "msResolution": true,
               "shared": true,
-              "sort": 2,
-              "value_type": "cumulative"
+              "sort": 0,
+              "value_type": "individual"
             },
             "type": "graph",
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -386,7 +349,7 @@
             },
             "yaxes": [
               {
-                "format": "short",
+                "format": "s",
                 "label": null,
                 "logBase": 1,
                 "max": null,
@@ -406,17 +369,14 @@
           {
             "aliasColors": {},
             "bars": false,
+            "dashLength": 10,
+            "dashes": false,
             "datasource": "prometheus",
-            "editable": true,
-            "error": false,
             "fill": 1,
-            "grid": {},
             "id": 6,
             "legend": {
               "avg": false,
               "current": false,
-              "hideEmpty": true,
-              "hideZero": true,
               "max": false,
               "min": false,
               "show": true,
@@ -424,39 +384,42 @@
               "values": false
             },
             "lines": true,
-            "linewidth": 2,
+            "linewidth": 1,
             "links": [],
-            "nullPointMode": "connected",
+            "nullPointMode": "null",
             "percentage": false,
             "pointradius": 5,
             "points": false,
             "renderer": "flot",
             "seriesOverrides": [],
-            "span": 12,
+            "spaceLength": 10,
+            "span": 6,
             "stack": false,
             "steppedLine": false,
             "targets": [
               {
-                "expr": "es_threadpool_threads_count{type=\"completed\"}",
-                "hide": false,
-                "intervalFactor": 2,
-                "legendFormat": "{{node}}",
+                "expr": "jvm_gc_collection_seconds_count{service_name=~\"$$service_name\"}",
+                "format": "time_series",
+                "interval": "",
+                "intervalFactor": 5,
+                "legendFormat": "{{gc}} [{{service_name}}]",
+                "metric": "",
                 "refId": "A",
-                "step": 120
+                "step": 5
               }
             ],
             "thresholds": [],
             "timeFrom": null,
             "timeShift": null,
-            "title": "Thread Pool - Completed Count",
+            "title": "GC count",
             "tooltip": {
-              "msResolution": true,
               "shared": true,
-              "sort": 2,
-              "value_type": "cumulative"
+              "sort": 0,
+              "value_type": "individual"
             },
             "type": "graph",
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -464,6 +427,7 @@
             },
             "yaxes": [
               {
+                "decimals": 0,
                 "format": "short",
                 "label": null,
                 "logBase": 1,
@@ -486,20 +450,41 @@
         "repeatIteration": null,
         "repeatRowId": null,
         "showTitle": false,
-        "title": "Row",
+        "title": "Dashboard Row",
         "titleSize": "h6"
       }
     ],
     "schemaVersion": 14,
     "style": "dark",
     "tags": [
-      "Elasticsearch"
+      "JVM"
     ],
     "templating": {
-      "list": []
+      "list": [
+        {
+          "allValue": "",
+          "current": {},
+          "datasource": "prometheus",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Service Name",
+          "multi": true,
+          "name": "service_name",
+          "options": [],
+          "query": "label_values(jvm_memory_bytes_used,service_name)",
+          "refresh": 1,
+          "regex": "",
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
     },
     "time": {
-      "from": "now-1h",
+      "from": "now-30m",
       "to": "now"
     },
     "timepicker": {
@@ -527,7 +512,8 @@
         "30d"
       ]
     },
-    "timezone": "utc",
-    "version": 7
+    "timezone": "",
+    "title": "JVM overview",
+    "version": 2
   }
 }

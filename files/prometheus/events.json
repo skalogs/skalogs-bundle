@@ -1,32 +1,6 @@
 {
   "overwrite": true,
   "dashboard": {
-    "__requires": [
-      {
-        "type": "grafana",
-        "id": "grafana",
-        "name": "Grafana",
-        "version": "4.5.1"
-      },
-      {
-        "type": "panel",
-        "id": "graph",
-        "name": "Graph",
-        "version": ""
-      },
-      {
-        "type": "datasource",
-        "id": "prometheus",
-        "name": "Prometheus",
-        "version": "1.0.0"
-      },
-      {
-        "type": "panel",
-        "id": "singlestat",
-        "name": "Singlestat",
-        "version": ""
-      }
-    ],
     "annotations": {
       "list": []
     },
@@ -408,10 +382,10 @@
             "steppedLine": false,
             "targets": [
               {
-                "expr": "sum(rate(nb_produce_error_kafka_count[10s])) by (type)",
+                "expr": "sum(rate(nb_produce_error_kafka_count[10s])) by (type, reason)",
                 "format": "time_series",
                 "intervalFactor": 2,
-                "legendFormat": "{{type}} {{reason}}",
+                "legendFormat": "{{type}} / {{reason}}",
                 "refId": "A",
                 "step": 2
               }
@@ -814,7 +788,7 @@
       ]
     },
     "timezone": "",
-    "title": "Event Stack - new",
+    "title": "Event Stack",
     "version": 6
   }
 }

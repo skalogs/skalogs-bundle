@@ -4,7 +4,9 @@
     "id": null,
     "title": "Kafka",
     "description": "Kafka resource usage and throughput",
-    "tags": [],
+    "tags": [
+      "Kafka"
+    ],
     "style": "dark",
     "timezone": "browser",
     "editable": true,
@@ -538,10 +540,10 @@
             "steppedLine": false,
             "targets": [
               {
-                "expr": "kafka_broker_consumer_group_offset_lag",
+                "expr": "sum(kafka_broker_consumer_group_offset_lag) by (group_id)",
                 "format": "time_series",
                 "intervalFactor": 2,
-                "legendFormat": "{{group_id}} {{topic}}",
+                "legendFormat": "{{group_id}}",
                 "refId": "A",
                 "step": 4
               }
