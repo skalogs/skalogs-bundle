@@ -34,6 +34,9 @@ services:
       SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       ZOOKEEPER_BOOTSTRAPSERVERS: zookeeper:2181/kafka
+      ADMIN_IMPORTERURL: "{{importer_process_url}}"
+      ADMIN_ERRORIMPORTERURL: "{{error_importer_url}}"
+      ADMIN_RETRYIMPORTERURL: "{{retry_importer_url}}"
     external_links:
     - kafka/kafka:kafka
     - zookeeper/zookeeper:zookeeper
