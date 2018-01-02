@@ -20,6 +20,12 @@ services:
       response_timeout: 5000
     metadata:
       prometheus-config: |
+        alerting:
+          alertmanagers:
+          - static_configs:
+            - targets:
+              - alertmanager:9093
+
         global:
           scrape_interval:     5s
           evaluation_interval: 5s
@@ -47,14 +53,25 @@ services:
             type: A
             port: 9173
 
+        - job_name: 'cadvisor'
+          dns_sd_configs:
+          - names:
+            - 'cadvisor'
+            refresh_interval: 15s
+            type: A
+            port: 8080
+
         - job_name: 'Prometheus'
           static_configs:
             - targets:
               - '127.0.0.1:9090'
 
       prometheus-rules: |
+        groups:
 {% for ruleFile in prometheus_rule_files %}
-{{ lookup('template', ruleFile) | indent(10, True) }}
+          - name: "{{ruleFile | basename | splitext | first}}"
+            rules:
+{{ lookup('template', ruleFile) | indent(12, True) }}
 {% endfor %}
 
   grafana:

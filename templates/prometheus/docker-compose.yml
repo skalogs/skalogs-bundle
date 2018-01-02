@@ -9,7 +9,7 @@ services:
     tty: true
     environment:
       HIDE_SYS: 'false'
-    image: infinityworks/prometheus-rancher-exporter:v0.22.52
+    image: infinityworks/prometheus-rancher-exporter:v0.22.93
 
   prometheus-config:
     image: adopteunops/rancher-prometheus-config:latest
@@ -26,14 +26,12 @@ services:
       io.rancher.scheduler.affinity:host_label: role=monitoring
       io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
     command:
-    - -alertmanager.url=http://alertmanager:9093
-    - -config.file=/etc/prom-conf/prometheus.yml
-    - -storage.local.path=/prometheus
-    - -web.console.libraries=/etc/prometheus/console_libraries
-    - -web.console.templates=/etc/prometheus/consoles
-    - -web.external-url={{endpoints_protocol}}://{{monitoring_prometheus_url}}
+    - --config.file=/etc/prom-conf/prometheus.yml
+    - --web.console.libraries=/etc/prometheus/console_libraries
+    - --web.console.templates=/etc/prometheus/consoles
+    - --web.external-url={{endpoints_protocol}}://{{monitoring_prometheus_url}}
     tty: true
-    image: prom/prometheus:v1.7.1
+    image: prom/prometheus:v2.0.0
     links:
     - cadvisor:cadvisor
     - prometheus-rancher-exporter:prometheus-rancher-exporter
@@ -52,7 +50,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.scheduler.affinity:host_label: role=monitoring
     tty: true
-    image: grafana/grafana:4.5.1
+    image: grafana/grafana:4.6.3
     environment:
       GF_SECURITY_ADMIN_PASSWORD: {{ monitoring_grafana_admin_password }}
       {% if smtp_enabled -%}
@@ -89,13 +87,13 @@ services:
       io.rancher.sidekicks: alertmanager-config
       io.rancher.scheduler.affinity:host_label: role=monitoring
     tty: true
-    image: prom/alertmanager:v0.8.0
+    image: prom/alertmanager:v0.12.0
     volumes_from:
     - alertmanager-config
     command:
-    - -config.file=/etc/alertmanager/config.yml
-    - -storage.path=/alertmanager
-    - -web.external-url={{endpoints_protocol}}://{{monitoring_alertmanager_url}}
+    - --config.file=/etc/alertmanager/config.yml
+    - --storage.path=/alertmanager
+    - --web.external-url={{endpoints_protocol}}://{{monitoring_alertmanager_url}}
 
   node-exporter:
     labels:
@@ -107,22 +105,20 @@ services:
     - /sys:/host/sys
     - /:/rootfs
     command:
-    - -collector.procfs
+    - --path.procfs
     - /host/proc
-    - -collector.sysfs
+    - --path.sysfs
     - /host/sys
-    - -collector.filesystem.ignored-fs-types
+    - --collector.filesystem.ignored-fs-types
     - ^(aufs|proc|nsfs|shm|cgroup|tmpfs)
-    image: prom/node-exporter:v0.14.0
+    image: prom/node-exporter:v0.15.2
     stdin_open: true
 
   cadvisor:
     labels:
       io.rancher.scheduler.global: 'true'
-      com.prometheus.monitoring: true
-      com.prometheus.port: 8080
     tty: true
-    image: google/cadvisor:v0.27.1
+    image: google/cadvisor:v0.28.3
     stdin_open: true
     volumes:
       - "/:/rootfs:ro"
