@@ -124,6 +124,22 @@
           }
         },
         {
+          "double_gen_field": {
+            "mapping": {
+              "type": "double"
+            },
+            "match": "*_double"
+          }
+        },
+        {
+          "long_gen_field": {
+            "mapping": {
+              "type": "long"
+            },
+            "match": "*_long"
+          }
+        },
+        {
           "na_string_field": {
             "mapping": {
               "norms": false,
