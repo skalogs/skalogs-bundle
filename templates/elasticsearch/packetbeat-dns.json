@@ -1360,5 +1360,5 @@
     "index.mapping.total_fields.limit": 10000,
     "index.refresh_interval": "5s"
   },
-  "template" : "{{elasticsearch_cluster_name}}-http*"
+  "template" : "{{elasticsearch_cluster_name}}-dns*"
 }
