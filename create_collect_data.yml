@@ -10,6 +10,7 @@
   # force reload of apikey, as it's cached by ansible when we first trigger the playbook
   - include_vars: "{{ inventory_dir }}/group_vars/{{ NAME_PROJECT }}/apikey.yml"
   roles:
+  - {role: AdopteUnOps.docker-login, tags: docker-login}
   - {role: AdopteUnOps.rancher-add-host, tags: add-host}
 
 - hosts: "{{ NAME_PROJECT}}[0]"

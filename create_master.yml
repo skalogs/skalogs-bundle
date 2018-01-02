@@ -2,6 +2,7 @@
 #./ansible-playbook_wrapper create_master.yml -K
 - hosts: rancher-master
   roles:
+  - {role: AdopteUnOps.docker-login, tags: docker-login}
   - {role: AdopteUnOps.mysql-docker, tags: mysql}
   - {role: AdopteUnOps.rancher-install-master, tags: rancher-master}
   - {role: AdopteUnOps.rancher-configure-catalog, tags: catalogs}
