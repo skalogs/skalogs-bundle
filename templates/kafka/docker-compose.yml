@@ -39,7 +39,7 @@ services:
       com.prometheus.monitoring: true
       com.prometheus.port: 1234
     tty: true
-    image: wurstmeister/kafka:0.11.0.1
+    image: wurstmeister/kafka:1.0.0
     stdin_open: true
 
   kafka-manager:
@@ -51,7 +51,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
     tty: true
-    image: adopteunops/kafka-manager:latest
+    image: adopteunops/kafka-manager:1.3.3.15
     stdin_open: true
   kafka-manager-setup:
     external_links:
@@ -69,6 +69,9 @@ services:
     stdin_open: true
 
   kafka-lag-prometheus-exporter:
+    environment:
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 9092
     labels:
       io.rancher.container.pull_image: always
       com.prometheus.monitoring: true
