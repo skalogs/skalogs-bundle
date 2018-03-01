@@ -1,0 +1,10 @@
+ {
+  "type": "slack",
+  "settings": {
+    "recipient": "{{ slack_channel }}",
+    "url": "{{ slack_api_url }}",
+    "uploadImage": true
+  },
+  "isDefault": false,
+  "name": "Slack"
+}

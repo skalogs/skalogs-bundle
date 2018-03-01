@@ -1,0 +1,11 @@
+ {
+  "type": "email",
+  "settings": {
+    "httpMethod": "POST",
+    "autoResolve": true,
+    "uploadImage": true,
+    "addresses": "{{ monitoring_recipient }}"
+  },
+  "isDefault": true,
+  "name": "email"
+}
