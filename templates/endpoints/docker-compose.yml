@@ -1,7 +1,7 @@
 version: '2'
 services:
   enduser:
-    image: rancher/lb-service-haproxy:v0.7.9
+    image: rancher/lb-service-haproxy:v0.7.15
     stdin_open: true
     tty: true
     ports:
@@ -12,7 +12,7 @@ services:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
   admin:
-    image: rancher/lb-service-haproxy:v0.7.9
+    image: rancher/lb-service-haproxy:v0.7.15
     stdin_open: true
     tty: true
     ports:
