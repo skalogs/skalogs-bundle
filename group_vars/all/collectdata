@@ -1,5 +1,6 @@
 volume_driver: local
-elasticsearch_cluster_name: docker-cluster
+
+elasticsearch_cluster_name: '{{normalized_project_name}}'
 
 master_heap_size: 512m
 master_mem_limit: 1073741824
@@ -15,9 +16,16 @@ initial_client_nodes: 1
 elk_monitoring_heap_size: 512m
 elk_monitoring_master_mem_limit: 1073741824
 elk_monitoring_minimum_master_nodes: 1
+elk_monitoring_conf_file: elk-monitoring/elasticsearch-conf.yml
 elk_monitoring_kibana_conf_file: elk-monitoring/kibana-conf.json
+elk_monitoring_retention: 7
+elk_monitoring_curator_config_file: elk-monitoring/curator-conf.yml
+elk_monitoring_cluster_name: monitoring
+
+logstash_heap_size: 1024m
 
 prometheus_scale: 1
+prometheus_retention: 7d
 alertmanager_config_file: prometheus/alertmanager.conf
 prometheus_rule_files:
   - prometheus/infra-prometheus-rules.conf
@@ -26,6 +34,8 @@ prometheus_rule_files:
 
 prometheus_grafana_datasources:
   - prometheus/prometheus-datasource.json
+
+prometheus_grafana_notifications: []
 
 prometheus_grafana_dashboards:
   - prometheus/hosts.json
@@ -38,6 +48,16 @@ prometheus_grafana_dashboards:
   - prometheus/events.json
   - prometheus/jvm-overview.json
 
+prometheus_federation_rule_files:
+  - prometheus/infra-prometheus-rules.conf
+
+prometheus_federation_grafana_dashboards:
+  - prometheus/hosts.json
+  - prometheus/hosts-extended.json
+  - prometheus/docker.json
+  - prometheus/jvm-overview.json
+
+curator_logging_format: json
 curator_cron_pattern: 0 22 * * *
 
 elasticsearch_template_files:
@@ -53,7 +73,10 @@ curator_config_file: elasticsearch/curator-conf.yml
 
 elasticsearch_license_file: ""
 
-elasticsearch_version: 6.0.1
+elasticsearch_version: 6.2.0
+elasticsearch_refresh_interval: 30s
+elasticsearch_nb_replicas: 1
+elasticsearch_plugins_name: []
 
 importer_version: 1.0.0-SNAPSHOT
 
@@ -94,6 +117,8 @@ monitoring_from: '{{normalized_project_name}}-prometheus@mydomain.com'
 monitoring_from_sender: '{{normalized_project_name}} Monitoring'
 monitoring_recipient: 'someone@mydomain.com'
 monitoring_grafana_admin_password: 'admin'
+
+use_prometheus_federation: false
 
 # endpoints url
 endpoints_protocol: http
