@@ -13,29 +13,12 @@
     "gnetId": null,
     "graphTooltip": 0,
     "hideControls": false,
-    "links": [
-      {
-        "icon": "external link",
-        "tags": [],
-        "title": "Prometheus Node Exporter",
-        "tooltip": "Exporter for machine metrics",
-        "type": "link",
-        "url": "https://github.com/prometheus/node_exporter"
-      },
-      {
-        "icon": "external link",
-        "tags": [],
-        "title": "Prometheus Rancher Exporter",
-        "tooltip": "Exposes Rancher metrics to Prometheus",
-        "type": "link",
-        "url": "https://github.com/infinityworksltd/prometheus-rancher-exporter"
-      }
-    ],
+    "links": [],
     "refresh": "30s",
     "rows": [
       {
         "collapse": false,
-        "height": "100px",
+        "height": "160px",
         "panels": [
           {
             "content": "# Host Metrics \nThis dashboard shows host level metrics gathered from prometheus. Prometheus in turn scrapes the data from the node-exporter scripts deployed as part of the template. You should be able to dynamically adjust the scope of the graphs using the templating above.",
@@ -44,10 +27,151 @@
             "id": 26,
             "links": [],
             "mode": "markdown",
-            "span": 12,
+            "span": 9,
             "title": "",
             "transparent": true,
             "type": "text"
+          },
+          {
+            "columns": [],
+            "datasource": "prometheus",
+            "fontSize": "100%",
+            "id": 27,
+            "links": [],
+            "minSpan": 3,
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+              "col": 0,
+              "desc": true
+            },
+            "span": 3,
+            "styles": [
+              {
+                "alias": "Time",
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "pattern": "Time",
+                "type": "hidden"
+              },
+              {
+                "alias": "Host name",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "instance",
+                "thresholds": [],
+                "type": "string",
+                "unit": "short"
+              },
+              {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "job",
+                "thresholds": [],
+                "type": "hidden",
+                "unit": "short"
+              },
+              {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "name",
+                "thresholds": [],
+                "type": "hidden",
+                "unit": "short"
+              },
+              {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "service_name",
+                "thresholds": [],
+                "type": "hidden",
+                "unit": "short"
+              },
+              {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "pattern": "stack_name",
+                "thresholds": [],
+                "type": "hidden",
+                "unit": "short"
+              },
+              {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 1,
+                "pattern": "Value",
+                "thresholds": [],
+                "type": "number",
+                "unit": "s"
+              },
+              {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(237, 129, 40, 0.89)",
+                  "rgba(50, 172, 45, 0.97)"
+                ],
+                "decimals": 2,
+                "pattern": "/.*/",
+                "thresholds": [],
+                "type": "number",
+                "unit": "short"
+              }
+            ],
+            "targets": [
+              {
+                "expr": "node_time{instance=~\"$$node\"} - node_boot_time{instance=~\"$$node\"}",
+                "format": "table",
+                "hide": false,
+                "instant": true,
+                "intervalFactor": 2,
+                "refId": "A"
+              }
+            ],
+            "title": "Host uptime",
+            "transform": "table",
+            "type": "table"
           }
         ],
         "repeat": null,
@@ -70,6 +194,8 @@
               "10.196.94.48:9100": "#EAB839"
             },
             "bars": false,
+            "dashLength": 10,
+            "dashes": false,
             "datasource": "prometheus",
             "editable": true,
             "error": false,
@@ -137,6 +263,7 @@
             "type": "graph",
             "x-axis": true,
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -181,6 +308,8 @@
           {
             "aliasColors": {},
             "bars": false,
+            "dashLength": 10,
+            "dashes": false,
             "datasource": "prometheus",
             "decimals": 0,
             "editable": true,
@@ -250,6 +379,7 @@
             "type": "graph",
             "x-axis": true,
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -294,6 +424,8 @@
           {
             "aliasColors": {},
             "bars": false,
+            "dashLength": 10,
+            "dashes": false,
             "datasource": "prometheus",
             "editable": true,
             "error": false,
@@ -326,14 +458,15 @@
             "renderer": "flot",
             "seriesOverrides": [],
             "span": 6,
-            "stack": true,
+            "stack": false,
             "steppedLine": false,
             "targets": [
               {
                 "calculatedInterval": "2s",
                 "datasourceErrors": {},
                 "errors": {},
-                "expr": "node_memory_MemAvailable{instance=~\"$$node\"} / 1048576",
+                "expr": "node_memory_MemAvailable{instance=~\"$$node\"}",
+                "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "{{instance}}",
                 "metric": "",
@@ -349,12 +482,13 @@
             "tooltip": {
               "msResolution": true,
               "shared": true,
-              "sort": 0,
-              "value_type": "cumulative"
+              "sort": 1,
+              "value_type": "individual"
             },
             "type": "graph",
             "x-axis": true,
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -367,7 +501,7 @@
             ],
             "yaxes": [
               {
-                "format": "short",
+                "format": "decbytes",
                 "label": null,
                 "logBase": 1,
                 "max": null,
@@ -387,6 +521,8 @@
           {
             "aliasColors": {},
             "bars": false,
+            "dashLength": 10,
+            "dashes": false,
             "datasource": "prometheus",
             "editable": true,
             "error": false,
@@ -419,14 +555,15 @@
             "renderer": "flot",
             "seriesOverrides": [],
             "span": 6,
-            "stack": true,
+            "stack": false,
             "steppedLine": false,
             "targets": [
               {
                 "calculatedInterval": "2s",
                 "datasourceErrors": {},
                 "errors": {},
-                "expr": "node_memory_Committed_AS{instance=~\"$$node\"} / 1048576",
+                "expr": "node_memory_Committed_AS{instance=~\"$$node\"}",
+                "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "{{instance}}",
                 "metric": "",
@@ -443,12 +580,13 @@
             "tooltip": {
               "msResolution": true,
               "shared": true,
-              "sort": 0,
+              "sort": 1,
               "value_type": "cumulative"
             },
             "type": "graph",
             "x-axis": true,
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -461,7 +599,7 @@
             ],
             "yaxes": [
               {
-                "format": "short",
+                "format": "decbytes",
                 "label": null,
                 "logBase": 1,
                 "max": null,
@@ -771,7 +909,7 @@
             "points": false,
             "renderer": "flot",
             "seriesOverrides": [],
-            "span": 6,
+            "span": 4,
             "stack": false,
             "steppedLine": false,
             "targets": [
@@ -855,7 +993,8 @@
               "current": false,
               "max": false,
               "min": false,
-              "show": false,
+              "rightSide": true,
+              "show": true,
               "total": false,
               "values": false
             },
@@ -868,20 +1007,16 @@
             "points": false,
             "renderer": "flot",
             "seriesOverrides": [],
-            "span": 6,
-            "stack": true,
+            "span": 8,
+            "stack": false,
             "steppedLine": false,
             "targets": [
               {
-                "calculatedInterval": "2m",
-                "datasourceErrors": {},
-                "errors": {},
-                "expr": "node_filesystem_free{instance=~\"$$node\",mountpoint=\"/\"}",
+                "expr": "node_filesystem_free{instance=~\"$$node\",mountpoint=~\"/rootfs/.*\"}",
+                "format": "time_series",
                 "intervalFactor": 2,
-                "metric": "",
-                "prometheusLink": "http://10.196.94.100:9090/graph#%5B%7B%22expr%22%3A%22node_filesystem_free%7Binstance%3D%5C%2210.196.94.100%3A9100%5C%22%2Cmountpoint%3D%5C%22%2F%5C%22%7D%22%2C%22range_input%22%3A%2286400s%22%2C%22end_input%22%3A%222016-1-7%2014%3A58%22%2C%22step_input%22%3A%22%22%2C%22stacked%22%3Afalse%2C%22tab%22%3A0%7D%5D",
-                "refId": "A",
-                "step": 10
+                "legendFormat": "{{instance}} - {{fstype}} - {{mountpoint}}",
+                "refId": "B"
               }
             ],
             "thresholds": [],
@@ -897,6 +1032,7 @@
             "type": "graph",
             "x-axis": true,
             "xaxis": {
+              "buckets": null,
               "mode": "time",
               "name": null,
               "show": true,
@@ -909,7 +1045,7 @@
             ],
             "yaxes": [
               {
-                "format": "short",
+                "format": "decbytes",
                 "label": null,
                 "logBase": 1,
                 "max": null,

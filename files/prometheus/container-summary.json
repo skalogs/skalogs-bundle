@@ -24,6 +24,30 @@
     "rows": [
       {
         "collapse": false,
+        "height": 50,
+        "panels": [
+          {
+            "content": "<h1><center>NAME_PROJECT environment</center></h1>",
+            "height": "50",
+            "id": 24,
+            "links": [],
+            "minSpan": 12,
+            "mode": "html",
+            "span": 12,
+            "title": "",
+            "transparent": false,
+            "type": "text"
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Env Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
         "height": "150px",
         "panels": [
           {
@@ -74,7 +98,7 @@
                 "to": "null"
               }
             ],
-            "span": 3,
+            "span": 2,
             "sparkline": {
               "fillColor": "rgba(31, 118, 189, 0.18)",
               "full": true,
@@ -184,6 +208,76 @@
             "colorBackground": false,
             "colorValue": true,
             "colors": [
+              "#299c46",
+              "#65c5db",
+              "#d44a3a"
+            ],
+            "datasource": "prometheus",
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "id": 25,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "span": 2,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "",
+            "targets": [
+              {
+                "expr": "sum(rancher_host_state)",
+                "format": "time_series",
+                "hide": false,
+                "intervalFactor": 2,
+                "refId": "A"
+              }
+            ],
+            "thresholds": "0",
+            "title": "Total host",
+            "type": "singlestat",
+            "valueFontSize": "110%",
+            "valueMaps": [],
+            "valueName": "avg"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": true,
+            "colors": [
               "rgba(245, 54, 54, 0.9)",
               "#ef843c",
               "rgba(50, 172, 45, 0.97)"
@@ -239,7 +333,7 @@
             "tableColumn": "",
             "targets": [
               {
-                "expr": "100 * (sum(rancher_host_state{state=\"active\"}) - sum(rancher_host_agent_state{state!=\"active\"})) / sum(rancher_host_state{state=\"active\"})",
+                "expr": "100 * sum(rancher_host_state{state=\"active\"}) / sum(rancher_host_state)",
                 "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "",
@@ -312,7 +406,7 @@
                 "to": "null"
               }
             ],
-            "span": 3,
+            "span": 2,
             "sparkline": {
               "fillColor": "rgba(31, 118, 189, 0.18)",
               "full": true,
@@ -448,6 +542,254 @@
             ]
           },
           {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+              "#d44a3a",
+              "rgba(237, 129, 40, 0.89)",
+              "#299c46"
+            ],
+            "datasource": "prometheus",
+            "description": "ALive test can be UP or DOWN",
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "hideTimeOverride": true,
+            "id": 22,
+            "interval": null,
+            "links": [],
+            "mappingType": 2,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "Test's DOWN",
+                "to": "null"
+              },
+              {
+                "from": "0",
+                "text": "Test's UP",
+                "to": "200"
+              }
+            ],
+            "span": 2,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "Value",
+            "targets": [
+              {
+                "expr": "sum(irate(alive_hit [30s]))",
+                "format": "time_series",
+                "hide": false,
+                "instant": false,
+                "intervalFactor": 2,
+                "refId": "A"
+              }
+            ],
+            "thresholds": "",
+            "timeFrom": "30s",
+            "timeShift": null,
+            "title": "Alive test - State",
+            "type": "singlestat",
+            "valueFontSize": "100%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "Test's up",
+                "value": "0.2"
+              },
+              {
+                "op": "=",
+                "text": "Test's down",
+                "value": "null"
+              }
+            ],
+            "valueName": "current"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": true,
+            "colorValue": false,
+            "colors": [
+              "#299c46",
+              "rgba(237, 129, 40, 0.89)",
+              "#d44a3a"
+            ],
+            "datasource": "prometheus",
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "hideTimeOverride": true,
+            "id": 23,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": " retry",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "span": 2,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "",
+            "targets": [
+              {
+                "expr": "sum(alive_retry)",
+                "format": "time_series",
+                "intervalFactor": 2,
+                "refId": "A"
+              }
+            ],
+            "thresholds": "1,2",
+            "timeFrom": "30s",
+            "timeShift": null,
+            "title": "Alive test - Average retry number",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+              }
+            ],
+            "valueName": "avg"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+              "#299c46",
+              "rgba(237, 129, 40, 0.89)",
+              "#d44a3a"
+            ],
+            "datasource": "prometheus",
+            "decimals": null,
+            "format": "ms",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": true,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "id": 21,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "span": 3,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "",
+            "targets": [
+              {
+                "expr": "sum(alive_search_duration)",
+                "format": "time_series",
+                "intervalFactor": 2,
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "thresholds": "50,75",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Alive test - Average search duration",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+              }
+            ],
+            "valueName": "avg"
+          },
+          {
             "aliasColors": {},
             "bars": false,
             "dashLength": 10,
@@ -474,12 +816,12 @@
             "renderer": "flot",
             "seriesOverrides": [],
             "spaceLength": 10,
-            "span": 12,
+            "span": 5,
             "stack": false,
             "steppedLine": false,
             "targets": [
               {
-                "expr": "100 * (sum(rancher_host_state{state=\"active\"}) - sum(rancher_host_agent_state{state!=\"active\"})) / sum(rancher_host_state{state=\"active\"})",
+                "expr": "100 * sum(rancher_host_state{state=\"active\"}) / sum(rancher_host_state)",
                 "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "Disponibilty",

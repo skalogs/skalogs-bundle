@@ -9,7 +9,7 @@ services:
     tty: true
     environment:
       HIDE_SYS: 'false'
-    image: infinityworks/prometheus-rancher-exporter:v0.22.93
+    image: christophefromparis/prometheus-rancher-exporter:v0.23
 
   prometheus-config:
     image: adopteunops/rancher-prometheus-config:latest
@@ -30,8 +30,9 @@ services:
     - --web.console.libraries=/etc/prometheus/console_libraries
     - --web.console.templates=/etc/prometheus/consoles
     - --web.external-url={{endpoints_protocol}}://{{monitoring_prometheus_url}}
+    - --storage.tsdb.retention={{ prometheus_retention }}
     tty: true
-    image: prom/prometheus:v2.0.0
+    image: prom/prometheus:v2.1.0
     links:
     - cadvisor:cadvisor
     - prometheus-rancher-exporter:prometheus-rancher-exporter
@@ -74,6 +75,7 @@ services:
     - grafana:grafana
     labels:
       io.rancher.container.start_once: 'true'
+      io.rancher.container.pull_image: always
 
   alertmanager-config:
     image: adopteunops/rancher-prometheus-alertmanager-config:latest
@@ -110,7 +112,7 @@ services:
     - --path.sysfs
     - /host/sys
     - --collector.filesystem.ignored-fs-types
-    - ^(aufs|proc|nsfs|shm|cgroup|tmpfs)
+    - ^(aufs|proc|nsfs|shm|cgroup|tmpfs|binfmt_misc|debugfs|devpts|fusectl|hugetlbfs|fuse.lxcfs|mqueue|pstore|securityfs|sysfs|autofs|devtmpfs|configfs)
     image: prom/node-exporter:v0.15.2
     stdin_open: true
 

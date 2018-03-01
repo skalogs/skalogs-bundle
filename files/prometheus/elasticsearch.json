@@ -351,7 +351,7 @@
                 "step": 60
               }
             ],
-            "thresholds": "",
+            "thresholds": "33,66",
             "title": "Active Shards",
             "type": "singlestat",
             "valueFontSize": "80%",
@@ -425,7 +425,7 @@
             "tableColumn": "",
             "targets": [
               {
-                "expr": "es_cluster_shards_number{cluster=\"$$cluster\", type=\"active\"}",
+                "expr": "sum(es_cluster_shards_number{cluster=\"$$cluster\", type=\"active\"})",
                 "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "",
@@ -506,7 +506,7 @@
             "tableColumn": "",
             "targets": [
               {
-                "expr": "es_cluster_shards_number{cluster=\"$$cluster\", type=\"active_primary\"}",
+                "expr": "sum(es_cluster_shards_number{cluster=\"$$cluster\", type=\"active_primary\"})",
                 "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "",
@@ -587,7 +587,7 @@
             "tableColumn": "",
             "targets": [
               {
-                "expr": "es_cluster_shards_number{cluster=\"$$cluster\", type=\"initializing\"}",
+                "expr": "sum(es_cluster_shards_number{cluster=\"$$cluster\", type=\"initializing\"})",
                 "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "",
@@ -668,7 +668,7 @@
             "tableColumn": "",
             "targets": [
               {
-                "expr": "es_cluster_shards_number{cluster=\"$$cluster\", type=\"unassigned\"}",
+                "expr": "sum(es_cluster_shards_number{cluster=\"$$cluster\", type=\"unassigned\"})",
                 "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "",
@@ -749,7 +749,7 @@
             "tableColumn": "",
             "targets": [
               {
-                "expr": "es_cluster_shards_number{cluster=\"$$cluster\", type=\"relocating\"}",
+                "expr": "sum(es_cluster_shards_number{cluster=\"$$cluster\", type=\"relocating\"})",
                 "format": "time_series",
                 "intervalFactor": 2,
                 "legendFormat": "",
