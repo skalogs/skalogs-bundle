@@ -1,1 +1,1 @@
- {"_index":".kibana","_type":"doc","_id":"index-pattern:{{ elasticsearch_cluster_name }}-*","_source":{"type":"index-pattern","index-pattern":{"title":"{{ elasticsearch_cluster_name }}-*","timeFieldName":"@timestamp","notExpandable":true}}}
+{{ elasticsearch_cluster_name }}-* @timestamp

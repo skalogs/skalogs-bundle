@@ -1,3 +1,9 @@
+network.host: 0.0.0.0
+
+# minimum_master_nodes need to be explicitly set when bound on a public IP
+# set to 1 to allow single node clusters
+# Details: https://github.com/elastic/elasticsearch/pull/17288
+discovery.zen.minimum_master_nodes: 1
 action.auto_create_index: "+.*,+{{elasticsearch_cluster_name}}-*"
 
 # perf
@@ -13,18 +19,26 @@ indices.recovery.max_bytes_per_sec: 1gb
 
 # audit
 xpack.security.audit.enabled: true
-xpack.security.audit.outputs: [logfile]
+xpack.security.audit.outputs: [index]
+xpack.security.audit.index.client.hosts: "elk-monitoring.rancher.internal:9300"
+xpack.security.audit.index.client.cluster.name: monitoring
+xpack.security.audit.index.client.xpack.security.user: "{{ elasticsearch_svcadmin_username }}:{{ elasticsearch_svcadmin_password }}"
+#xpack.security.audit.index.bulk_size: 1000
+xpack.security.audit.index.flush_interval: 5s
 
 # xpack monitoring
 xpack.monitoring.exporters.id1.type: http
 xpack.monitoring.exporters.id1.host: ["elk-monitoring.rancher.internal:9200"]
-xpack.monitoring.exporters.id1.connection.keep_alive: true
+#xpack.monitoring.exporters.id1.connection.keep_alive: true
 xpack.monitoring.exporters.id1.connection.timeout: 6s
 xpack.monitoring.exporters.id1.connection.read_timeout: 60s
 xpack.monitoring.exporters.id1.auth.username: "{{ elasticsearch_svcadmin_username }}"
 xpack.monitoring.exporters.id1.auth.password: "{{ elasticsearch_svcadmin_password }}"
 
 # watcher
-xpack.notification.email.default_account: default
-xpack.notification.email.account.default.email_defaults.from: "{{smtp_from}}"
-xpack.notification.email.account.default.smtp.host: "{{smtp_host}}"
+xpack.notification.email.default_account: alerting
+xpack.notification.email.account.alerting.email_defaults.from: "{{smtp_from}}"
+xpack.notification.email.account.alerting.smtp.host: "{{smtp_host}}"
+xpack.notification.slack.account.monitoring.url: https://hooks.slack.com/services/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
+xpack.notification.slack.account.monitoring.message_defaults.from: ES Watcher
+xpack.notification.slack.account.monitoring.message_defaults.attachment.title: ES Watcher notifications

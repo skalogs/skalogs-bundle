@@ -7,14 +7,13 @@ services:
         network_mode: none
         image: adopteunops/elasticsearch-rancher-config:latest
     elasticsearch-master-sysctl:
-        labels:
-            io.rancher.container.start_once: true
         network_mode: none
         image: rawmind/alpine-sysctl:0.1
         privileged: true
         environment:
             - "SYSCTL_KEY=vm.max_map_count"
             - "SYSCTL_VALUE=262144"
+            - "KEEP_ALIVE=1"
     elasticsearch-master:
         labels:
             io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
@@ -58,15 +57,13 @@ services:
         network_mode: none
         image: adopteunops/elasticsearch-rancher-config:latest
     elasticsearch-data-sysctl:
-        labels:
-            io.rancher.container.start_once: true
-            io.rancher.container.pull_image: always
         network_mode: none
         image: rawmind/alpine-sysctl:0.1
         privileged: true
         environment:
             - "SYSCTL_KEY=vm.max_map_count"
             - "SYSCTL_VALUE=262144"
+            - "KEEP_ALIVE=1"
     elasticsearch-data:
         labels:
             io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
@@ -112,14 +109,13 @@ services:
         network_mode: none
         image: adopteunops/elasticsearch-rancher-config:latest
     elasticsearch-client-sysctl:
-        labels:
-            io.rancher.container.start_once: true
         network_mode: none
         image: rawmind/alpine-sysctl:0.1
         privileged: true
         environment:
             - "SYSCTL_KEY=vm.max_map_count"
             - "SYSCTL_VALUE=262144"
+            - "KEEP_ALIVE=1"
     elasticsearch-client:
         labels:
             io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
@@ -190,8 +186,10 @@ services:
         CRON_EXPR: {{curator_cron_pattern}}
         SERVICE_ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
         SERVICE_ELASTICSEARCH_PASSWORD: {{ elasticsearch_svcadmin_password }}
-      image: adopteunops/elasticsearch-curator:5.4.1
+        SERVICE_CURATOR_LOGGING_FORMAT: {{ curator_logging_format }}
+      image: adopteunops/elasticsearch-curator:latest
       labels:
+        io.rancher.container.pull_image: always
         io.rancher.scheduler.affinity:host_label: role=monitoring
         logspout.exclude: 'true'
       tty: true

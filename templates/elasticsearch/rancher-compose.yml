@@ -17,7 +17,12 @@ services:
       elasticsearch-config: |
 {{ lookup('template', elasticsearch_conf_file) | indent(8, True) }}
 
-
+{% if elasticsearch_plugins_name | length > 0 %}
+      elasticsearch-plugins: |
+{% for plugin in elasticsearch_plugins_name %}
+        {{plugin}}
+{% endfor %}
+{% endif %}
   elasticsearch-data:
     scale: {{initial_data_nodes}}
     retain_ip: true
@@ -34,6 +39,12 @@ services:
       elasticsearch-config: |
 {{ lookup('template', elasticsearch_conf_file) | indent(8, True) }}
 
+{% if elasticsearch_plugins_name | length > 0 %}
+      elasticsearch-plugins: |
+{% for plugin in elasticsearch_plugins_name %}
+        {{plugin}}
+{% endfor %}
+{% endif %}
   elasticsearch-client:
     scale: {{initial_client_nodes}}
     retain_ip: true
@@ -50,6 +61,12 @@ services:
       elasticsearch-config: |
 {{ lookup('template', elasticsearch_conf_file) | indent(8, True) }}
 
+{% if elasticsearch_plugins_name | length > 0 %}
+      elasticsearch-plugins: |
+{% for plugin in elasticsearch_plugins_name %}
+        {{plugin}}
+{% endfor %}
+{% endif %}
   elasticsearch-setup:
     metadata:
       templates: |

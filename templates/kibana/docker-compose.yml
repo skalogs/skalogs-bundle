@@ -14,6 +14,8 @@ services:
     tty: true
     image: {{docker_elastic_repo}}/kibana/kibana:{{elasticsearch_version}}
     stdin_open: true
+    ports:
+    - 5601:5601
 
   kibana-setup:
     environment:
@@ -23,7 +25,7 @@ services:
       DEFAULT_INDEX_PATTERN: "{{elasticsearch_cluster_name}}-*"
     external_links:
     - elasticsearch/elasticsearch-client:elasticsearch
-    image: adopteunops/elasticdump-rancher:latest
+    image: adopteunops/kibana-rancher-setup:0.1.4
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.start_once: true

@@ -16,5 +16,5 @@ services:
 
   kibana-setup:
     metadata:
-      elasticdump: |
+      index-pattern: |
 {{ lookup('template', elasticsearch_kibana_conf_file) | indent(8, True) }}

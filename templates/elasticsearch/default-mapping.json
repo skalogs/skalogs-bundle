@@ -17,9 +17,9 @@
       "search.slowlog.threshold.query.info": "5s",
       "search.slowlog.threshold.query.trace": "500ms",
       "search.slowlog.threshold.query.warn": "10s",
-      "refresh_interval": "30s",
+      "refresh_interval": "{{elasticsearch_refresh_interval}}",
       "number_of_shards": "5",
-      "number_of_replicas": "1",
+      "number_of_replicas": "{{elasticsearch_nb_replicas}}",
       "codec": "best_compression",
       "merge.scheduler.max_thread_count": 1,
       "priority": "5",
@@ -190,9 +190,6 @@
           }
         }
       ],
-      "_all": {
-        "enabled": false
-      },
       "properties": {
         "timestamp": {
           "type": "date",

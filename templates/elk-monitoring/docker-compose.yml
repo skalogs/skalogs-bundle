@@ -6,14 +6,13 @@ services:
       logspout.exclude: 'true'
     image: adopteunops/elasticsearch-rancher-config:latest
   elasticsearch-sysctl:
-        labels:
-            io.rancher.container.start_once: true
         network_mode: none
         image: rawmind/alpine-sysctl:0.1
         privileged: true
         environment:
             - "SYSCTL_KEY=vm.max_map_count"
             - "SYSCTL_VALUE=262144"
+            - "KEEP_ALIVE=1"
   elasticsearch:
     labels:
       io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
@@ -22,7 +21,7 @@ services:
       io.rancher.scheduler.affinity:host_label: role=monitoring
       logspout.exclude: 'true'
     environment:
-      - "cluster.name=monitoring"
+      - "cluster.name={{elk_monitoring_cluster_name}}"
       - "node.name=$${HOSTNAME}"
       - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms{{elk_monitoring_heap_size}} -Xmx{{elk_monitoring_heap_size}}"
@@ -76,6 +75,10 @@ services:
       io.rancher.scheduler.affinity:host_label: role=monitoring
       logspout.exclude: 'true'
   logstash-indexer:
+    environment:
+      XPACK_MONITORING_ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
+      XPACK_MONITORING_ELASTICSEARCH_PASSWORD: {{ elasticsearch_svcadmin_password }}
+      LS_JAVA_OPTS: -Xms{{ logstash_heap_size }} -Xmx{{ logstash_heap_size }}
     restart: always
     tty: true
     volumes_from:
@@ -102,6 +105,10 @@ services:
       io.rancher.container.hostname_override: container_name
       logspout.exclude: 'true'
   logstash-collector:
+    environment:
+      XPACK_MONITORING_ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
+      XPACK_MONITORING_ELASTICSEARCH_PASSWORD: {{ elasticsearch_svcadmin_password }}
+      LS_JAVA_OPTS: -Xms{{ logstash_heap_size }} -Xmx{{ logstash_heap_size }}
     restart: always
     tty: true
     links:
@@ -121,7 +128,6 @@ services:
       io.rancher.sidekicks: logstash-collector-config
       io.rancher.scheduler.global: 'true'
       io.rancher.container.hostname_override: container_name
-      io.rancher.scheduler.affinity:host_label: role=monitoring
       logspout.exclude: 'true'
 
   logspout:
@@ -148,9 +154,11 @@ services:
     environment:
       SERVICE_ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
       SERVICE_ELASTICSEARCH_PASSWORD: {{ elasticsearch_svcadmin_password }}
+      SERVICE_CURATOR_LOGGING_FORMAT: {{ curator_logging_format }}
       CRON_EXPR: {{curator_cron_pattern}}
-    image: adopteunops/elasticsearch-curator:5.4.1
+    image: adopteunops/elasticsearch-curator:latest
     labels:
+      io.rancher.container.pull_image: always
       io.rancher.scheduler.affinity:host_label: role=monitoring
       logspout.exclude: 'true'
     tty: true
@@ -175,7 +183,7 @@ services:
       SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
       ELASTICSEARCH_VERSION: "{{elasticsearch_version}}"
       DEFAULT_INDEX_PATTERN: "logstash-*"
-    image: adopteunops/elasticdump-rancher:latest
+    image: adopteunops/kibana-rancher-setup:0.1.4
     labels:
       io.rancher.container.pull_image: always
       io.rancher.scheduler.affinity:host_label: role=monitoring
@@ -184,8 +192,23 @@ services:
     tty: true
     stdin_open: true
     links:
-    - "elasticsearch:"
+    - 'elasticsearch:'
+    - 'kibana:'
 
+  elasticsearch-prometheus-exporter:
+      environment:
+        ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
+        ELASTICSEARCH_PASSWORD: {{ elasticsearch_svcadmin_password }}
+        ELASTICSEARCH_CLUSTER: {{ elk_monitoring_cluster_name }}
+      labels:
+        com.prometheus.monitoring: true
+        com.prometheus.port: 7979
+        io.rancher.container.pull_image: always
+      tty: true
+      image: adopteunops/elasticsearch-prometheus-exporter:1.0-SNAPSHOT
+      links:
+      - elasticsearch:elasticsearch
+      stdin_open: true
 
 volumes:
   elasticsearch-volume:

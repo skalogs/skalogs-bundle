@@ -1,1 +1,2 @@
-{"_index":".kibana","_type":"doc","_id":"index-pattern:logstash-*","_source":{"type": "index-pattern", "index-pattern": {"title":"logstash-*","timeFieldName":"timestamp","notExpandable":true}}}
+logstash-* @timestamp
+.security_audit_log-* @timestamp
