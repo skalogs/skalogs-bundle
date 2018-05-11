@@ -5,6 +5,7 @@ services:
       ELASTICSEARCH_USERNAME: "{{ elasticsearch_svckibana_username }}"
       ELASTICSEARCH_PASSWORD: "{{ elasticsearch_svckibana_password }}"
       ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_PORT: 9300
     external_links:
     - elasticsearch/elasticsearch-client:elasticsearch
     labels:

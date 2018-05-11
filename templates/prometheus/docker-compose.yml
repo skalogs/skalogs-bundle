@@ -9,7 +9,7 @@ services:
     tty: true
     environment:
       HIDE_SYS: 'false'
-    image: christophefromparis/prometheus-rancher-exporter:v0.23
+    image: infinityworks/prometheus-rancher-exporter:v0.22.94
 
   prometheus-config:
     image: adopteunops/rancher-prometheus-config:latest
@@ -43,6 +43,8 @@ services:
     volumes_from:
     - prometheus-config
     - prometheus-rancher-scraper
+    ports:
+      - 9090:9090
 
   grafana:
     ports:
@@ -51,7 +53,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.scheduler.affinity:host_label: role=monitoring
     tty: true
-    image: grafana/grafana:4.6.3
+    image: grafana/grafana:5.0.4
     environment:
       GF_SECURITY_ADMIN_PASSWORD: {{ monitoring_grafana_admin_password }}
       {% if smtp_enabled -%}
@@ -120,13 +122,14 @@ services:
     labels:
       io.rancher.scheduler.global: 'true'
     tty: true
-    image: google/cadvisor:v0.28.3
+    image: google/cadvisor:v0.29.0
     stdin_open: true
     volumes:
       - "/:/rootfs:ro"
       - "/var/run:/var/run:rw"
       - "/sys:/sys:ro"
       - "/var/lib/docker/:/var/lib/docker:ro"
+      - "/dev/disk/:/dev/disk:ro"
 
 volumes:
   prometheus-volume:

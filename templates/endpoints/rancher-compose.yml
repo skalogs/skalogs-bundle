@@ -65,14 +65,6 @@ services:
                  acl AuthOkay http_auth(L1)
                  http-request auth realm UserAuth if !AuthOkay
 
-        backend processimporter
-                 acl AuthOkay http_auth(L1)
-                 http-request auth realm UserAuth if !AuthOkay
-
-        backend admin
-                 acl AuthOkay http_auth(L1)
-                 http-request auth realm UserAuth if !AuthOkay
-
         #frontend http-frontend
         #  bind *:80
         #  mode http

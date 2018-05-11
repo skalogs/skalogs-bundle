@@ -1,0 +1,12 @@
+version: '2'
+services:
+  cartinject:
+    labels:
+        io.rancher.container.start_once: true
+    image: adopteunops/cartdemoinject:1.0.1
+    environment:
+      CART_FRONT_URL: http://35.189.243.136:8080
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always

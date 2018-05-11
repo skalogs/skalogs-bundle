@@ -200,6 +200,7 @@ services:
         ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
         ELASTICSEARCH_PASSWORD: {{ elasticsearch_svcadmin_password }}
         ELASTICSEARCH_CLUSTER: {{ elk_monitoring_cluster_name }}
+        ELASTICSEARCH_PORT: 9300
       labels:
         com.prometheus.monitoring: true
         com.prometheus.port: 7979

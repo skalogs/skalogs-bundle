@@ -1,0 +1,20 @@
+version: '2'
+services:
+  cartdemo:
+    image: adopteunops/cartdemo:1.0.1
+    environment:
+      MONGODB_CONNECTION_STRING: mongodb://mongo:27017/expresscart
+    stdin_open: true
+    external_links:
+    - mongo/mongo:mongo
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  cart:
+    image: rancher/lb-service-haproxy:v0.7.15
+    ports:
+    - 80:80/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin,agent
+      io.rancher.container.agent_service.drain_provider: 'true'
+      io.rancher.container.create_agent: 'true'

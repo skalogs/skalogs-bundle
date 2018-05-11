@@ -1,0 +1,23 @@
+version: '2'
+services:
+  logstash-collector:
+    metadata:
+      logstash:
+        inputs: |
+          udp {
+            port => 5000
+            codec => "json"
+          }
+        filters: |
+          if [time]{
+            mutate {
+                 copy => { "time" => "timestamp" }
+            }
+          }
+        outputs: |
+          kafka {
+            bootstrap_servers => "35.190.214.51:9092"
+            topic_id => "demo-cart"
+            codec => "json"
+          }
+          stdout { codec => rubydebug }

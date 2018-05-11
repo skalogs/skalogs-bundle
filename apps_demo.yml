@@ -1,0 +1,9 @@
+---
+- hosts: "{{ NAME_PROJECT}}[0]"
+  gather_facts: no
+  roles:
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: janitor, tags: [install-stack, janitor]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: mongo, tags: [install-stack, mongo]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: cart, tags: [install-stack, cart]}
+#  - {role: AdopteUnOps.rancher-install-stack, stack_name: cartinject, tags: [install-stack, cartinject]}
+  - {role: AdopteUnOps.rancher-install-stack, stack_name: cartlog, tags: [install-stack, cartlog]}

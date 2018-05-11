@@ -1,0 +1,25 @@
+version: '2'
+services:
+  cartdemo:
+    scale: 1
+    start_on_create: true
+  cart:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      certs: []
+      config: |-
+        global
+            userlist L1
+                user {{ admin_endpoint_user }} insecure-password {{ admin_endpoint_password }}
+
+        backend cart
+            acl AuthOkay http_auth(L1)
+            http-request auth realm UserAuth if !AuthOkay
+      port_rules:
+      - backend_name: cart
+        priority: 1
+        protocol: http
+        service: cartdemo
+        source_port: 80
+        target_port: 1111

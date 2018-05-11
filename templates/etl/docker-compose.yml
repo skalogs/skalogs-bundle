@@ -1,0 +1,92 @@
+version: '2'
+services:
+  etl-frontend:
+    image: skalogs/skaetl-frontend:{{etl_version}}
+    environment:
+      BACKEND: http://etl-backend:8090
+    stdin_open: true
+    tty: true
+    links:
+    - etl-backend:etl-backend
+    ports:
+    - 8083:5555/tcp
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+  etl-backend:
+    image: skalogs/skaetl-backend:{{etl_version}}
+    environment:
+      JAVA_OPTS: -Xms512m -Xmx512m
+      KAFKA_BOOTSTRAPSERVERS: kafka:9092
+      SPRING_PROFILES_ACTIVE: prod
+      IMPORTER_FULLURLSIMULATE: http://simulate:8084
+      ELASTICSEARCH_CLUSTERNAME: skalogs-demo
+      ELASTICSEARCH_CUSTOM_INDEX_PREFIX: skalogs-demo
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PASSWORD: changeme
+      ELASTICSEARCH_PORT: '9200'
+      ELASTICSEARCH_USERNAME: elastic
+      ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
+    stdin_open: true
+    external_links:
+    - kafka/kafka:kafka
+    - postgres/postgres:postgres
+    - prometheus/prometheus:prometheus
+    - zookeeper/zookeeper:zookeeper
+    tty: true
+    links:
+    - process-importer-simulator:simulate
+    ports:
+    - 8090:8090/tcp
+    labels:
+      com.prometheus.monitoring: 'true'
+      io.rancher.container.hostname_override: container_name
+      com.prometheus.port: '8090'
+      io.rancher.container.pull_image: always
+      com.prometheus.metricspath: /prometheus
+  process-importer-simulator:
+    image: skalogs/process-importer-simulator:{{etl_version}}
+    environment:
+      JAVA_OPTS: -Xms512m -Xmx512m
+      KAFKA_BOOTSTRAPSERVERS: kafka:9092
+      PROCESS_URL_REGISTRY: http://etl-backend:8090
+      ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
+    stdin_open: true
+    external_links:
+    - kafka/kafka:kafka
+    - zookeeper/zookeeper:zookeeper
+    - etl/etl-backend:etl-backend
+    tty: true
+    ports:
+    - 8084:8084/tcp
+    labels:
+      com.prometheus.monitoring: 'true'
+      io.rancher.container.hostname_override: container_name
+      com.prometheus.port: '8084'
+      io.rancher.container.pull_image: always
+      com.prometheus.metricspath: /prometheus
+  referential-importer:
+    mem_limit: 636870912
+    image: skalogs/referential-importer:{{etl_version}}
+    environment:
+      JAVA_OPTS: -Xms512m -Xmx512m
+      KAFKA_BOOTSTRAPSERVERS: kafka:9092
+      PROCESS_URL_REGISTRY: http://etl-backend:8090
+      SPRING_PROFILES_ACTIVE: prod
+      ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
+    stdin_open: true
+    external_links:
+    - zookeeper/zookeeper:zookeeper
+    - postgres/postgres:postgres
+    - kafka/kafka:kafka
+    tty: true
+    links:
+    - etl-backend:etl-backend
+    ports:
+    - 8082:8082/tcp
+    labels:
+      com.prometheus.monitoring: 'true'
+      io.rancher.container.hostname_override: container_name
+      com.prometheus.port: '8082'
+      io.rancher.container.pull_image: always
+      com.prometheus.metricspath: /prometheus

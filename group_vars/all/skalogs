@@ -1,0 +1,150 @@
+volume_driver: local
+
+elasticsearch_cluster_name: '{{normalized_project_name}}'
+
+master_heap_size: 512m
+master_mem_limit: 1073741824
+data_heap_size: 512m
+data_mem_limit: 1073741824
+client_heap_size: 512m
+client_mem_limit: 1073741824
+
+minimum_master_nodes: 1
+initial_data_nodes: 1
+initial_client_nodes: 1
+
+elk_monitoring_heap_size: 512m
+elk_monitoring_master_mem_limit: 1073741824
+elk_monitoring_minimum_master_nodes: 1
+elk_monitoring_conf_file: elk-monitoring/elasticsearch-conf.yml
+elk_monitoring_kibana_conf_file: elk-monitoring/kibana-conf.json
+elk_monitoring_retention: 7
+elk_monitoring_curator_config_file: elk-monitoring/curator-conf.yml
+elk_monitoring_cluster_name: monitoring
+
+logstash_heap_size: 1024m
+
+prometheus_scale: 1
+prometheus_retention: 7d
+alertmanager_config_file: prometheus/alertmanager.conf
+prometheus_rule_files:
+  - prometheus/infra-prometheus-rules.conf
+  - kafka/kafka-prometheus-rules.conf
+  - elasticsearch/elasticsearch-prometheus-rules.conf
+
+prometheus_grafana_datasources:
+  - prometheus/prometheus-datasource.json
+
+prometheus_grafana_notifications: []
+
+prometheus_grafana_dashboards:
+  - prometheus/hosts.json
+  - prometheus/hosts-extended.json
+  - prometheus/container-summary.json
+  - prometheus/docker.json
+  - prometheus/elasticsearch.json
+  - prometheus/elasticsearch-thread-pool.json
+  - prometheus/kafka.json
+  - prometheus/events.json
+  - prometheus/jvm-overview.json
+  - prometheus/prometheus.json
+
+prometheus_federation_rule_files:
+  - prometheus/infra-prometheus-rules.conf
+
+prometheus_federation_grafana_dashboards:
+  - prometheus/hosts.json
+  - prometheus/hosts-extended.json
+  - prometheus/docker.json
+  - prometheus/jvm-overview.json
+
+curator_logging_format: json
+curator_cron_pattern: 0 22 * * *
+
+elasticsearch_template_files:
+  - elasticsearch/default-mapping.json
+  - elasticsearch/packetbeat-dns.json
+  - elasticsearch/packetbeat-http.json
+
+elasticsearch_repository_files: []
+
+elasticsearch_kibana_conf_file: kibana/kibana-conf.json
+elasticsearch_conf_file: elasticsearch/elasticsearch-conf.yml
+curator_config_file: elasticsearch/curator-conf.yml
+
+elasticsearch_license_file: ""
+
+elasticsearch_version: 6.2.0
+elasticsearch_refresh_interval: 30s
+elasticsearch_nb_replicas: 1
+elasticsearch_plugins_name: []
+
+etl_version: 1.0.1-SNAPSHOT
+
+zookeeper_heap_size: 512m
+#should be 3 for clustering
+zookeeper_scale: 1
+
+kafka_scale: 1
+kafka_heap_size: 512m
+
+kafka_zookeeper_path: zookeeper:2181/kafka
+kafka_manager_zookeeper_path: zookeeper:2181
+
+kibana_scale: 1
+elasticsearch_svckibana_username: elastic
+elasticsearch_svckibana_password: changeme
+elasticsearch_svcadmin_username: "{{elasticsearch_svckibana_username}}"
+elasticsearch_svcadmin_password: "{{elasticsearch_svckibana_password}}"
+
+rancher_dns_root_domain: skalogs.com
+
+importer_heap_size: 512m
+importer_mem_limit: 636870912
+
+normalized_project_name: '{{NAME_PROJECT | lower }}'
+rancher_dns_subdomain_fqdn: '{{normalized_project_name}}.{{rancher_dns_root_domain}}'
+
+#SMTP
+smtp_enabled: false
+smtp_host: localhost
+smtp_port: 53
+smtp_auth_username: ""
+smtp_auth_password: ""
+smtp_from: ""
+
+# monitoring notification
+monitoring_from: '{{normalized_project_name}}-prometheus@mydomain.com'
+monitoring_from_sender: '{{normalized_project_name}} Monitoring'
+monitoring_recipient: 'someone@mydomain.com'
+monitoring_grafana_admin_password: 'admin'
+
+use_prometheus_federation: false
+
+# endpoints url
+endpoints_protocol: http
+monitoring_prometheus_url: 'prometheus-admin.{{ rancher_dns_subdomain_fqdn }}'
+monitoring_grafana_url: 'grafana-admin.{{rancher_dns_subdomain_fqdn}}'
+monitoring_alertmanager_url: 'alertmanager-admin.{{ rancher_dns_subdomain_fqdn }}'
+monitoring_kibana_url: 'kibana-admin.{{ rancher_dns_subdomain_fqdn }}'
+zookeeper_viewer_url: 'zookeeper-admin.{{ rancher_dns_subdomain_fqdn }}'
+kafka_manager_url: 'kafka-admin.{{ rancher_dns_subdomain_fqdn }}'
+importer_process_url: 'importer.{{ rancher_dns_subdomain_fqdn }}'
+etl_frontend_url: 'etl.{{ rancher_dns_subdomain_fqdn }}'
+
+enduser_kibana_url: 'kibana.{{rancher_dns_subdomain_fqdn}}'
+enduser_elasticsearch_url: 'elasticsearch-api.{{rancher_dns_subdomain_fqdn}}'
+kafka_endpoint_url: 'kafka.kafka.{{rancher_dns_subdomain_fqdn}}:9092'
+prometheus_endpoint_url: 'prometheus.prometheus.{{rancher_dns_subdomain_fqdn}}:9092'
+
+platform_support_email: 'monitoring@yourcompany.com'
+
+admin_endpoint_user: admin
+admin_endpoint_password: admin
+
+spring_mail_host: localhost
+spring_mail_port: 25
+spring_mail_username: ""
+spring_mail_password: ""
+spring_mail_properties_mail_smtp_auth: true
+spring_mail_properties_mail_smtp_starttls_enable: true

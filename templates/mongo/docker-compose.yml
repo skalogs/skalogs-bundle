@@ -1,0 +1,8 @@
+version: '2'
+services:
+  mongo:
+    image: mongo
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
