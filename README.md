@@ -2,21 +2,21 @@
 
 ## Foreword
 
-If you don't know yet rancher please read the official documentation http://docs.rancher.com/rancher/latest/en/.
+If you are not familiar with Rancher please read the official documentation http://docs.rancher.com/rancher/latest/en/.
 
-Rancher will be used to create segregated environments for each project instances.
+Rancher is used to create segregated environments for each project instances.
 
-Each environments should exists as "environments" in rancher (example: my-uat-project my-production-project ).
+Each environment should exist as "environments" in rancher (example: my-uat-project my-production-project ).
 Each rancher environment is segregated at network level via Docker Overlay and IPSec tunnels (managed by rancher itself).
 
 Only trusted ops can connect to the machines, unix accounts are managed by ansible.
 
-Developpers will not be allowed to access rancher by itself, rancher master will be accessible only for ops for the moment.
+Developpers will not be allowed to access rancher by itself, rancher master will only be accessible to ops for the moment.
 End users will have tools in their project to see their application logs & metrics (elk, prometheus).
 
 ### Machine requirements
 
-At the moment this set of playbooks is designed to be run on ubuntu. We recommend using latest LTS (16.04 at times of writing).
+At the moment this set of playbooks is designed to run on ubuntu. We recommend using latest LTS (16.04 at times of writing).
 
 Each host (including the master) must have at least the following requirements :
 * 2 vcpu
@@ -25,8 +25,8 @@ Each host (including the master) must have at least the following requirements :
 
 ### Exemple for test environments
 
-3 hosts per rancher environment :
-* one for monitoring (elk, prometheus)
+3 hosts per Rancher environment :
+* one for monitoring (ELK, Prometheus)
 * one for the cluster itself
 
 ## Playbooks documentation
@@ -47,10 +47,10 @@ ansible-galaxy install -r requirements.yml
 
 ### Rancher platforms
 
-Each rancher platform will have it's own configuration (inventory + group_vars + hosts_vars).
-By default wrappers will use production one.
+Each Rancher platform will have its own configuration (inventory + group_vars + hosts_vars).
+By default wrappers will use the production configuration.
 
-But you can use other ones changing inventory from the command line (everything is relative to the path of the inventory file).
+You can use other configurations by changing inventory from the command line (everything is relative to the path of the inventory file).
 ```
 ./ansible-playbook_wrapper configure_host.yml -K -i path/to/inventory
 
@@ -58,7 +58,7 @@ But you can use other ones changing inventory from the command line (everything 
 
 ### SSH configuration
 
-Copy the file `config_ssh.template` to `config_ssh` in this local folder
+Copy the file `config_ssh.template` to `config_ssh` in this local folder, 
 then edit `config_ssh` to configure it. The user must match a user declared
 in ssh_users list in `<rancher_cluster_name>/group_vars/all/vars`
 
@@ -71,11 +71,11 @@ ansible_sudo_pass: your_sudo_password
 
 Where your_sudo_password is the password declared in ssh_users list in `<rancher_cluster_name>/group_vars/all/vars`
 
-Please note that if you are using this mechanism, it will always be used, even if you are using `-k` or `-K`
+Note that if you are using this mechanism, it will always be used, even if you are using `-k` or `-K`
 
 ### Vault
 
-Please add the vault password in `ansible/.ansible_vault_pass`
+Add the vault password in `ansible/.ansible_vault_pass`
 
 ### Workflow to setup rancher from scratch
 
@@ -90,13 +90,13 @@ You can bootstrap the machine for the first time with the following command
 
 ``` /ansible-playbook_wrapper configure_host.yml -u your account -Kk ```
 
-This ansible install
+This ansible does the following :
 
-* Configure the kernel
-* Docker
-* Set machine hostname
-* Configure ssh (disable root login, enforce auth by key)
-* Remove the former ops account
+* Configures the kernel
+* Installs Docker
+* Sets machine hostname
+* Configures ssh (disable root login, enforce auth by key)
+* Removes the former ops account
 
 ###  Create a Master
 
@@ -132,12 +132,12 @@ Launch the playbook
 ./ansible-playbook_wrapper create_project.yml -K -e "NAME_PROJECT=my-first-environment-project"
 ```
 
-This ansible create :
+This ansible does the following :
 
-* A project into RANCHER
-* Create "API KEY ENVIRONMENT" into rancher and write into group_vars/{{NAME_PROJECT}}
-* Add Host into the project
-* Install some stacks : Janitor
+* Creates a project into RANCHER
+* Creates "API KEY ENVIRONMENT" into rancher and write into group_vars/{{NAME_PROJECT}}
+* Adds Host into the project
+* Installs some stacks : Janitor
 
 ### Create the project "collect-data"
 
@@ -152,12 +152,12 @@ Launch the playbook
 ./ansible-playbook_wrapper create_collect_data.yml -K -e "NAME_PROJECT=collect-data"
 ```
 
-This ansible create :
+This ansible does the following :
 
-* A project into RANCHER
-* Create "API KEY ENVIRONMENT" into rancher and write into group_vars/{{NAME_PROJECT}}
-* Add Host into the project
-* Install some stacks : 
+* Creates a project into RANCHER
+* Creates "API KEY ENVIRONMENT" into rancher and write into group_vars/{{NAME_PROJECT}}
+* Adds Host into the project
+* Installs stacks : 
      * Janitor
      * Elasticsearch
      * Zookeeper
@@ -166,7 +166,7 @@ This ansible create :
      * Kibana
      * Packetbeat-dashboard
      * Metricbeat-dashboard
-     * Elk-monitoring : for monitor your cluster
+     * Elk-monitoring (to monitor your cluster)
      * Prometheus
      * Endpoints
           
@@ -179,7 +179,7 @@ Launch the playbook
 ./ansible-playbook_wrapper create_project_demo.yml -K -e "NAME_PROJECT=demo"
 ```
 
-* Install some stacks : 
+* Installs stacks : 
     * demo-todo : application nodejs
     * demo-petclinic : application springboot
     * packetbeat : collect network informations from Host
@@ -188,7 +188,7 @@ Launch the playbook
 ## Disaster recovery
 
 If for some reason the host running rancher-master dies, application will remain up and running, so there is no impact.
-If after running troubleshooting steps you don't have any clue we recommend you to wipe the master machine spawn a new master with "create_master.yml" playbook and run mysql restore script (see above).
+After running troubleshooting steps, if you don't have any clue we recommend you to wipe the master machine and spawn a new master with "create_master.yml" playbook and run mysql restore script (see above).
 
 
 ### Quick cleanup procedure (optional)
@@ -222,17 +222,17 @@ If you want to restore a specific backup you can do
 ID_BUCKET_RESTORE=2016-07-21T133544Z.dump.sql.gz ./restore.sh
 ```
 
-## Upgrading rancher
+## Upgrading Rancher
 
-To upgrade rancher you just need to change the rancher_version version in group vars.
+To upgrade Rancher you just need to change the rancher_version version in group vars.
 Exemple: in production/group_vars/all/vars
 ```
 rancher_version: "v1.6.10"
 rancher_agent_version: "v1.2.6"
 ```
 
-We highly recommend to stick to a specific version for production rancher environment to make sure everything is repeatable.
+We highly recommend to stick to a specific version for production Rancher environment to make sure everything is repeatable.
 
 Then just run again the create_master.yml playbook.
 It will upgrade rancher-master smoothly.
-When rancher-master is up again it will contact environments host agents and update it if necessary, this operation is done by rancher itself.
+When rancher-master is up again it will contact environments host agents and update it if necessary, this operation is done by Rancher itself.
