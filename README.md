@@ -23,7 +23,7 @@ Each host (including the master) must have at least the following requirements :
 * 4 Go ram
 * 2 disks with one for the system with 12Go (8Go for / + 4Go for swap) and one for /var/lib/docker with 8Go.
 
-### Exemple for test environments
+### Example for test environments
 
 3 hosts per Rancher environment :
 * one for monitoring (ELK, Prometheus)
@@ -225,7 +225,7 @@ ID_BUCKET_RESTORE=2016-07-21T133544Z.dump.sql.gz ./restore.sh
 ## Upgrading Rancher
 
 To upgrade Rancher you just need to change the rancher_version version in group vars.
-Exemple: in production/group_vars/all/vars
+Example: in production/group_vars/all/vars
 ```
 rancher_version: "v1.6.10"
 rancher_agent_version: "v1.2.6"
