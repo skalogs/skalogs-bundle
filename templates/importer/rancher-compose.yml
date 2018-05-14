@@ -1,42 +1,50 @@
 version: '2'
 services:
-  retry-importer:
+  process-importer:
+    scale: 1
+    start_on_create: true
     health_check:
-      response_timeout: 2000
       healthy_threshold: 2
+      response_timeout: 2000
       port: 8080
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000
+  metric-importer:
+    scale: 1
+    start_on_create: true
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 2000
+      port: 8081
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000
+  error-importer:
+    scale: 1
+    start_on_create: true
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 2000
+      port: 8085
+      unhealthy_threshold: 3
+      initializing_timeout: 60000
+      interval: 2000
+      strategy: recreate
+      reinitializing_timeout: 60000
+  retry-importer:
+    scale: 1
+    start_on_create: true
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 2000
+      port: 8086
       unhealthy_threshold: 3
       initializing_timeout: 60000
       interval: 2000
       strategy: recreate
       reinitializing_timeout: 6000
-  error-importer:
-    health_check:
-      response_timeout: 2000
-      healthy_threshold: 2
-      port: 8080
-      unhealthy_threshold: 3
-      initializing_timeout: 60000
-      interval: 2000
-      strategy: recreate
-      reinitializing_timeout: 60000
-  process-importer:
-    health_check:
-      response_timeout: 2000
-      healthy_threshold: 2
-      port: 8080
-      unhealthy_threshold: 3
-      initializing_timeout: 60000
-      interval: 2000
-      strategy: recreate
-      reinitializing_timeout: 60000
-  admin:
-    health_check:
-      response_timeout: 2000
-      healthy_threshold: 2
-      port: 8090
-      unhealthy_threshold: 3
-      initializing_timeout: 60000
-      interval: 2000
-      strategy: recreate
-      reinitializing_timeout: 60000

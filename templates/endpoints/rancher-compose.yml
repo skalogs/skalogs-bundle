@@ -112,34 +112,13 @@ services:
         service: elk-monitoring/kibana
         source_port: 80
         target_port: 5601
-      - backend_name: processimporter
-        hostname: {{importer_process_url}}
+      - backend_name: etl
+        hostname: {{etl_frontend_url}}
         priority: 7
         protocol: http
-        service: "importer/process-importer"
+        service: "etl/etl-frontend"
         source_port: 80
-        target_port: 8080
-      - backend_name: adminimporter
-        hostname: {{admin_importer_url}}
-        priority: 8
-        protocol: http
-        service: "importer/admin"
-        source_port: 80
-        target_port: 8090
-      - backend_name: errorimporter
-        hostname: {{error_importer_url}}
-        priority: 9
-        protocol: http
-        service: "importer/error-importer"
-        source_port: 80
-        target_port: 8080
-      - backend_name: retryimporter
-        hostname: {{retry_importer_url}}
-        priority: 10
-        protocol: http
-        service: "importer/retry-importer"
-        source_port: 80
-        target_port: 8080
+        target_port: 5555
       #- hostname: '*'
       #  path: ''
       #  priority: 50
