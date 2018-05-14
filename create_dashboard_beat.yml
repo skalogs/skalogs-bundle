@@ -1,6 +1,0 @@
----
-- hosts: "{{ NAME_PROJECT}}[0]"
-  gather_facts: no
-  roles:
-  - {role: AdopteUnOps.rancher-install-stack, stack_name: packetbeat-dashboard, tags: [install-stack, packetbeat-dashboard]}
-  - {role: AdopteUnOps.rancher-install-stack, stack_name: metricbeat-dashboard, tags: [install-stack, metricbeat-dashboard]}
