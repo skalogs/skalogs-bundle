@@ -5,7 +5,7 @@ services:
             io.rancher.container.start_once: true
             io.rancher.container.pull_image: always
         network_mode: none
-        image: adopteunops/elasticsearch-rancher-config:latest
+        image: skalogs/elasticsearch-rancher-config:6.2
     elasticsearch-master-sysctl:
         network_mode: none
         image: rawmind/alpine-sysctl:0.1
@@ -55,7 +55,7 @@ services:
         labels:
             io.rancher.container.start_once: true
         network_mode: none
-        image: adopteunops/elasticsearch-rancher-config:latest
+        image: skalogs/elasticsearch-rancher-config:6.2
     elasticsearch-data-sysctl:
         network_mode: none
         image: rawmind/alpine-sysctl:0.1
@@ -107,7 +107,7 @@ services:
             io.rancher.container.start_once: true
             io.rancher.container.pull_image: always
         network_mode: none
-        image: adopteunops/elasticsearch-rancher-config:latest
+        image: skalogs/elasticsearch-rancher-config:6.2
     elasticsearch-client-sysctl:
         network_mode: none
         image: rawmind/alpine-sysctl:0.1
@@ -160,7 +160,7 @@ services:
           SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
         labels:
             io.rancher.container.start_once: true
-        image: adopteunops/elasticsearch-rancher-setup:latest
+        image: skalogs/elasticsearch-rancher-setup:1.0.0
         links:
             - "elasticsearch-master:elasticsearch"
 
@@ -188,7 +188,7 @@ services:
         SERVICE_ELASTICSEARCH_USERNAME: {{ elasticsearch_svcadmin_username }}
         SERVICE_ELASTICSEARCH_PASSWORD: {{ elasticsearch_svcadmin_password }}
         SERVICE_CURATOR_LOGGING_FORMAT: {{ curator_logging_format }}
-      image: adopteunops/elasticsearch-curator:latest
+      image: skalogs/elasticsearch-curator:5.4.1.2
       labels:
         io.rancher.container.pull_image: always
         io.rancher.scheduler.affinity:host_label: role=monitoring

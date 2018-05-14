@@ -20,32 +20,10 @@ services:
       com.prometheus.port: '8080'
       com.prometheus.metricspath: '/prometheus'
     tty: true
-    image: adopteunops/process-importer:{{importer_version}}
+    image: skalogs/process-importer:{{importer_version}}
     stdin_open: true
     mem_limit: {{importer_mem_limit}}
     mem_swappiness: 0
-
-  admin:
-    environment:
-      ELASTICSEARCH_HOST: elasticsearch
-      ELASTICSEARCH_PORT: 9200
-      ELASTICSEARCH_CLUSTERNAME: "{{ elasticsearch_cluster_name }}"
-      SERVICE_ELASTICSEARCH_USERNAME: "{{elasticsearch_svckibana_username}}"
-      SERVICE_ELASTICSEARCH_PASSWORD: "{{elasticsearch_svckibana_password}}"
-      KAFKA_BOOTSTRAPSERVERS: kafka:9092
-      ZOOKEEPER_BOOTSTRAPSERVERS: zookeeper:2181/kafka
-      ADMIN_IMPORTERURL: "{{importer_process_url}}"
-      ADMIN_ERRORIMPORTERURL: "{{error_importer_url}}"
-      ADMIN_RETRYIMPORTERURL: "{{retry_importer_url}}"
-    external_links:
-    - kafka/kafka:kafka
-    - zookeeper/zookeeper:zookeeper
-    - elasticsearch/elasticsearch-client:elasticsearch
-    labels:
-      io.rancher.container.pull_image: always
-    tty: true
-    image: adopteunops/admin:{{importer_version}}
-    stdin_open: true
 
   error-importer:
     environment:
@@ -65,7 +43,7 @@ services:
       com.prometheus.port: '8080'
       com.prometheus.metricspath: '/prometheus'
     tty: true
-    image: adopteunops/error-importer:{{importer_version}}
+    image: skalogs/error-importer:{{importer_version}}
     stdin_open: true
     mem_limit: {{importer_mem_limit}}
     mem_swappiness: 0
@@ -88,7 +66,7 @@ services:
       com.prometheus.port: '8080'
       com.prometheus.metricspath: '/prometheus'
     tty: true
-    image: adopteunops/retry-importer:{{importer_version}}
+    image: skalogs/retry-importer:{{importer_version}}
     stdin_open: true
     mem_limit: {{importer_mem_limit}}
     mem_swappiness: 0
