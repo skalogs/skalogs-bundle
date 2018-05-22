@@ -4,6 +4,7 @@ services:
     image: skalogs/skaetl-frontend:{{etl_version}}
     environment:
       BACKEND: http://etl-backend:8090
+      GF_ROOT_URL: '{{endpoints_protocol}}://{{monitoring_grafana_url}}'
     stdin_open: true
     tty: true
     links:
