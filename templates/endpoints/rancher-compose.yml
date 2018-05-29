@@ -12,14 +12,20 @@ services:
       #    mode http
       #    redirect scheme https code 301 if !{ ssl_fc }
       port_rules:
-      - hostname: kibana.{{rancher_dns_subdomain_fqdn}}
+      - hostname: doc.{{rancher_dns_subdomain_fqdn}}
         priority: 1
+        protocol: http
+        service: documentation/enduser-doc
+        source_port: 80
+        target_port: 80
+      - hostname: kibana.{{rancher_dns_subdomain_fqdn}}
+        priority: 2
         protocol: http
         service: kibana/kibana
         source_port: 80
         target_port: 5601
       - hostname: elasticsearch-api.{{rancher_dns_subdomain_fqdn}}
-        priority: 2
+        priority: 3
         protocol: http
         service: elasticsearch/elasticsearch-client
         source_port: 80
