@@ -1,0 +1,16 @@
+version: '2'
+services:
+  enduser-doc:
+    image: skalogs/enduser-doc:{{etl_version}}
+    stdin_open: true
+    tty: true
+    ports:
+    - 80:80/tcp
+    environment:
+      SERVICE_PROJECT_NAME: "{{elasticsearch_cluster_name}}"
+      SERVICE_KIBANA_ENDPOINT: "{{endpoints_protocol}}://{{enduser_kibana_url}}"
+      SERVICE_ELASTICSEARCH_ENDPOINT: "{{endpoints_protocol}}://{{enduser_elasticsearch_url}}"
+      SERVICE_KAFKA_ENDPOINT: "{{kafka_endpoint_url}}"
+      SERVICE_SUPPORT_EMAIL: "{{platform_support_email}}"
+    labels:
+      io.rancher.container.pull_image: always
