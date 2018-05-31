@@ -140,6 +140,14 @@
           }
         },
         {
+          "path_string_field": {
+            "mapping": {
+              "type": "text"
+            },
+            "match": "*_text"
+          }
+        },
+        {
           "na_string_field": {
             "mapping": {
               "norms": false,
@@ -156,8 +164,7 @@
             "mapping": {
               "search_analyzer": "url_email_analyzer",
               "analyzer": "url_email_analyzer",
-              "norms": false,
-              "type": "text"
+              "type": "keyword"
             },
             "match": "*_ue"
           }
@@ -167,8 +174,7 @@
             "mapping": {
               "search_analyzer": "path_analyzer",
               "analyzer": "path_analyzer",
-              "norms": false,
-              "type": "text"
+              "type": "keyword"
             },
             "match": "*_path"
           }
