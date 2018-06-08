@@ -21,8 +21,8 @@ services:
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       SPRING_PROFILES_ACTIVE: prod
       IMPORTER_FULLURLSIMULATE: http://simulate:8084
-      ELASTICSEARCH_CLUSTERNAME: skalogs-demo
-      ELASTICSEARCH_CUSTOM_INDEX_PREFIX: skalogs-demo
+      ELASTICSEARCH_CLUSTERNAME: {{elasticsearch_cluster_name}}
+      ELASTICSEARCH_CUSTOM_INDEX_PREFIX: {{elasticsearch_cluster_name}}
       ELASTICSEARCH_HOST: elasticsearch
       ELASTICSEARCH_PASSWORD: changeme
       ELASTICSEARCH_PORT: '9200'
