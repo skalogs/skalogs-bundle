@@ -34,6 +34,7 @@ services:
     - postgres/postgres:postgres
     - prometheus/prometheus:prometheus
     - zookeeper/zookeeper:zookeeper
+    - elasticsearch/elasticsearch-client:elasticsearch
     tty: true
     links:
     - process-importer-simulator:simulate
