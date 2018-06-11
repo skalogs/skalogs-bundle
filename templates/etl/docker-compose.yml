@@ -75,6 +75,12 @@ services:
       PROCESS_URL_REGISTRY: http://etl-backend:8090
       SPRING_PROFILES_ACTIVE: prod
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
+      ELASTICSEARCH_CLUSTERNAME: {{elasticsearch_cluster_name}}
+      ELASTICSEARCH_CUSTOM_INDEX_PREFIX: {{elasticsearch_cluster_name}}
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PASSWORD: changeme
+      ELASTICSEARCH_PORT: '9200'
+      ELASTICSEARCH_USERNAME: elastic
     stdin_open: true
     external_links:
     - elasticsearch/elasticsearch-client:elasticsearch
