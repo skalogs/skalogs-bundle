@@ -35,7 +35,7 @@ services:
       io.rancher.container.pull_image: always
       com.prometheus.metricspath: /prometheus
   metric-importer:
-    mem_limit: 636870912
+    mem_limit: 1153433600
     image: skalogs/metric-importer:{{etl_version}}
     environment:
       ELASTICSEARCH_CLUSTERNAME: {{elasticsearch_cluster_name}}
@@ -44,7 +44,7 @@ services:
       ELASTICSEARCH_PASSWORD: changeme
       ELASTICSEARCH_PORT: '9200'
       ELASTICSEARCH_USERNAME: elastic
-      JAVA_OPTS: -Xms512m -Xmx512m
+      JAVA_OPTS: -Xms512m -Xmx1024m
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       PROCESS_URL_REGISTRY: http://etl-backend:8090
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka

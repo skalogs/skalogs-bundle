@@ -1,8 +1,0 @@
-version: '2'
-services:
-  postgres:
-    image: postgres:9.4
-    environment:
-      - POSTGRES_USER=fu
-      - POSTGRES_PASSWORD=fu
-      - POSTGRES_DB=referential

@@ -22,7 +22,6 @@
   - {role: AdopteUnOps.rancher-install-stack, stack_name: elasticsearch, tags: [install-stack, elasticsearch]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: zookeeper, tags: [install-stack, zookeeper]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: kafka, tags: [install-stack, kafka]}
-  - {role: AdopteUnOps.rancher-install-stack, stack_name: postgres, tags: [install-stack, postgres]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: etl, tags: [install-stack, etl]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: importer, tags: [install-stack, importer]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: kibana, tags: [install-stack, kibana]}
