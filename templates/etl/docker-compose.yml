@@ -30,7 +30,6 @@ services:
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
     stdin_open: true
     external_links:
-    - elasticsearch/elasticsearch-client:elasticsearch
     - kafka/kafka:kafka
     - prometheus/prometheus:prometheus
     - zookeeper/zookeeper:zookeeper
