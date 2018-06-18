@@ -14,6 +14,34 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
+  generator:
+    image: skalogs/generator:{{etl_version}}
+    environment:
+      JAVA_OPTS: -Xms512m -Xmx512m
+      KAFKA_BOOTSTRAPSERVERS: kafka:9092
+      SPRING_PROFILES_ACTIVE: prod
+      ELASTICSEARCH_CLUSTERNAME: {{elasticsearch_cluster_name}}
+      ELASTICSEARCH_CUSTOM_INDEX_PREFIX: {{elasticsearch_cluster_name}}
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PASSWORD: changeme
+      ELASTICSEARCH_PORT: '9200'
+      ELASTICSEARCH_USERNAME: elastic
+      ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
+    stdin_open: true
+    external_links:
+    - kafka/kafka:kafka
+    - prometheus/prometheus:prometheus
+    - zookeeper/zookeeper:zookeeper
+    - elasticsearch/elasticsearch-client:elasticsearch
+    tty: true
+    ports:
+    - 8099:8099/tcp
+    labels:
+      com.prometheus.monitoring: 'true'
+      io.rancher.container.hostname_override: container_name
+      com.prometheus.port: '8099'
+      io.rancher.container.pull_image: always
+      com.prometheus.metricspath: /prometheus
   etl-backend:
     image: skalogs/skaetl-backend:{{etl_version}}
     environment:
