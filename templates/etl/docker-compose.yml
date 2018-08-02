@@ -37,11 +37,8 @@ services:
     ports:
     - 8099:8099/tcp
     labels:
-      com.prometheus.monitoring: 'true'
       io.rancher.container.hostname_override: container_name
-      com.prometheus.port: '8099'
       io.rancher.container.pull_image: always
-      com.prometheus.metricspath: /prometheus
   etl-backend:
     image: skalogs/skaetl-backend:{{etl_version}}
     environment:
@@ -72,7 +69,7 @@ services:
       io.rancher.container.hostname_override: container_name
       com.prometheus.port: '8090'
       io.rancher.container.pull_image: always
-      com.prometheus.metricspath: /prometheus
+      com.prometheus.metricspath: /actuator/prometheus
   process-importer-simulator:
     image: skalogs/process-importer-simulator:{{etl_version}}
     environment:
@@ -89,11 +86,8 @@ services:
     ports:
     - 8084:8084/tcp
     labels:
-      com.prometheus.monitoring: 'true'
       io.rancher.container.hostname_override: container_name
-      com.prometheus.port: '8084'
       io.rancher.container.pull_image: always
-      com.prometheus.metricspath: /prometheus
   referential-importer:
     mem_limit: 636870912
     image: skalogs/referential-importer:{{etl_version}}
@@ -124,4 +118,4 @@ services:
       io.rancher.container.hostname_override: container_name
       com.prometheus.port: '8082'
       io.rancher.container.pull_image: always
-      com.prometheus.metricspath: /prometheus
+      com.prometheus.metricspath: /actuator/prometheus
