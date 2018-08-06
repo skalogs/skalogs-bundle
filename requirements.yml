@@ -1,22 +1,40 @@
 #configure host dependencies
 - src: AdopteUnOps.install-kernel
+  version: 1.0
 - src: AdopteUnOps.configure-rsyslog
+  version: 1.0
 - src: AdopteUnOps.configure-hostname
+  version: 1.0
 - src: AdopteUnOps.configure-ssh
+  version: 1.0
 - src: AdopteUnOps.install-debugging-tools
+  version: 1.0
 - src: AdopteUnOps.docker
+  version: 1.0
 - src: AdopteUnOps.docker-login
+  version: 1.0
 - src: AdopteUnOps.upgrade-packages
+  version: 1.0
 - src: AdopteUnOps.configure-unix-accounts
+  version: 1.0
 
 # rancher stuff dependencies
 - src: AdopteUnOps.mysql-docker
+  version: 1.0
 - src: AdopteUnOps.rancher-install-master
+  version: 1.0
 - src: AdopteUnOps.rancher-create-project
+  version: 1.0
 - src: AdopteUnOps.rancher-add-host
+  version: 1.0
 - src: AdopteUnOps.rancher-install-stack
+  version: 1.0
 - src: AdopteUnOps.rancher-configure-catalog
+  version: 1.0
 - src: AdopteUnOps.clean-docker-host
+  version: 1.0
 - src: AdopteUnOps.rancher-delete-host
+  version: 1.0
 - src: AdopteUnOps.rancher-delete-project
+  version: 1.0
  
