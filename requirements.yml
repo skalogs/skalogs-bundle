@@ -38,3 +38,6 @@
 - src: AdopteUnOps.rancher-delete-project
   version: 1.0
  
+
+- src: AdopteUnOps.lvm
+  version: 1.0
