@@ -34,6 +34,8 @@ services:
     labels:
       com.prometheus.monitoring: 'true'
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+      io.rancher.scheduler.affinity:host_label_soft: role_compute=true
       com.prometheus.port: '8080'
       io.rancher.container.pull_image: always
       com.prometheus.metricspath: /actuator/prometheus
@@ -72,6 +74,8 @@ services:
     labels:
       com.prometheus.monitoring: 'true'
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+      io.rancher.scheduler.affinity:host_label_soft: role_compute=true
       com.prometheus.port: '8081'
       io.rancher.container.pull_image: always
       com.prometheus.metricspath: /actuator/prometheus
@@ -103,6 +107,7 @@ services:
       com.prometheus.monitoring: 'true'
       com.prometheus.port: '8085'
       io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       com.prometheus.metricspath: /actuator/prometheus
   retry-importer:
     mem_limit: 636870912
@@ -132,4 +137,6 @@ services:
       com.prometheus.monitoring: 'true'
       com.prometheus.port: '8086'
       io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+      io.rancher.scheduler.affinity:host_label_soft: role_compute=true
       com.prometheus.metricspath: /actuator/prometheus
