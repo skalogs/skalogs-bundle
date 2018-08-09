@@ -25,6 +25,7 @@ services:
       KAFKA_HEAP_OPTS: "-Xms{{kafka_heap_size}} -Xmx{{kafka_heap_size}}"
       KAFKA_LOG_DIRS: "/kafka/kafka-logs"
       KAFKA_OPTS: "-javaagent:/etc/jmx_exporter/jmx_exporter_agent.jar=1234:/etc/jmx_exporter/kafka-0-8-2.yml"
+      KAFKA_DELETE_TOPIC_ENABLE: 'true'
     external_links:
     - zookeeper/zookeeper:zookeeper
     volumes:
