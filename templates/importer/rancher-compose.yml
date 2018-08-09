@@ -1,7 +1,7 @@
 version: '2'
 services:
   process-importer:
-    scale: 1
+    scale: {{process_importer_scale}}
     start_on_create: true
     health_check:
       healthy_threshold: 2
@@ -13,7 +13,7 @@ services:
       strategy: recreate
       reinitializing_timeout: 60000
   metric-importer:
-    scale: 1
+    scale: {{metric_importer_scale}}
     start_on_create: true
     health_check:
       healthy_threshold: 2

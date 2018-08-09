@@ -102,6 +102,8 @@ rancher_dns_root_domain: skalogs.com
 
 importer_heap_size: 512m
 importer_mem_limit: "{{512 * 1024 * 1024}}"
+process_importer_scale: 1
+metric_importer_scale: 1
 
 normalized_project_name: '{{NAME_PROJECT | lower }}'
 rancher_dns_subdomain_fqdn: '{{normalized_project_name}}.{{rancher_dns_root_domain}}'

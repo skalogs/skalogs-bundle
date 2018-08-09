@@ -29,6 +29,8 @@
   - {role: AdopteUnOps.rancher-scale-service, service_fqdn: "kafka/kafka", service_scale: "{{kafka_scale}}", tags: [scale,kafka]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: etl, tags: [install-stack, etl]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: importer, tags: [install-stack, importer]}
+  - {role: AdopteUnOps.rancher-scale-service, service_fqdn: "importer/process-importer", service_scale: "{{process_importer_scale}}", tags: [scale,importer]}
+  - {role: AdopteUnOps.rancher-scale-service, service_fqdn: "importer/metric-importer", service_scale: "{{metric_importer_scale}}", tags: [scale,importer]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: kibana, tags: [install-stack, kibana]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: documentation, tags: [install-stack, doc]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: endpoints, tags: [install-stack, endpoints]}
