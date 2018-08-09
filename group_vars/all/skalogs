@@ -10,8 +10,9 @@ client_heap_size: 512m
 client_mem_limit: 1073741824
 
 minimum_master_nodes: 1
-initial_data_nodes: 1
-initial_client_nodes: 1
+elasticsearch_master_scale: 1
+elasticsearch_data_scale: 1
+elasticsearch_client_scale: 1
 
 elk_monitoring_heap_size: 512m
 elk_monitoring_master_mem_limit: 1073741824

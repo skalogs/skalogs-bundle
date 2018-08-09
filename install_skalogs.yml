@@ -20,8 +20,13 @@
   - {role: AdopteUnOps.rancher-install-stack, stack_name: elk-monitoring, tags: [install-stack, elk-monitoring]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: prometheus, tags: [install-stack, prometheus]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: elasticsearch, tags: [install-stack, elasticsearch]}
+  - {role: AdopteUnOps.rancher-scale-service, service_fqdn: "elasticsearch/elasticsearch-master", service_scale: "{{elasticsearch_master_scale}}", tags: [scale,elasticsearch]}
+  - {role: AdopteUnOps.rancher-scale-service, service_fqdn: "elasticsearch/elasticsearch-data", service_scale: "{{elasticsearch_data_scale}}", tags: [scale,elasticsearch]}
+  - {role: AdopteUnOps.rancher-scale-service, service_fqdn: "elasticsearch/elasticsearch-client", service_scale: "{{elasticsearch_client_scale}}", tags: [scale,elasticsearch]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: zookeeper, tags: [install-stack, zookeeper]}
+  - {role: AdopteUnOps.rancher-scale-service, service_fqdn: "zookeeper/zookeeper", service_scale: "{{zookeeper_scale}}", tags: [scale,zookeeper]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: kafka, tags: [install-stack, kafka]}
+  - {role: AdopteUnOps.rancher-scale-service, service_fqdn: "kafka/kafka", service_scale: "{{kafka_scale}}", tags: [scale,kafka]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: etl, tags: [install-stack, etl]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: importer, tags: [install-stack, importer]}
   - {role: AdopteUnOps.rancher-install-stack, stack_name: kibana, tags: [install-stack, kibana]}

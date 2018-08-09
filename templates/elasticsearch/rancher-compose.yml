@@ -2,7 +2,7 @@ version: '2'
 services:
 
   elasticsearch-master:
-    scale: {{minimum_master_nodes}}
+    scale: {{elasticsearch_master_scale}}
     retain_ip: true
     health_check:
       response_timeout: 2000
@@ -24,7 +24,7 @@ services:
 {% endfor %}
 {% endif %}
   elasticsearch-data:
-    scale: {{initial_data_nodes}}
+    scale: {{elasticsearch_data_scale}}
     retain_ip: true
     health_check:
       response_timeout: 2000
@@ -46,7 +46,7 @@ services:
 {% endfor %}
 {% endif %}
   elasticsearch-client:
-    scale: {{initial_client_nodes}}
+    scale: {{elasticsearch_client_scale}}
     retain_ip: true
     health_check:
       response_timeout: 2000

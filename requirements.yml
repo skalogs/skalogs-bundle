@@ -23,6 +23,8 @@
   version: 1.0
 - src: AdopteUnOps.rancher-install-master
   version: 1.0
+- src: AdopteUnOps.rancher-scale-service
+  version: 1.0
 - src: AdopteUnOps.rancher-create-project
   version: 1.0
 - src: AdopteUnOps.rancher-add-host
