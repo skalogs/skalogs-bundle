@@ -9,7 +9,7 @@ services:
       ELASTICSEARCH_PASSWORD: changeme
       ELASTICSEARCH_PORT: '9200'
       ELASTICSEARCH_USERNAME: elastic
-      JAVA_OPTS: -Xms512m -Xmx512m
+      JAVA_OPTS: -Xms{{importer_heap_size}} -Xmx{{importer_heap_size}}
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       PROCESS_URL_REGISTRY: http://etl-backend:8090
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
@@ -47,7 +47,7 @@ services:
       ELASTICSEARCH_PASSWORD: changeme
       ELASTICSEARCH_PORT: '9200'
       ELASTICSEARCH_USERNAME: elastic
-      JAVA_OPTS: -Xms512m -Xmx1024m
+      JAVA_OPTS: -Xms{{importer_heap_size}} -Xmx{{importer_heap_size}}
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       PROCESS_URL_REGISTRY: http://etl-backend:8090
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
