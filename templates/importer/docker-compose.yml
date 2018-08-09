@@ -110,7 +110,7 @@ services:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       com.prometheus.metricspath: /actuator/prometheus
   retry-importer:
-    mem_limit: 636870912
+    mem_limit: {{importer_mem_limit}}
     image: skalogs/retry-importer:{{etl_version}}
     environment:
       ELASTICSEARCH_CLUSTERNAME: {{elasticsearch_cluster_name}}
@@ -119,7 +119,7 @@ services:
       ELASTICSEARCH_PASSWORD: changeme
       ELASTICSEARCH_PORT: '9200'
       ELASTICSEARCH_USERNAME: elastic
-      JAVA_OPTS: -Xms512m -Xmx512m
+      JAVA_OPTS: -Xms{{retry_heap_size}} -Xmx{{retry_heap_size}}
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
       BUFFER_ELASTICSEARCH_MAX_ELEMENTS: {{buffer_elasticsearch_max_elements}}
