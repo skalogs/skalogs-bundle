@@ -79,7 +79,7 @@ elasticsearch_refresh_interval: 30s
 elasticsearch_nb_replicas: 1
 elasticsearch_plugins_name: []
 
-etl_version: 1.0.1
+etl_version: 1.0.2-SNAPSHOT
 
 zookeeper_heap_size: 512m
 #should be 3 for clustering
