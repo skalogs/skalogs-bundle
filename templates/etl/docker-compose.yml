@@ -27,6 +27,7 @@ services:
       ELASTICSEARCH_PORT: '9200'
       ELASTICSEARCH_USERNAME: elastic
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
+      GENERATOR_BACKEND: http://etl-backend:8090
     stdin_open: true
     external_links:
     - kafka/kafka:kafka
