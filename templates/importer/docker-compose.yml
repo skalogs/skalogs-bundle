@@ -1,6 +1,7 @@
 version: '2'
 services:
   process-importer:
+    mem_limit: {{importer_mem_limit}}
     image: skalogs/process-importer:{{etl_version}}
     environment:
       ELASTICSEARCH_CLUSTERNAME: {{elasticsearch_cluster_name}}
@@ -40,7 +41,7 @@ services:
       io.rancher.container.pull_image: always
       com.prometheus.metricspath: /actuator/prometheus
   metric-importer:
-    mem_limit: 1153433600
+    mem_limit: {{importer_mem_limit}}
     image: skalogs/metric-importer:{{etl_version}}
     environment:
       ELASTICSEARCH_CLUSTERNAME: {{elasticsearch_cluster_name}}

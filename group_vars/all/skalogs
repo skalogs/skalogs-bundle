@@ -101,7 +101,7 @@ elasticsearch_svcadmin_password: "{{elasticsearch_svckibana_password}}"
 rancher_dns_root_domain: skalogs.com
 
 importer_heap_size: 512m
-importer_mem_limit: "{{512 * 1024 * 1024}}"
+importer_mem_limit: "{{(512 * 1024 * 1024) + 200}}"
 process_importer_scale: 1
 metric_importer_scale: 1
 
