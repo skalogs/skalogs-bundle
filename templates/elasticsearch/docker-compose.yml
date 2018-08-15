@@ -153,6 +153,8 @@ services:
             - elasticsearch-client-config
         links:
             - elasticsearch-master
+        ports:
+            - 9200:9200/tcp
 
     elasticsearch-setup:
         environment:
