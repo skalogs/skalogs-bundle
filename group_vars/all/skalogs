@@ -155,6 +155,6 @@ spring_mail_password: ""
 spring_mail_properties_mail_smtp_auth: true
 spring_mail_properties_mail_smtp_starttls_enable: true
 
-buffer_elasticsearch_max_elements: 20000
-buffer_elasticsearch_max_size_in_bytes: 10000000
+buffer_elasticsearch_max_elements: 10000
+buffer_elasticsearch_max_size: 1
 buffer_elasticsearch_max_time: 1

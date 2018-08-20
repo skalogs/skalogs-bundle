@@ -21,7 +21,7 @@ services:
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: {{spring_mail_properties_mail_smtp_auth}}
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: {{spring_mail_properties_mail_smtp_starttls_enable}}
       BUFFER_ELASTICSEARCH_MAX_ELEMENTS: {{buffer_elasticsearch_max_elements}}
-      BUFFER_ELASTICSEARCH_MAX_SIZE_IN_BYTES: {{buffer_elasticsearch_max_size_in_bytes}}
+      BUFFER_ELASTICSEARCH_MAX_SIZE: {{buffer_elasticsearch_max_size}}
       BUFFER_ELASTICSEARCH_MAX_TIME: {{buffer_elasticsearch_max_time}}
     stdin_open: true
     external_links:
@@ -61,7 +61,7 @@ services:
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: {{spring_mail_properties_mail_smtp_auth}}
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: {{spring_mail_properties_mail_smtp_starttls_enable}}
       BUFFER_ELASTICSEARCH_MAX_ELEMENTS: {{buffer_elasticsearch_max_elements}}
-      BUFFER_ELASTICSEARCH_MAX_SIZE_IN_BYTES: {{buffer_elasticsearch_max_size_in_bytes}}
+      BUFFER_ELASTICSEARCH_MAX_SIZE: {{buffer_elasticsearch_max_size}}
       BUFFER_ELASTICSEARCH_MAX_TIME: {{buffer_elasticsearch_max_time}}
     stdin_open: true
     external_links:
@@ -94,7 +94,7 @@ services:
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
       BUFFER_ELASTICSEARCH_MAX_ELEMENTS: {{buffer_elasticsearch_max_elements}}
-      BUFFER_ELASTICSEARCH_MAX_SIZE_IN_BYTES: {{buffer_elasticsearch_max_size_in_bytes}}
+      BUFFER_ELASTICSEARCH_MAX_SIZE: {{buffer_elasticsearch_max_size}}
       BUFFER_ELASTICSEARCH_MAX_TIME: {{buffer_elasticsearch_max_time}}
     stdin_open: true
     external_links:
@@ -124,7 +124,7 @@ services:
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
       BUFFER_ELASTICSEARCH_MAX_ELEMENTS: {{buffer_elasticsearch_max_elements}}
-      BUFFER_ELASTICSEARCH_MAX_SIZE_IN_BYTES: {{buffer_elasticsearch_max_size_in_bytes}}
+      BUFFER_ELASTICSEARCH_MAX_SIZE: {{buffer_elasticsearch_max_size}}
       BUFFER_ELASTICSEARCH_MAX_TIME: {{buffer_elasticsearch_max_time}}
     stdin_open: true
     external_links:
