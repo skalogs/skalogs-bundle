@@ -139,5 +139,4 @@ services:
       com.prometheus.port: '8086'
       io.rancher.container.pull_image: always
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
-      io.rancher.scheduler.affinity:host_label_soft: role_compute=true
       com.prometheus.metricspath: /actuator/prometheus
