@@ -140,11 +140,19 @@
           }
         },
         {
-          "path_string_field": {
+          "text_gen_field": {
             "mapping": {
               "type": "text"
             },
             "match": "*_text"
+          }
+        },
+        {
+          "keyword_gen_field": {
+            "mapping": {
+              "type": "keyword"
+            },
+            "match": "*_keyword"
           }
         },
         {
