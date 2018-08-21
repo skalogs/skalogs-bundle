@@ -10,7 +10,7 @@ services:
       ELASTICSEARCH_PASSWORD: changeme
       ELASTICSEARCH_PORT: '9200'
       ELASTICSEARCH_USERNAME: elastic
-      JAVA_OPTS: -Xms{{importer_heap_size}} -Xmx{{importer_heap_size}}
+      JAVA_OPTS: {{importer_java_opts}}
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       PROCESS_URL_REGISTRY: http://etl-backend:8090
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
@@ -20,9 +20,9 @@ services:
       SPRING_MAIL_PASSWORD: {{spring_mail_password}}
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: {{spring_mail_properties_mail_smtp_auth}}
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: {{spring_mail_properties_mail_smtp_starttls_enable}}
-      BUFFER_ELASTICSEARCH_MAX_ELEMENTS: {{buffer_elasticsearch_max_elements}}
-      BUFFER_ELASTICSEARCH_MAX_SIZE: {{buffer_elasticsearch_max_size}}
-      BUFFER_ELASTICSEARCH_MAX_TIME: {{buffer_elasticsearch_max_time}}
+      bufferElasticsearch.maxElements: {{buffer_elasticsearch_max_elements}}
+      bufferElasticsearch.maxSize: {{buffer_elasticsearch_max_size}}
+      bufferElasticsearch.maxTime: {{buffer_elasticsearch_max_time}}
     stdin_open: true
     external_links:
     - zookeeper/zookeeper:zookeeper
@@ -50,7 +50,7 @@ services:
       ELASTICSEARCH_PASSWORD: changeme
       ELASTICSEARCH_PORT: '9200'
       ELASTICSEARCH_USERNAME: elastic
-      JAVA_OPTS: -Xms{{importer_heap_size}} -Xmx{{importer_heap_size}}
+      JAVA_OPTS: {{importer_java_opts}}
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       PROCESS_URL_REGISTRY: http://etl-backend:8090
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
@@ -60,9 +60,9 @@ services:
       SPRING_MAIL_PASSWORD: {{spring_mail_password}}
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: {{spring_mail_properties_mail_smtp_auth}}
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: {{spring_mail_properties_mail_smtp_starttls_enable}}
-      BUFFER_ELASTICSEARCH_MAX_ELEMENTS: {{buffer_elasticsearch_max_elements}}
-      BUFFER_ELASTICSEARCH_MAX_SIZE: {{buffer_elasticsearch_max_size}}
-      BUFFER_ELASTICSEARCH_MAX_TIME: {{buffer_elasticsearch_max_time}}
+      bufferElasticsearch.maxElements: {{buffer_elasticsearch_max_elements}}
+      bufferElasticsearch.maxSize: {{buffer_elasticsearch_max_size}}
+      bufferElasticsearch.maxTime: {{buffer_elasticsearch_max_time}}
     stdin_open: true
     external_links:
     - zookeeper/zookeeper:zookeeper
@@ -81,7 +81,7 @@ services:
       io.rancher.container.pull_image: always
       com.prometheus.metricspath: /actuator/prometheus
   error-importer:
-    mem_limit: 636870912
+    mem_limit: {{error_mem_limit}}
     image: skalogs/error-importer:{{etl_version}}
     environment:
       ELASTICSEARCH_CLUSTERNAME: {{elasticsearch_cluster_name}}
@@ -90,12 +90,12 @@ services:
       ELASTICSEARCH_PASSWORD: changeme
       ELASTICSEARCH_PORT: '9200'
       ELASTICSEARCH_USERNAME: elastic
-      JAVA_OPTS: -Xms512m -Xmx512m
+      JAVA_OPTS: {{error_java_opts}}
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
-      BUFFER_ELASTICSEARCH_MAX_ELEMENTS: {{buffer_elasticsearch_max_elements}}
-      BUFFER_ELASTICSEARCH_MAX_SIZE: {{buffer_elasticsearch_max_size}}
-      BUFFER_ELASTICSEARCH_MAX_TIME: {{buffer_elasticsearch_max_time}}
+      bufferElasticsearch.maxElements: {{buffer_elasticsearch_max_elements}}
+      bufferElasticsearch.maxSize: {{buffer_elasticsearch_max_size}}
+      bufferElasticsearch.maxTime: {{buffer_elasticsearch_max_time}}
     stdin_open: true
     external_links:
     - zookeeper/zookeeper:zookeeper
@@ -111,7 +111,7 @@ services:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       com.prometheus.metricspath: /actuator/prometheus
   retry-importer:
-    mem_limit: {{importer_mem_limit}}
+    mem_limit: {{retry_mem_limit}}
     image: skalogs/retry-importer:{{etl_version}}
     environment:
       ELASTICSEARCH_CLUSTERNAME: {{elasticsearch_cluster_name}}
@@ -120,12 +120,12 @@ services:
       ELASTICSEARCH_PASSWORD: changeme
       ELASTICSEARCH_PORT: '9200'
       ELASTICSEARCH_USERNAME: elastic
-      JAVA_OPTS: -Xms{{retry_heap_size}} -Xmx{{retry_heap_size}}
+      JAVA_OPTS: {{retry_java_opts}}
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
-      BUFFER_ELASTICSEARCH_MAX_ELEMENTS: {{buffer_elasticsearch_max_elements}}
-      BUFFER_ELASTICSEARCH_MAX_SIZE: {{buffer_elasticsearch_max_size}}
-      BUFFER_ELASTICSEARCH_MAX_TIME: {{buffer_elasticsearch_max_time}}
+      bufferElasticsearch.maxElements: {{buffer_elasticsearch_max_elements}}
+      bufferElasticsearch.maxSize: {{buffer_elasticsearch_max_size}}
+      bufferElasticsearch.maxTime: {{buffer_elasticsearch_max_time}}
     stdin_open: true
     external_links:
     - zookeeper/zookeeper:zookeeper

@@ -100,13 +100,16 @@ elasticsearch_svcadmin_password: "{{elasticsearch_svckibana_password}}"
 
 rancher_dns_root_domain: skalogs.com
 
-importer_heap_size: 512m
+importer_java_opts: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
 importer_mem_limit: "{{(512 * 1024 * 1024) + 200}}"
 process_importer_scale: 1
 metric_importer_scale: 1
 
-retry_heap_size: 512m
+retry_java_opts: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
 retry_mem_limit: "{{512 * 1024 * 1024}}"
+
+error_java_opts: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
+error_mem_limit: "{{512 * 1024 * 1024}}"
 
 normalized_project_name: '{{NAME_PROJECT | lower }}'
 rancher_dns_subdomain_fqdn: '{{normalized_project_name}}.{{rancher_dns_root_domain}}'
