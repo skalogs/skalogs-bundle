@@ -13,7 +13,7 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0001-'
+      value: '.*-0001-\d{4}-\d{2}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
@@ -34,7 +34,7 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0007-'
+      value: '.*-0007-\d{4}-\d{2}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
@@ -55,7 +55,7 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0030-'
+      value: '.*-0030-\d{4}-\d{2}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
@@ -76,7 +76,7 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0090-'
+      value: '.*-0090-\d{4}-\d{2}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
@@ -97,7 +97,7 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0365-'
+      value: '.*-0365-\d{4}-\d{2}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
@@ -118,7 +118,7 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0730-'
+      value: '.*-0730-\d{4}-\d{2}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
@@ -139,7 +139,7 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-1825-'
+      value: '.*-1825-\d{4}-\d{2}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
@@ -160,17 +160,13 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0030-'
+      value: '.*-0030-\d{4}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
-      timestring: '%Y-%m'
+      timestring: '-0030-%Y-%m'
       unit: months
       unit_count: 1
-    - filtertype: pattern
-      kind: timestring
-      value: '%Y-%m-%d'
-      exclude: True
   9:
     action: delete_indices
     description: >-
@@ -185,17 +181,13 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0090-'
+      value: '.*-0090-\d{4}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
-      timestring: '%Y-%m'
+      timestring: '-0090-%Y-%m'
       unit: months
       unit_count: 3
-    - filtertype: pattern
-      kind: timestring
-      value: '%Y-%m-%d'
-      exclude: True
   10:
     action: delete_indices
     description: >-
@@ -210,17 +202,13 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0365-'
+      value: '.*-0365-\d{4}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
-      timestring: '%Y-%m'
+      timestring: '-0365-%Y-%m'
       unit: years
       unit_count: 1
-    - filtertype: pattern
-      kind: timestring
-      value: '%Y-%m-%d'
-      exclude: True
   11:
     action: delete_indices
     description: >-
@@ -235,17 +223,13 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-0730-'
+      value: '.*-0730-\d{4}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
-      timestring: '%Y-%m'
+      timestring: '-0730-%Y-%m'
       unit: years
       unit_count: 2
-    - filtertype: pattern
-      kind: timestring
-      value: '%Y-%m-%d'
-      exclude: True
   12:
     action: delete_indices
     description: >-
@@ -260,18 +244,14 @@ actions:
       value: {{elasticsearch_cluster_name}}-
     - filtertype: pattern
       kind: regex
-      value: '.*-1825-'
+      value: '.*-1825-\d{4}-\d{2}$$'
     - filtertype: age
       source: name
       direction: older
-      timestring: '%Y-%m'
+      timestring: '-1825-%Y-%m'
       unit: years
       unit_count: 5
-    - filtertype: pattern
-      kind: timestring
-      value: '%Y-%m-%d'
-      exclude: True
-  8:
+  13:
     action: forcemerge
     description: >-
       forceMerge {{elasticsearch_cluster_name}}- prefixed indices older than 2 days (based on index
