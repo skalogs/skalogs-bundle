@@ -111,6 +111,9 @@ retry_mem_limit: "{{512 * 1024 * 1024}}"
 error_java_opts: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
 error_mem_limit: "{{512 * 1024 * 1024}}"
 
+retry_active_on_startup: true
+error_active_on_startup: true
+
 normalized_project_name: '{{NAME_PROJECT | lower }}'
 rancher_dns_subdomain_fqdn: '{{normalized_project_name}}.{{rancher_dns_root_domain}}'
 

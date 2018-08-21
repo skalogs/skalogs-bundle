@@ -93,6 +93,7 @@ services:
       JAVA_OPTS: {{error_java_opts}}
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
+      PROCESS_ACTIVE: {{error_active_on_startup}}
       bufferElasticsearch.maxElements: {{buffer_elasticsearch_max_elements}}
       bufferElasticsearch.maxSize: {{buffer_elasticsearch_max_size}}
       bufferElasticsearch.maxTime: {{buffer_elasticsearch_max_time}}
@@ -123,6 +124,7 @@ services:
       JAVA_OPTS: {{retry_java_opts}}
       KAFKA_BOOTSTRAPSERVERS: kafka:9092
       ZOOKEEPER_BOOTSTRAP_SERVERS: zookeeper:2181/kafka
+      PROCESS_ACTIVE: {{retry_active_on_startup}}
       bufferElasticsearch.maxElements: {{buffer_elasticsearch_max_elements}}
       bufferElasticsearch.maxSize: {{buffer_elasticsearch_max_size}}
       bufferElasticsearch.maxTime: {{buffer_elasticsearch_max_time}}
