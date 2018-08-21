@@ -68,6 +68,14 @@
       },
       "dynamic_templates": [
         {
+          "message_field": {
+            "mapping": {
+              "type": "text"
+            },
+            "match": "message"
+          }
+        },
+        {
           "text_gen_field": {
             "mapping": {
               "type": "text"
@@ -82,7 +90,7 @@
             },
             "match": "*_keyword"
           }
-        },        
+        },
         {
           "long_field": {
             "mapping": {
