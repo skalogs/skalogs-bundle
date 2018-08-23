@@ -1,1 +1,1 @@
-{{ elasticsearch_cluster_name }}-* @timestamp
+{{ elasticsearch_cluster_name }}-* timestamp
