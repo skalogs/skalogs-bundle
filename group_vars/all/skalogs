@@ -143,6 +143,7 @@ zookeeper_viewer_url: 'zookeeper-admin.{{ rancher_dns_subdomain_fqdn }}'
 kafka_manager_url: 'kafka-admin.{{ rancher_dns_subdomain_fqdn }}'
 importer_process_url: 'importer.{{ rancher_dns_subdomain_fqdn }}'
 etl_frontend_url: 'etl.{{ rancher_dns_subdomain_fqdn }}'
+etl_api_url: 'etl-api.{{ rancher_dns_subdomain_fqdn }}'
 
 enduser_kibana_url: 'kibana.{{rancher_dns_subdomain_fqdn}}'
 enduser_elasticsearch_url: 'elasticsearch-api.{{rancher_dns_subdomain_fqdn}}'

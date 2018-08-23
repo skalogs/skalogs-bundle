@@ -125,6 +125,13 @@ services:
         service: "etl/etl-frontend"
         source_port: 80
         target_port: 5555
+      - backend_name: etl-api
+        hostname: {{etl_api_url}}
+        priority: 8
+        protocol: http
+        service: "etl/etl-backend"
+        source_port: 80
+        target_port: 8090
       #- hostname: '*'
       #  path: ''
       #  priority: 50
