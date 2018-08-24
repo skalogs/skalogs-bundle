@@ -88,11 +88,8 @@ services:
     ports:
     - 8084:8084/tcp
     labels:
-      com.prometheus.monitoring: 'true'
       io.rancher.container.hostname_override: container_name
-      com.prometheus.port: '8084'
       io.rancher.container.pull_image: always
-      com.prometheus.metricspath: /actuator/prometheus
   referential-importer:
     mem_limit: 636870912
     image: skalogs/referential-importer:{{etl_version}}
