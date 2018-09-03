@@ -36,7 +36,7 @@ Each host (including the master) must have at least the following requirements :
 * Ansible >= 2.3
 * Vagrant / Virtualbox (optional) if you want to run this on your own machine
 * Configure collectdata/inventory with the list of Host 
-* Configure collectdata/all/Rancher with the ip of rancher master and docker_registries (if needed)
+* Configure collectdata/group_vars/all/Rancher with the ip of rancher master and docker_registries (if needed)
 
 ### Roles dependencies
 
@@ -88,7 +88,7 @@ Use the configure_host.yml
 
 You can bootstrap the machine for the first time with the following command
 
-``` /ansible-playbook_wrapper configure_host.yml -u your account -Kk ```
+``` ./ansible-playbook_wrapper configure_host.yml -u your_account -Kk ```
 
 This ansible does the following :
 
