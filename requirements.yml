@@ -8,9 +8,9 @@
 - src: AdopteUnOps.configure-ssh
   version: 1.0
 - src: AdopteUnOps.install-debugging-tools
-  version: 1.0
+  version: 1.1
 - src: AdopteUnOps.docker
-  version: 1.0
+  version: 1.1
 - src: AdopteUnOps.docker-login
   version: 1.0
 - src: AdopteUnOps.upgrade-packages
