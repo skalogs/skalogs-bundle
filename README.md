@@ -88,7 +88,7 @@ Use the configure_host.yml
 
 You can bootstrap the machine for the first time with the following command
 
-``` /ansible-playbook_wrapper configure_host.yml -u your account -Kk ```
+``` ./ansible-playbook_wrapper configure_host.yml -u your_account -Kk ```
 
 This ansible does the following :
 
