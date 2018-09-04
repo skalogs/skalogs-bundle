@@ -8,10 +8,11 @@ rancher_project_name: "{{NAME_PROJECT | lower }}"
 rancher_agent_ip: "{{ansible_host}}"
 
 docker_registries: []
+docker_opts: ""
 
 docker_elastic_repo: docker.elastic.co
 
-rancher_version: "v1.6.20"
+rancher_version: "v1.6.21"
 rancher_agent_version: "v1.2.11"
 
 mysql_host: "{{ ansible_default_ipv4.address }}"

@@ -227,7 +227,7 @@ ID_BUCKET_RESTORE=2016-07-21T133544Z.dump.sql.gz ./restore.sh
 To upgrade Rancher you just need to change the rancher_version version in group vars.
 Example: in production/group_vars/all/vars
 ```
-rancher_version: "v1.6.20"
+rancher_version: "v1.6.21"
 rancher_agent_version: "v1.2.11"
 ```
 
@@ -244,4 +244,18 @@ If you want to get this role working on ubuntu 16.04 you may override docker_ver
 
 ```
 docker_version: "18.02.0~ce-0~ubuntu"
+```
+
+Reference to localhost present in /etc/resolv.conf
+--------------------------------------------------
+Some Linux distributions will run a local DNS cache server like dnsmasq. If this is the case, the nameserver entry in /etc/resolv.conf will point to 127.0.0.1 (localhost). This configuration is re-used when running Docker containers, but inside a container you cannot reach dnsmasq on 127.0.0.1. Since rancher/agent:v1.2.7, the agent will fail to register and log:
+
+```
+ERROR: DNS Checking loopback IP address 127.0.0.0/8, localhost or ::1 configured as the DNS server on the host file /etc/resolv.conf, can't accept it
+```
+To fix this, you can either specify DNS servers for Docker or disable dnsmasq. Instructions on both options are provided in the [Docker documentation](https://docs.docker.com/install/linux/linux-postinstall/#dns-resolver-found-in-resolvconf-and-containers-cant-use-it)
+
+This can be done by overriding docker_opts in group_vars/all/.
+```
+docker_opts: "--dns 8.8.8.8 --dns 8.8.4.4"
 ```
