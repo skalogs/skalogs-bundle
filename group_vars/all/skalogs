@@ -165,3 +165,6 @@ spring_mail_properties_mail_smtp_starttls_enable: true
 buffer_elasticsearch_max_elements: 10000
 buffer_elasticsearch_max_size: 1
 buffer_elasticsearch_max_time: 1
+
+docker_version: 18.06.0~ce~3-0~ubuntu
+docker_compose_version: 1.17.1-2
