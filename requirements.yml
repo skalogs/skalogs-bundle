@@ -10,7 +10,7 @@
 - src: AdopteUnOps.install-debugging-tools
   version: 1.2
 - src: AdopteUnOps.docker
-  version: 1.1
+  version: 1.2
 - src: AdopteUnOps.docker-login
   version: 1.0
 - src: AdopteUnOps.upgrade-packages
@@ -39,7 +39,7 @@
   version: 1.0
 - src: AdopteUnOps.rancher-delete-project
   version: 1.0
- 
+
 
 - src: AdopteUnOps.lvm
   version: 1.0
