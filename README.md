@@ -227,8 +227,8 @@ ID_BUCKET_RESTORE=2016-07-21T133544Z.dump.sql.gz ./restore.sh
 To upgrade Rancher you just need to change the rancher_version version in group vars.
 Example: in production/group_vars/all/vars
 ```
-rancher_version: "v1.6.10"
-rancher_agent_version: "v1.2.6"
+rancher_version: "v1.6.20"
+rancher_agent_version: "v1.2.11"
 ```
 
 We highly recommend to stick to a specific version for production Rancher environment to make sure everything is repeatable.
