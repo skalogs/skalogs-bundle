@@ -35,7 +35,7 @@ Each host (including the master) must have at least the following requirements :
 
 * Ansible >= 2.3
 * Vagrant / Virtualbox (optional) if you want to run this on your own machine
-* Configure collectdata/inventory with the list of Host 
+* Configure collectdata/inventory with the list of Host
 * Configure collectdata/all/Rancher with the ip of rancher master and docker_registries (if needed)
 
 ### Roles dependencies
@@ -58,7 +58,7 @@ You can use other configurations by changing inventory from the command line (ev
 
 ### SSH configuration
 
-Copy the file `config_ssh.template` to `config_ssh` in this local folder, 
+Copy the file `config_ssh.template` to `config_ssh` in this local folder,
 then edit `config_ssh` to configure it. The user must match a user declared
 in ssh_users list in `<rancher_cluster_name>/group_vars/all/vars`
 
@@ -157,7 +157,7 @@ This ansible does the following :
 * Creates a project into RANCHER
 * Creates "API KEY ENVIRONMENT" into rancher and write into group_vars/{{NAME_PROJECT}}
 * Adds Host into the project
-* Installs stacks : 
+* Installs stacks :
      * Janitor
      * Elasticsearch
      * Zookeeper
@@ -169,7 +169,7 @@ This ansible does the following :
      * Elk-monitoring (to monitor your cluster)
      * Prometheus
      * Endpoints
-          
+
 ### Create the project "demo"
 
 This project is a demo for collect data.
@@ -179,7 +179,7 @@ Launch the playbook
 ./ansible-playbook_wrapper create_project_demo.yml -K -e "NAME_PROJECT=demo"
 ```
 
-* Installs stacks : 
+* Installs stacks :
     * demo-todo : application nodejs
     * demo-petclinic : application springboot
     * packetbeat : collect network informations from Host
@@ -236,3 +236,12 @@ We highly recommend to stick to a specific version for production Rancher enviro
 Then just run again the create_master.yml playbook.
 It will upgrade rancher-master smoothly.
 When rancher-master is up again it will contact environments host agents and update it if necessary, this operation is done by Rancher itself.
+
+Docker version
+--------------
+Default docker version is for Ubuntu 18.04 version.
+If you want to get this role working on ubuntu 16.04 you may override docker_version variable to an older version :
+
+```
+docker_version: "18.02.0~ce-0~ubuntu"
+```
