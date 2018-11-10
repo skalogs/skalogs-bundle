@@ -254,6 +254,7 @@ docker_compose_version: 1.17.1-2
 See:
 
 docker releases: https://github.com/docker/docker-ce/releases
+
 docker-compose releases: https://github.com/docker/compose/releases/
 
 Reference to localhost present in /etc/resolv.conf
