@@ -36,7 +36,7 @@ In that case you should run again configure_host.yml on your host.
 
 ### On master side
 
-Check host global heatlh (freespace, memory, cpu).
+Check host global health (freespace, memory, cpu).
 
 Check docker state
 ```
