@@ -249,7 +249,7 @@ Suggested docker version and docker-compose version for Ubuntu 18.04.1 (bionic):
 
 ```
 docker_version: 5:18.09.0~3-0~ubuntu-bionic
-docker_compose_version: 1.17.1-2
+docker_compose_version: 1.23.1
 ```
 See:
 
