@@ -245,6 +245,16 @@ If you want to get this role working on ubuntu 16.04 you may override docker_ver
 ```
 docker_version: "18.02.0~ce-0~ubuntu"
 ```
+Suggested docker version and docker-compose version for Ubuntu 18.04.1 (bionic):
+
+```
+docker_version: 5:18.09.0~3-0~ubuntu-bionic
+docker_compose_version: 1.17.1-2
+```
+See:
+
+docker releases: https://github.com/docker/docker-ce/releases
+docker-compose releases: https://github.com/docker/compose/releases/
 
 Reference to localhost present in /etc/resolv.conf
 --------------------------------------------------
