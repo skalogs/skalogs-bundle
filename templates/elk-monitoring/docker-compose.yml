@@ -205,6 +205,7 @@ services:
         com.prometheus.monitoring: true
         com.prometheus.port: 7979
         io.rancher.container.pull_image: always
+        io.rancher.scheduler.affinity:host_label: role=monitoring
       tty: true
       image: adopteunops/elasticsearch-prometheus-exporter:1.0-SNAPSHOT
       links:
