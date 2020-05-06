@@ -19,7 +19,7 @@ End users will have tools in their project to see their application logs & metri
 At the moment this set of playbooks is designed to run on ubuntu. We recommend using latest LTS (16.04 at times of writing).
 
 Each host (including the master) must have at least the following requirements :
-* 2 vcpu
+* 2 vCPU
 * 4 Go ram
 * 2 disks with one for the system with 12Go (8Go for / + 4Go for swap) and one for /var/lib/docker with 8Go.
 
@@ -149,7 +149,7 @@ host-3
 ```
 Launch the playbook
 ```
-./ansible-playbook_wrapper create_collect_data.yml -K -e "NAME_PROJECT=collect-data"
+./ansible-playbook_wrapper install_skalogs.yml -K -e "NAME_PROJECT=collect-data"
 ```
 
 This ansible does the following :
