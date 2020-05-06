@@ -1,3 +1,6 @@
+ansible_python_interpreter: "/usr/bin/python3"
+dockerpy_version: 4.2.0
+
 rancher_master_host: 10.10.10.10
 rancher_master_port: 8080
 rancher_master_url: http://{{rancher_master_host}}:{{rancher_master_port}}
